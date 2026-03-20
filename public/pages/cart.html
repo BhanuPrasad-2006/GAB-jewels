@@ -3,93 +3,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Shopping Bag | GAB Jewels</title>
+    <title>Your Bag | GAB Jewels</title>
     
     <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* ─── Advance item styles (self-contained, no extra file needed) ─── */
+
+        .cart-item.is-advance {
+            border-left: 3px solid var(--gold);
+            padding-left: calc(28px - 3px);
+        }
+
+        .metal-swatch {
+            width: 100px;
+            height: 100px;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            gap: 4px;
+            user-select: none;
+        }
+
+        .metal-swatch small {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.75;
+        }
+
+        .metal-swatch--gold22 { background: linear-gradient(135deg,#f0d060,#c8960c); color:#5a3a00; }
+        .metal-swatch--gold24 { background: linear-gradient(135deg,#fce270,#d4a000); color:#3a2500; }
+        .metal-swatch--silver { background: linear-gradient(135deg,#e8e8ee,#a8a8b8); color:#333; }
+
+        .advance-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(212,175,55,0.10);
+            color: var(--gold-dark);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 2px;
+            border: 1px solid rgba(212,175,55,0.25);
+            margin-top: 5px;
+        }
+
+        .advance-badge i { font-size: 0.6rem; }
+
+        .locked-rate {
+            font-size: 0.72rem;
+            color: var(--cream-dim);
+            margin-top: 4px;
+            display: block;
+        }
+
+        .locked-rate strong { color: var(--cream); }
+
+        /* Divider between jewellery section and advance section */
+        .cart-section-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 0 8px;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--cream-dim);
+            font-weight: 500;
+        }
+
+        .cart-section-divider::before,
+        .cart-section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Gold-coloured subtotal for advance rows */
+        .cart-item.is-advance .cart-item-subtotal {
+            color: var(--gold-dark);
+        }
+
+        /* Summary jewellery row — hides the original subtotal row */
+        #summary-subtotal-row { display: none !important; }
+    </style>
 </head>
 <body>
 
+        <!-- Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker-track">
+            <span>✦ Free shipping on orders above ₹50,000</span>
+            <span>✦ BIS Hallmarked Jewellery</span>
+            <span>✦ Lifetime Exchange & Buyback</span>
+            <span>✦ 30-Day Easy Returns</span>
+            <span>✦ Custom Design Available</span>
+            <span>✦ EMI Available</span>
+            <span>✦ Free shipping on orders above ₹50,000</span>
+            <span>✦ BIS Hallmarked Jewellery</span>
+            <span>✦ Lifetime Exchange & Buyback</span>
+            <span>✦ 30-Day Easy Returns</span>
+            <span>✦ Custom Design Available</span>
+            <span>✦ EMI Available</span>
+        </div>
+    </div>
+
     <header class="top-nav">
-        <a href="index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+        <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
         <nav>
-            <a href="index.html">Home</a>
+            <a href="../index.html">Home</a>
             <a href="collections.html">Collections</a>
+            <a href="advance-buy.html">Buy Gold</a>
             <a href="settings.html">My Account</a>
             <a href="cart.html" class="active cart-icon">
-                <i class="fas fa-shopping-bag"></i> 
+                <i class="fas fa-shopping-bag"></i>
                 <span id="cart-badge" class="badge">0</span>
             </a>
         </nav>
     </header>
 
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>◆</span>
+        <span style="color: var(--gold);">Your Bag</span>
+    </div>
+
     <main class="cart-page">
         <div class="cart-page-title">
             <h1>Your Shopping Bag</h1>
-            <p>Masterpieces selected for your collection.</p>
+            <p id="cart-count-label">Masterpieces selected for your collection.</p>
         </div>
 
         <div class="cart-layout">
+
+            <!-- ── LEFT: Items ── -->
             <div class="cart-items-col">
+
                 <div id="cart-header-row" class="cart-table-header">
                     <span>Product</span>
-                    <span style="text-align: center;">Price</span>
-                    <span style="text-align: center;">Quantity</span>
-                    <span style="text-align: center;">Subtotal</span>
+                    <span style="text-align:center;">Price</span>
+                    <span style="text-align:center;">Quantity</span>
+                    <span style="text-align:center;">Subtotal</span>
                     <span></span>
                 </div>
 
-                <div id="empty-cart-message" class="cart-empty" style="display: none;">
+                <!-- Empty state (shown when BOTH sections are empty) -->
+                <div id="empty-cart-message" class="cart-empty" style="display:none;">
                     <i class="fas fa-shopping-bag"></i>
                     <h2>Your bag is empty</h2>
-                    <p>Discover our collections to find your perfect piece.</p>
-                    <a href="collections.html" class="btn-primary">Explore Boutiques</a>
+                    <p>Discover our collections or reserve gold in advance.</p>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px;">
+                        <a href="collections.html" class="btn-primary" style="width:auto;padding:14px 28px;">Explore Collections</a>
+                        <a href="advance-buy.html" class="btn-ghost" style="padding:14px 28px;">Advance Gold Buy</a>
+                    </div>
                 </div>
-                
+
+                <!--
+                    Regular jewellery items go here.
+                    Your existing cart-page.js injects them into #cart-items-container.
+                    DO NOT rename this div — it must stay as-is for your existing scripts.
+                -->
                 <div id="cart-items-container"></div>
 
-                <div class="promo-row" id="cart-footer-controls" style="display: none; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" class="promo-input" placeholder="Promo Code">
-                        <button class="btn-apply-promo">Apply</button>
+                <!-- Advance gold & silver items injected here by the script below -->
+                <div id="advance-items-container"></div>
+
+                <!-- Footer: promo + clear -->
+                <div class="promo-row" id="cart-footer-controls"
+                     style="display:none; justify-content:space-between; align-items:center;">
+                    <div style="display:flex;gap:10px;">
+                        <input type="text" class="promo-input" id="promo-code-input" placeholder="Promo Code" />
+                        <button class="btn-apply-promo" id="btn-apply-promo">Apply</button>
                     </div>
                     <button onclick="clearFullCart()" class="btn-secondary">
                         <i class="fas fa-trash-alt"></i> Clear Bag
                     </button>
                 </div>
+
+                <div id="promo-msg" style="font-size:0.8rem;margin-top:8px;padding:0 2px;"></div>
+
             </div>
 
+            <!-- ── RIGHT: Order Summary ── -->
             <aside class="order-summary" id="order-summary-card">
                 <h3>Order Summary</h3>
-                <div class="summary-line">
+
+                <!--
+                    We keep the original #summary-subtotal element so your
+                    existing cart-page.js can still write to it without errors.
+                    We hide that row via CSS and replace it with two explicit rows below.
+                -->
+                <div class="summary-line" id="summary-subtotal-row">
                     <span>Subtotal</span>
                     <span id="summary-subtotal">₹ 0</span>
+                </div>
+
+                <!-- Our two explicit rows -->
+                <div class="summary-line" id="row-jewellery">
+                    <span>Jewellery</span>
+                    <span id="summary-jewellery">₹ 0</span>
+                </div>
+                <div class="summary-line" id="row-advance">
+                    <span>Advance Gold / Silver</span>
+                    <span id="summary-advance">₹ 0</span>
+                </div>
+
+                <div class="summary-line">
+                    <span>Making Charge (advance)</span>
+                    <span style="color:#2a8a4a;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Waived</span>
                 </div>
                 <div class="summary-line">
                     <span>Secure Shipping</span>
                     <span>Complimentary</span>
                 </div>
+                <div class="summary-line" id="discount-row" style="display:none;">
+                    <span>Promo Discount</span>
+                    <span id="summary-discount" style="color:#2a8a4a;">−₹ 0</span>
+                </div>
+
                 <div class="summary-divider"></div>
+
                 <div class="summary-total">
                     <span class="label">Total</span>
                     <span class="amount" id="summary-total">₹ 0</span>
                 </div>
-                
-                <button class="btn-place-order" onclick="window.location.href='checkout.html'">
+
+                <button class="btn-place-order" id="btn-checkout"
+                        onclick="window.location.href='checkout.html'">
                     Proceed to Checkout <i class="fas fa-arrow-right"></i>
                 </button>
 
                 <div class="trust-badges">
                     <div class="trust-badge"><i class="fas fa-shield-alt"></i> 100% Secure Payment</div>
                     <div class="trust-badge"><i class="fas fa-certificate"></i> Certified Authentic</div>
+                    <div class="trust-badge"><i class="fas fa-lock"></i> Rates Locked at Purchase</div>
+                    <div class="trust-badge"><i class="fas fa-rotate-left"></i> No Expiry on Advance</div>
                 </div>
+
                 <p class="summary-tax-note">Taxes and shipping calculated at checkout</p>
+
+                <a href="advance-buy.html" class="back-to-cart"
+                   style="display:inline-flex;align-items:center;gap:8px;font-size:0.75rem;
+                          color:var(--text-muted,#777);text-decoration:none;text-transform:uppercase;
+                          letter-spacing:1.5px;margin-top:16px;transition:color 0.2s;">
+                    <i class="fas fa-plus"></i> Add Advance Gold
+                </a>
             </aside>
+
         </div>
     </main>
 
+    <!-- ── Your existing scripts (handle jewellery items — do not touch) ── -->
     <script src="../assets/js/cart.js"></script>
     <script src="../assets/js/cart-page.js"></script>
+
+    <!-- ── Advance Gold cart logic — runs after your existing scripts ── -->
+    <script>
+    (function () {
+        'use strict';
+
+        /* ── Config ── */
+        const ADVANCE_KEY = 'aurum_cart';           // same key as advance-buy.html
+        const PROMO_CODES = { 'GOLD10': 0.10, 'AURUM5': 0.05 };
+        let appliedDiscount = 0;
+
+        /* ── Helpers ── */
+        const fmt = n => '₹ ' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+
+        function getAdvanceCart() {
+            try { return JSON.parse(localStorage.getItem(ADVANCE_KEY)) || []; }
+            catch { return []; }
+        }
+
+        function saveAdvanceCart(cart) {
+            localStorage.setItem(ADVANCE_KEY, JSON.stringify(cart));
+        }
+
+        function metalShort(metal) {
+            return { gold22: '22K', gold24: '24K', silver: 'Ag' }[metal] || '?';
+        }
+
+        /* ── Remove advance item ── */
+        function removeAdvanceItem(id) {
+            saveAdvanceCart(getAdvanceCart().filter(i => i.id !== id));
+            renderAll();
+        }
+
+        /* ── Qty stepper for advance items ── */
+        function changeAdvanceQty(id, delta) {
+            const cart = getAdvanceCart();
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+            item.qty       = Math.max(1, (item.qty || 1) + delta);
+            const base     = item.grams * item.rate * item.qty;
+            item.gst       = base * 0.03;
+            item.subtotal  = base + item.gst;
+            saveAdvanceCart(cart);
+            renderAll();
+        }
+
+        /* ── Render advance items section ── */
+        function renderAdvanceItems() {
+            const cart      = getAdvanceCart();
+            const container = document.getElementById('advance-items-container');
+            if (!container) return;
+
+            if (cart.length === 0) { container.innerHTML = ''; return; }
+
+            let html = `<div class="cart-section-divider"><span>Advance Gold &amp; Silver</span></div>`;
+
+            cart.forEach(function (item) {
+                var qty      = item.qty || 1;
+                var unitCost = item.grams * item.rate * 1.03;
+                var total    = unitCost * qty;
+
+                html += `
+                <div class="cart-item is-advance" data-id="${item.id}">
+
+                    <div class="cart-item-product">
+                        <div class="metal-swatch metal-swatch--${item.metal}">
+                            ${metalShort(item.metal)}
+                            <small>${item.grams}g</small>
+                        </div>
+                        <div class="cart-item-details">
+                            <span class="cart-item-purity">${item.purity}</span>
+                            <div class="cart-item-name">${item.label} &middot; ${item.grams}g</div>
+                            <span class="advance-badge">
+                                <i class="fas fa-bolt"></i>&nbsp;Advance Purchase
+                            </span>
+                            <span class="locked-rate">Rate locked at <strong>${fmt(item.rate)}/g</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="cart-item-price">${fmt(unitCost)}</div>
+
+                    <div class="cart-item-qty-col">
+                        <div class="qty-stepper">
+                            <button class="qty-btn"
+                                onclick="window.__advQty('${item.id}', -1)">−</button>
+                            <input class="qty-input" type="number"
+                                value="${qty}" min="1" readonly />
+                            <button class="qty-btn"
+                                onclick="window.__advQty('${item.id}', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="cart-item-subtotal">${fmt(total)}</div>
+
+                    <div class="cart-item-remove">
+                        <button class="btn-remove"
+                            onclick="window.__advRemove('${item.id}')"
+                            title="Remove item">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        /* ── Update cart badge (jewellery count + advance count) ── */
+        function updateBadge() {
+            var jewCount = document.querySelectorAll('#cart-items-container .cart-item').length;
+            var advCount = getAdvanceCart().length;
+            var badge    = document.getElementById('cart-badge');
+            if (!badge) return;
+            var total            = jewCount + advCount;
+            badge.textContent    = total;
+            badge.style.display  = total > 0 ? 'flex' : 'none';
+        }
+
+        /* ── Update order summary totals ── */
+        function updateSummary() {
+            /*
+             * Jewellery total — your existing cart-page.js writes the jewellery
+             * subtotal into #summary-subtotal. We read that value and re-display
+             * it in our #summary-jewellery field, then compute the combined grand total.
+             */
+            var jewRaw   = document.getElementById('summary-subtotal');
+            var jewTotal = jewRaw
+                ? parseFloat((jewRaw.textContent || '0').replace(/[₹,\s]/g, '')) || 0
+                : 0;
+
+            var advCart  = getAdvanceCart();
+            var advTotal = advCart.reduce(function (s, i) {
+                return s + (i.grams * i.rate * 1.03 * (i.qty || 1));
+            }, 0);
+
+            var rawGrand = jewTotal + advTotal;
+            var discount = rawGrand * appliedDiscount;
+            var grand    = rawGrand - discount;
+
+            /* Hide jewellery row if zero, show if non-zero */
+            var rowJew = document.getElementById('row-jewellery');
+            if (rowJew) rowJew.style.display = jewTotal > 0 ? 'flex' : 'none';
+
+            var rowAdv = document.getElementById('row-advance');
+            if (rowAdv) rowAdv.style.display = advTotal > 0 ? 'flex' : 'none';
+
+            var jEl = document.getElementById('summary-jewellery');
+            var aEl = document.getElementById('summary-advance');
+            var tEl = document.getElementById('summary-total');
+
+            if (jEl) jEl.textContent = fmt(jewTotal);
+            if (aEl) aEl.textContent = fmt(advTotal);
+            if (tEl) tEl.textContent = fmt(grand);
+
+            var discRow = document.getElementById('discount-row');
+            if (discRow) discRow.style.display = discount > 0 ? 'flex' : 'none';
+            var discEl = document.getElementById('summary-discount');
+            if (discEl) discEl.textContent = '−' + fmt(discount);
+        }
+
+        /* ── Toggle empty state and UI chrome ── */
+        function toggleEmptyState() {
+            var jewCount    = document.querySelectorAll('#cart-items-container .cart-item').length;
+            var advCount    = getAdvanceCart().length;
+            var total       = jewCount + advCount;
+
+            var emptyEl     = document.getElementById('empty-cart-message');
+            var footerEl    = document.getElementById('cart-footer-controls');
+            var headerEl    = document.getElementById('cart-header-row');
+            var checkoutBtn = document.getElementById('btn-checkout');
+            var countLabel  = document.getElementById('cart-count-label');
+
+            if (emptyEl)     emptyEl.style.display      = total === 0 ? 'flex'  : 'none';
+            if (footerEl)    footerEl.style.display     = total > 0  ? 'flex'  : 'none';
+            if (headerEl)    headerEl.style.display     = total > 0  ? 'grid'  : 'none';
+            if (checkoutBtn) checkoutBtn.disabled       = total === 0;
+            if (countLabel)  countLabel.textContent     = total === 0
+                ? 'Masterpieces selected for your collection.'
+                : total + ' item' + (total > 1 ? 's' : '') + ' in your bag';
+        }
+
+        /* ── Master render (called on every change) ── */
+        function renderAll() {
+            renderAdvanceItems();
+            updateSummary();
+            toggleEmptyState();
+            updateBadge();
+        }
+
+        /* ── Expose handlers to inline onclick attributes ── */
+        window.__advRemove = removeAdvanceItem;
+        window.__advQty    = changeAdvanceQty;
+
+        /* ── Override clearFullCart to also clear advance items ── */
+        window.clearFullCart = function () {
+            saveAdvanceCart([]);
+            if (typeof clearCart === 'function') clearCart();   // your existing jewellery clear
+            renderAll();
+        };
+
+        /* ── Promo code ── */
+        function initPromo() {
+            var applyBtn = document.getElementById('btn-apply-promo');
+            if (!applyBtn) return;
+            applyBtn.addEventListener('click', function () {
+                var code  = (document.getElementById('promo-code-input')?.value || '').trim().toUpperCase();
+                var msgEl = document.getElementById('promo-msg');
+                if (PROMO_CODES[code] !== undefined) {
+                    appliedDiscount     = PROMO_CODES[code];
+                    if (msgEl) {
+                        msgEl.style.color   = '#2a8a4a';
+                        msgEl.textContent   = '✓ Code "' + code + '" applied — ' +
+                                              (appliedDiscount * 100).toFixed(0) + '% off!';
+                    }
+                } else {
+                    appliedDiscount = 0;
+                    if (msgEl) {
+                        msgEl.style.color   = '#cc0000';
+                        msgEl.textContent   = code
+                            ? '"' + code + '" is not a valid promo code.'
+                            : 'Please enter a promo code.';
+                    }
+                }
+                updateSummary();
+            });
+        }
+
+        /* ── Init ── */
+        function init() {
+            renderAll();
+            initPromo();
+
+            /*
+             * Watch for jewellery cart changes fired by your existing cart-page.js.
+             * If it dispatches a 'cartUpdated' event on document, we re-render.
+             * If it uses a different event name, update the string below.
+             */
+            document.addEventListener('cartUpdated', renderAll);
+
+            /*
+             * Fallback: poll the summary-subtotal value every 400ms for the first
+             * 3 s in case your script writes to it after DOMContentLoaded.
+             */
+            var polls = 0;
+            var poller = setInterval(function () {
+                updateSummary();
+                updateBadge();
+                if (++polls >= 8) clearInterval(poller);
+            }, 400);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+    })();
+    </script>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <span class="footer-brand-name">GAB JEWELS</span>
+                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru. Every piece carries the weight of tradition and the brilliance of modern artistry.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigate</h4>
+                <a href="../index.html">Home</a>
+                <a href="collections.html">Collections</a>
+                <a href="advance-buy.html">Buy Gold</a>
+                <a href="cart.html">Your Bag</a>
+            </div>
+            <div class="footer-col">
+                <h4>Policies</h4>
+                <a href="#">Exchange Policy</a>
+                <a href="#">Buyback Terms</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+        </div>
+    </footer>
+
 </body>
 </html>

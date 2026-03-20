@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Checkout | GAB Jewels</title>
     <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
 
+    <!-- Minimal nav for checkout (no distractions) -->
     <header class="top-nav">
-        <a href="index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+        <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+        <div style="display:flex; align-items:center; gap:10px; font-family:'Raleway',sans-serif; font-size:0.68rem; letter-spacing:0.2em; color:var(--gold);">
+            <i class="fas fa-lock" style="font-size:0.75rem;"></i> SECURE CHECKOUT
+        </div>
     </header>
 
     <main class="checkout-page">
+
+        <!-- Steps -->
         <div class="checkout-steps">
             <div class="step done">
-                <div class="step-num">1</div> <span>Bag</span>
+                <div class="step-num"><i class="fas fa-check" style="font-size:0.6rem;"></i></div>
+                <span>Bag</span>
             </div>
             <div class="step-connector"></div>
             <div class="step active">
-                <div class="step-num">2</div> <span>Checkout</span>
+                <div class="step-num">2</div>
+                <span>Checkout</span>
             </div>
             <div class="step-connector"></div>
             <div class="step">
-                <div class="step-num">3</div> <span>Confirmation</span>
+                <div class="step-num">3</div>
+                <span>Confirmation</span>
             </div>
         </div>
 
         <div class="checkout-layout">
+
+            <!-- LEFT: Form -->
             <form id="checkout-form" class="checkout-form-col">
 
+                <!-- Shipping -->
                 <section class="form-section">
-                    <h2 class="form-section-title"><i class="fas fa-truck"></i> Shipping Address</h2>
+                    <h2 class="form-section-title">
+                        <i class="fas fa-truck"></i> Shipping Address
+                    </h2>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">First Name</label>
@@ -55,108 +66,256 @@
                     <div class="form-row thirds">
                         <div class="form-group">
                             <label class="form-label">City</label>
-                            <input type="text" class="form-input" placeholder="Mumbai" required>
+                            <input type="text" class="form-input" placeholder="Bengaluru" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">State</label>
-                            <input type="text" class="form-input" placeholder="MH" required>
+                            <input type="text" class="form-input" placeholder="KA" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">PIN Code</label>
-                            <input type="text" class="form-input" placeholder="400001" required>
+                            <input type="text" class="form-input" placeholder="560001" required>
                         </div>
                     </div>
-                </section>
-
-                <section class="form-section">
-                    <h2 class="form-section-title"><i class="fas fa-credit-card"></i> Payment Method</h2>
-                    <div class="payment-tabs">
-                        <button type="button" class="payment-tab active"><i class="fas fa-card-alt"></i> Credit/Debit
-                            Card</button>
-                        <button type="button" class="payment-tab"><i class="fas fa-university"></i> Net Banking</button>
-                        <button type="button" class="payment-tab"><i class="fas fa-wallet"></i> UPI</button>
-                    </div>
-
                     <div class="form-row full">
-                        <div class="form-group card-input-wrapper">
-                            <label class="form-label">Card Number</label>
-                            <input type="text" class="form-input" placeholder="0000 0000 0000 0000" required>
-                            <i class="fab fa-cc-visa card-type-icon"></i>
-                        </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">Expiry (MM/YY)</label>
-                            <input type="text" class="form-input" placeholder="12/28" required>
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" placeholder="+91 98765 43210" required>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">CVV</label>
-                            <input type="password" class="form-input" placeholder="***" required>
-                        </div>
-                    </div>
-                    <div class="secure-note">
-                        <i class="fas fa-lock"></i> Your payment information is encrypted and secure.
                     </div>
                 </section>
 
-                <button type="submit" class="btn-place-order">
-                    Complete Purchase <i class="fas fa-check-circle"></i>
+                <!-- Shipping Method -->
+                <section class="form-section">
+                    <h2 class="form-section-title">
+                        <i class="fas fa-box"></i> Delivery Method
+                    </h2>
+                    <div class="shipping-options">
+                        <label class="shipping-option">
+                            <input type="radio" name="shipping" value="standard" checked>
+                            <div class="shipping-option-info">
+                                <span class="shipping-option-name">Standard Delivery</span>
+                                <span class="shipping-option-eta">5–7 business days</span>
+                            </div>
+                            <span class="shipping-option-price">Free</span>
+                        </label>
+                        <label class="shipping-option">
+                            <input type="radio" name="shipping" value="express">
+                            <div class="shipping-option-info">
+                                <span class="shipping-option-name">Express Delivery</span>
+                                <span class="shipping-option-eta">1–2 business days · Insured</span>
+                            </div>
+                            <span class="shipping-option-price">₹499</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Payment -->
+                <section class="form-section">
+                    <h2 class="form-section-title">
+                        <i class="fas fa-credit-card"></i> Payment Method
+                    </h2>
+
+                    <div class="payment-tabs" id="payment-tabs">
+                        <button type="button" class="payment-tab active" data-tab="card">
+                            <i class="fas fa-credit-card"></i> Card
+                        </button>
+                        <button type="button" class="payment-tab" data-tab="netbanking">
+                            <i class="fas fa-university"></i> Net Banking
+                        </button>
+                        <button type="button" class="payment-tab" data-tab="upi">
+                            <i class="fas fa-wallet"></i> UPI
+                        </button>
+                    </div>
+
+                    <!-- Card panel -->
+                    <div id="panel-card">
+                        <div class="form-row full">
+                            <div class="form-group card-input-wrapper">
+                                <label class="form-label">Card Number</label>
+                                <input type="text" class="form-input" id="card-number"
+                                    placeholder="0000 0000 0000 0000" maxlength="19" required>
+                                <i class="fab fa-cc-visa card-type-icon" id="card-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row full">
+                            <div class="form-group">
+                                <label class="form-label">Name on Card</label>
+                                <input type="text" class="form-input" placeholder="ARJUN SHARMA" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Expiry (MM/YY)</label>
+                                <input type="text" class="form-input" placeholder="12/28" maxlength="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CVV</label>
+                                <input type="password" class="form-input" placeholder="•••" maxlength="4" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Net Banking panel -->
+                    <div id="panel-netbanking" style="display:none;">
+                        <div class="form-row full">
+                            <div class="form-group">
+                                <label class="form-label">Select Bank</label>
+                                <select class="form-select form-input">
+                                    <option value="">— Choose your bank —</option>
+                                    <option>HDFC Bank</option>
+                                    <option>ICICI Bank</option>
+                                    <option>SBI</option>
+                                    <option>Axis Bank</option>
+                                    <option>Kotak Mahindra</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UPI panel -->
+                    <div id="panel-upi" style="display:none;">
+                        <div class="form-row full">
+                            <div class="form-group">
+                                <label class="form-label">UPI ID</label>
+                                <input type="text" class="form-input" placeholder="yourname@upi">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="secure-note">
+                        <i class="fas fa-lock"></i> Your payment information is 256-bit SSL encrypted and fully secure.
+                    </div>
+                </section>
+
+                <button type="submit" class="btn-place-order" id="btn-place-order">
+                    Complete Purchase &nbsp;<i class="fas fa-check-circle"></i>
                 </button>
-                <a href="cart.html" class="back-to-cart"><i class="fas fa-arrow-left"></i> Return to Shopping Bag</a>
+                <a href="cart.html" class="back-to-cart">
+                    <i class="fas fa-arrow-left"></i> Return to Shopping Bag
+                </a>
+
             </form>
 
+            <!-- RIGHT: Order Summary -->
             <aside class="order-summary">
                 <h3>Your Order</h3>
-                <div id="checkout-items-list">
-                </div>
+                <div id="checkout-items-list"></div>
                 <div class="summary-divider"></div>
                 <div class="summary-total">
                     <span class="label">Total Amount</span>
                     <span class="amount" id="checkout-total">₹ 0</span>
                 </div>
+                <div class="trust-badges">
+                    <div class="trust-badge"><i class="fas fa-shield-alt"></i> 100% Secure Payment</div>
+                    <div class="trust-badge"><i class="fas fa-certificate"></i> BIS Certified Authentic</div>
+                    <div class="trust-badge"><i class="fas fa-lock"></i> Rates Locked at Purchase</div>
+                    <div class="trust-badge"><i class="fas fa-rotate-left"></i> 30-Day Easy Returns</div>
+                </div>
+                <p class="summary-tax-note">Taxes and shipping calculated above</p>
             </aside>
+
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom" style="max-width:1200px; margin:0 auto; padding: 30px 60px;">
+            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+        </div>
+    </footer>
+
     <script src="../assets/js/cart.js"></script>
     <script>
-        // Simple Logic for Checkout Page
         document.addEventListener('DOMContentLoaded', () => {
-            const list = document.getElementById('checkout-items-list');
+
+            // ── Populate order summary ──
+            const list    = document.getElementById('checkout-items-list');
             const totalEl = document.getElementById('checkout-total');
-            const localCart = JSON.parse(localStorage.getItem('gab_cart')) || [];
+
+            // Jewellery cart
+            const jewCart = JSON.parse(localStorage.getItem('gab_cart')) || [];
+            // Advance cart
+            const advCart = JSON.parse(localStorage.getItem('aurum_cart')) || [];
 
             let total = 0;
-            localCart.forEach(item => {
+
+            jewCart.forEach(item => {
                 total += item.price;
                 const div = document.createElement('div');
                 div.className = 'summary-line';
-                div.innerHTML = `<span>${item.title}</span> <span>₹${item.price.toLocaleString('en-IN')}</span>`;
+                div.innerHTML = `<span>${item.title}</span><span>₹${item.price.toLocaleString('en-IN')}</span>`;
                 list.appendChild(div);
             });
+
+            advCart.forEach(item => {
+                total += item.subtotal;
+                const div = document.createElement('div');
+                div.className = 'summary-line';
+                div.innerHTML = `<span>${item.label} · ${item.grams}g</span><span>₹${item.subtotal.toLocaleString('en-IN', {maximumFractionDigits:0})}</span>`;
+                list.appendChild(div);
+            });
+
+            if (jewCart.length === 0 && advCart.length === 0) {
+                list.innerHTML = '<p style="color:var(--cream-dim);font-style:italic;font-size:0.9rem;padding:10px 0;">Your bag is empty.</p>';
+            }
 
             totalEl.innerText = new Intl.NumberFormat('en-IN', {
                 style: 'currency', currency: 'INR', maximumFractionDigits: 0
             }).format(total);
 
-            // Handle Form Submission
+            // ── Payment tab switching ──
+            document.querySelectorAll('.payment-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    ['card','netbanking','upi'].forEach(p => {
+                        document.getElementById('panel-' + p).style.display = 'none';
+                    });
+                    document.getElementById('panel-' + tab.dataset.tab).style.display = 'block';
+                });
+            });
+
+            // ── Card number formatting ──
+            const cardInput = document.getElementById('card-number');
+            const cardIcon  = document.getElementById('card-icon');
+            if (cardInput) {
+                cardInput.addEventListener('input', (e) => {
+                    let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+                    e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
+                    // Detect card type
+                    if (v.startsWith('4')) cardIcon.className = 'fab fa-cc-visa card-type-icon';
+                    else if (v.startsWith('5')) cardIcon.className = 'fab fa-cc-mastercard card-type-icon';
+                    else if (v.startsWith('3')) cardIcon.className = 'fab fa-cc-amex card-type-icon';
+                    else cardIcon.className = 'fas fa-credit-card card-type-icon';
+                });
+            }
+
+            // ── Form submission ──
             document.getElementById('checkout-form').addEventListener('submit', (e) => {
                 e.preventDefault();
+                const btn = document.getElementById('btn-place-order');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> &nbsp; Processing...';
 
-                // 1. Grab the current cart
-                const currentCart = localStorage.getItem('gab_cart');
-
-                // 2. Save it as the 'last_order' so the confirmation page can see it
-                localStorage.setItem('last_order', currentCart);
-
-                // 3. NOW clear the shopping bag
-                localStorage.removeItem('gab_cart');
-
-                // 4. Redirect
-                window.location.href = 'conformation.html';
+                setTimeout(() => {
+                    // Save order snapshot
+                    localStorage.setItem('last_order', JSON.stringify({
+                        jewellery: jewCart,
+                        advance: advCart,
+                        total: total,
+                        orderId: 'GAB-' + Date.now().toString(36).toUpperCase()
+                    }));
+                    // Clear carts
+                    localStorage.removeItem('gab_cart');
+                    localStorage.removeItem('aurum_cart');
+                    // Redirect
+                    window.location.href = 'confirmation.html';
+                }, 1800);
             });
+
         });
     </script>
 </body>
-
 </html>

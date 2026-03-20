@@ -1,20 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details | GAB Jewels</title>
     <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+    <style>
+        /* ── Purity tag (gold-tag alias used here) ── */
+        .purity-tag {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.65rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 12px;
+        }
 
+        /* ── Description block spacing ── */
+        .description { margin-top: 32px; }
+        .description h3 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            font-weight: 500;
+            color: var(--gold);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        /* ── Add to cart button row ── */
+        .btn-add-row {
+            margin-top: 36px;
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        #btn-add-to-cart {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* ── Trust strip below button ── */
+        .trust-strip {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.68rem;
+            color: var(--cream-dim);
+            letter-spacing: 0.06em;
+        }
+        .trust-item i { color: var(--gold); font-size: 0.8rem; }
+
+        /* ── Thumbnail click swap ── */
+        .thumb { cursor: pointer; }
+    </style>
+</head>
 <body>
 
+    <!-- Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker-track">
+            <span>✦ Free shipping on orders above ₹50,000</span>
+            <span>✦ BIS Hallmarked Jewellery</span>
+            <span>✦ Lifetime Exchange & Buyback</span>
+            <span>✦ 30-Day Easy Returns</span>
+            <span>✦ Custom Design Available</span>
+            <span>✦ EMI Available</span>
+            <span>✦ Free shipping on orders above ₹50,000</span>
+            <span>✦ BIS Hallmarked Jewellery</span>
+            <span>✦ Lifetime Exchange & Buyback</span>
+            <span>✦ 30-Day Easy Returns</span>
+            <span>✦ Custom Design Available</span>
+            <span>✦ EMI Available</span>
+        </div>
+    </div>
+
+    <!-- Nav -->
     <header class="top-nav">
-        <div class="brand"><i class="fas fa-gem"></i> GAB Jewels</div>
+        <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
         <nav>
-            <a href="index.html">Home</a>
+            <a href="../index.html">Home</a>
             <a href="collections.html" class="active">Collections</a>
+            <a href="advance-buy.html">Buy Gold</a>
             <a href="settings.html">My Account</a>
             <a href="cart.html" class="cart-icon">
                 <i class="fas fa-shopping-bag"></i>
@@ -23,32 +104,111 @@
         </nav>
     </header>
 
-    <main class="product-detail-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb" id="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>◆</span>
+        <a href="collections.html">Collections</a>
+        <span>◆</span>
+        <span style="color: var(--gold);" id="breadcrumb-title">Product</span>
+    </div>
+
+    <!-- Product Detail -->
+    <main class="product-detail-container reveal">
+
+        <!-- Gallery -->
         <div class="product-gallery">
             <img id="main-image" src="" alt="Product Image">
             <div class="thumbnail-row">
-                <img class="thumb active" id="thumb-1" src="">
-                <img class="thumb" id="thumb-2" src="">
+                <img class="thumb active" id="thumb-1" src="" alt="View 1">
+                <img class="thumb" id="thumb-2" src="" alt="View 2">
             </div>
         </div>
 
+        <!-- Info -->
         <div class="product-info-large">
             <span class="purity-tag" id="detail-purity">Loading...</span>
             <h1 id="detail-title">Loading...</h1>
-            <p class="price" id="detail-price">₹ 0</p>
+            <span class="price" id="detail-price">₹ 0</span>
 
             <div class="description">
-                <h3>Description</h3>
-                <p id="detail-desc">A masterpiece of craftsmanship, designed to elevate your everyday elegance. This
-                    piece is certified authentic.</p>
+                <h3>About this piece</h3>
+                <p id="detail-desc">A masterpiece of craftsmanship, designed to elevate your everyday elegance. Each piece is BIS hallmarked and certified authentic — a legacy you can wear.</p>
             </div>
 
-            <button id="btn-add-to-cart" class="btn-primary">Add to Shopping Bag</button>
+            <div class="btn-add-row">
+                <button id="btn-add-to-cart" class="btn-primary">
+                    <i class="fas fa-shopping-bag" style="margin-right:8px;"></i> Add to Bag
+                </button>
+                <button class="btn-ghost" onclick="window.history.back()">← Back</button>
+            </div>
+
+            <div class="trust-strip">
+                <div class="trust-item"><i class="fas fa-certificate"></i> BIS Hallmarked</div>
+                <div class="trust-item"><i class="fas fa-shield-alt"></i> Certified Authentic</div>
+                <div class="trust-item"><i class="fas fa-rotate-left"></i> 30-Day Returns</div>
+                <div class="trust-item"><i class="fas fa-truck"></i> Free Shipping</div>
+            </div>
         </div>
+
     </main>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <span class="footer-brand-name">GAB JEWELS</span>
+                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru. Every piece carries the weight of tradition and the brilliance of modern artistry.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigate</h4>
+                <a href="../index.html">Home</a>
+                <a href="collections.html">Collections</a>
+                <a href="advance-buy.html">Buy Gold</a>
+                <a href="cart.html">Your Bag</a>
+            </div>
+            <div class="footer-col">
+                <h4>Policies</h4>
+                <a href="#">Exchange Policy</a>
+                <a href="#">Buyback Terms</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+        </div>
+    </footer>
+
+    <!-- Scripts: cart.js MUST come before product-detail.js -->
     <script src="../assets/js/cart.js"></script>
     <script src="../assets/js/product-detail.js"></script>
-</body>
+    <script>
+        // Thumbnail swap
+        document.querySelectorAll('.thumb').forEach(thumb => {
+            thumb.addEventListener('click', () => {
+                document.getElementById('main-image').src = thumb.src;
+                document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+            });
+        });
 
+        // Update breadcrumb title once product-detail.js has injected the title
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const title = document.getElementById('detail-title').innerText;
+                if (title && title !== 'Loading...') {
+                    document.getElementById('breadcrumb-title').textContent = title;
+                }
+            }, 100);
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.05 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
 </html>

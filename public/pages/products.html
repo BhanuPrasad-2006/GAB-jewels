@@ -9,27 +9,54 @@
 </head>
 <body>
 
+    <div class="ticker-wrap">
+        <div class="ticker-track">
+            <span>✦ Free shipping on orders above ₹50,000</span>
+            <span>✦ BIS Hallmarked Jewellery</span>
+            <span>✦ Lifetime Exchange & Buyback</span>
+            <span>✦ 30-Day Easy Returns</span>
+            <span>✦ Custom Design Available</span>
+            <span>✦ EMI Available</span>
+            <span>✦ Free shipping on orders above ₹50,000</span>
+            <span>✦ BIS Hallmarked Jewellery</span>
+            <span>✦ Lifetime Exchange & Buyback</span>
+            <span>✦ 30-Day Easy Returns</span>
+            <span>✦ Custom Design Available</span>
+            <span>✦ EMI Available</span>
+        </div>
+    </div>
+
     <header class="top-nav">
-        <div class="brand"><i class="fas fa-gem"></i> GAB Jewels</div>
+        <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
         <nav>
-    <a href="index.html">Home</a>
-    <a href="collections.html" class="active">Collections</a>
-    <a href="settings.html">My Account</a>
-    <a href="cart.html" class="cart-icon">
-        <i class="fas fa-shopping-bag"></i>
-        <span id="cart-badge" class="badge">0</span>
-    </a>
-</nav>
+            <a href="../index.html">Home</a>
+            <a href="collections.html" class="active">Collections</a>
+            <a href="advance-buy.html">Buy Gold</a>
+            <a href="settings.html">My Account</a>
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cart-badge" class="badge">0</span>
+            </a>
+        </nav>
     </header>
 
-    <div class="header-text">
-        <h1 id="page-title">The Boutique</h1>
+    <div class="breadcrumb" id="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>◆</span>
+        <a href="collections.html">Collections</a>
+        <span>◆</span>
+        <span id="breadcrumb-dept" style="color: var(--gold);">Gallery</span>
+    </div>
+
+    <div class="header-text reveal">
+        <span class="eyebrow" id="page-eyebrow">The Boutique</span>
+        <h1 id="page-title">Our Gallery</h1>
         <p id="page-subtitle">Curated masterpieces for your collection.</p>
+        <div class="ornament-line"><div class="ornament-diamond"></div></div>
     </div>
 
     <main class="shop-layout">
-        
-        <aside class="filters-sidebar">
+        <aside class="filters-sidebar reveal">
             <div class="filter-section">
                 <h4>Material</h4>
                 <label class="filter-label"><input type="checkbox" value="18k"> 18k Yellow Gold</label>
@@ -37,21 +64,72 @@
                 <label class="filter-label"><input type="checkbox" value="rose"> 18k Rose Gold</label>
                 <label class="filter-label"><input type="checkbox" value="platinum"> Platinum</label>
             </div>
-
             <div class="filter-section">
                 <h4>Price Range</h4>
                 <label class="filter-label"><input type="radio" name="price"> Under ₹50,000</label>
-                <label class="filter-label"><input type="radio" name="price"> ₹50k - ₹2 Lakhs</label>
+                <label class="filter-label"><input type="radio" name="price"> ₹50k – ₹2 Lakhs</label>
                 <label class="filter-label"><input type="radio" name="price"> Above ₹2 Lakhs</label>
             </div>
         </aside>
 
-        <section class="products-grid" id="products-grid">
-            </section>
-
+        <section class="products-grid reveal" id="products-grid"></section>
     </main>
+
+    <footer>
+        <div class="footer-top">
+            <div>
+                <span class="footer-brand-name">GAB JEWELS</span>
+                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru. Every piece carries the weight of tradition and the brilliance of modern artistry.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigate</h4>
+                <a href="../index.html">Home</a>
+                <a href="collections.html">Collections</a>
+                <a href="advance-buy.html">Buy Gold</a>
+                <a href="cart.html">Your Bag</a>
+            </div>
+            <div class="footer-col">
+                <h4>Policies</h4>
+                <a href="#">Exchange Policy</a>
+                <a href="#">Buyback Terms</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+        </div>
+    </footer>
 
     <script src="../assets/js/products.js"></script>
     <script src="../assets/js/cart.js"></script>
+    <script>
+        // Enhance breadcrumb based on URL params
+        const params = new URLSearchParams(window.location.search);
+        const dept = params.get('dept');
+        const cat  = params.get('cat');
+        if (dept) {
+            const deptLabel = dept.charAt(0).toUpperCase() + dept.slice(1);
+            document.getElementById('breadcrumb-dept').textContent = deptLabel;
+            // Insert category crumb if present
+            if (cat) {
+                const catLabel = cat.charAt(0).toUpperCase() + cat.slice(1);
+                const bc = document.getElementById('breadcrumb');
+                const sep = document.createElement('span'); sep.textContent = '◆'; sep.style.color = 'var(--border-hover)';
+                const link = document.createElement('a'); link.href = `collections.html`; link.textContent = deptLabel; link.style.color = 'rgba(250,246,238,0.35)';
+                const sep2 = document.createElement('span'); sep2.textContent = '◆'; sep2.style.color = 'var(--border-hover)';
+                const cur = document.createElement('span'); cur.textContent = catLabel; cur.style.color = 'var(--gold)';
+                // Replace the last breadcrumb item
+                document.getElementById('breadcrumb-dept').replaceWith(link, sep2, cur);
+            }
+        }
+
+        // Scroll reveal
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.05 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>

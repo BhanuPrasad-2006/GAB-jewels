@@ -19,7 +19,7 @@ function renderCartPage() {
 
     // 2. Handle Empty State
     if (!cart || cart.length === 0) {
-        emptyMsg.style.display = 'block';
+        emptyMsg.style.display = 'flex';
         summaryCard.style.display = 'none';
         headerRow.style.display = 'none';
         footerControls.style.display = 'none';

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | GAB Jewels</title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ── Confirmation-specific styles ── */
+        .confirmed-icon {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: rgba(201,168,76,0.08);
+            border: 1px solid rgba(201,168,76,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            font-size: 1.9rem;
+            color: var(--gold);
+            animation: iconPop 0.6s cubic-bezier(0.25,0.8,0.25,1) 0.2s both;
+        }
+
+        @keyframes iconPop {
+            from { opacity: 0; transform: scale(0.6); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .order-confirmed {
+            max-width: 680px;
+            margin: 0 auto 100px;
+            padding: 0 40px;
+            text-align: center;
+        }
+
+        .order-confirmed h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            color: var(--cream);
+            font-weight: 400;
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.4s forwards;
+        }
+
+        .order-confirmed > p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--cream-muted);
+            line-height: 1.8;
+            max-width: 480px;
+            margin: 0 auto 24px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.5s forwards;
+        }
+
+        .confirmed-order-num {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            color: var(--cream-dim);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.6s forwards;
+        }
+        .confirmed-order-num strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Steps on confirmation page */
+        .checkout-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 0 50px;
+            opacity: 0;
+            animation: fadeUp 0.5s ease 0.1s forwards;
+        }
+
+        /* Order summary box */
+        .order-summary-box {
+            border: 1px solid var(--border);
+            margin: 0 0 36px;
+            overflow: hidden;
+            position: relative;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.7s forwards;
+        }
+        .order-summary-box::before {
+            content: '';
+            display: block;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .order-summary-box-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .confirmed-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+        .confirmed-item:last-child { border-bottom: none; }
+
+        .confirmed-item-img {
+            width: 68px; height: 68px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            filter: sepia(10%);
+        }
+
+        /* Advance item swatch on confirmation */
+        .confirmed-swatch {
+            width: 68px; height: 68px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            gap: 3px;
+        }
+        .confirmed-swatch small {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.55rem;
+            letter-spacing: 0.12em;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+        .swatch--gold22 { background: linear-gradient(135deg,#f0d060,#c8960c); color:#5a3a00; }
+        .swatch--gold24 { background: linear-gradient(135deg,#fce270,#d4a000); color:#3a2500; }
+        .swatch--silver { background: linear-gradient(135deg,#e8e8ee,#a8a8b8); color:#333; }
+
+        .confirmed-item-info { flex: 1; }
+        .confirmed-item-tag {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.6rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .confirmed-item-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.92rem;
+            font-weight: 400;
+            color: var(--cream);
+            letter-spacing: 0.04em;
+        }
+
+        .confirmed-item-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            color: var(--gold-light);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .confirmed-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            background: rgba(201,168,76,0.04);
+            border-top: 1px solid var(--border);
+        }
+        .confirmed-total-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+        .confirmed-total-value {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--gold-light);
+        }
+
+        /* Action buttons */
+        .confirmed-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.9s forwards;
+        }
+
+        /* Delivery info strip */
+        .delivery-strip {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border);
+            margin-bottom: 28px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.8s forwards;
+        }
+        .delivery-item {
+            flex: 1;
+            padding: 18px 16px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+        .delivery-item:last-child { border-right: none; }
+        .delivery-item i {
+            color: var(--gold);
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .delivery-item span {
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--cream-dim);
+            display: block;
+        }
+        .delivery-item strong {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            color: var(--cream-muted);
+            display: block;
+            margin-top: 3px;
+            letter-spacing: 0.05em;
+        }
+
+        /* Empty state */
+        .no-order {
+            padding: 40px 24px;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: var(--cream-dim);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Minimal nav -->
+    <header class="top-nav">
+        <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+        <div style="font-family:'Raleway',sans-serif; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold);">
+            <i class="fas fa-check-circle" style="margin-right:6px;"></i> Order Placed
+        </div>
+    </header>
+
+    <main class="order-confirmed">
+
+        <!-- Steps -->
+        <div class="checkout-steps">
+            <div class="step done">
+                <div class="step-num"><i class="fas fa-check" style="font-size:0.55rem;"></i></div>
+                <span>Bag</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step done">
+                <div class="step-num"><i class="fas fa-check" style="font-size:0.55rem;"></i></div>
+                <span>Checkout</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step active">
+                <div class="step-num">3</div>
+                <span>Confirmation</span>
+            </div>
+        </div>
+
+        <!-- Icon -->
+        <div class="confirmed-icon">
+            <i class="fas fa-gem"></i>
+        </div>
+
+        <h1>Your Order is Confirmed</h1>
+        <p>Your masterpiece is being prepared with care. A confirmation email with tracking details has been sent to you.</p>
+
+        <div class="confirmed-order-num">
+            Order Reference: <strong id="order-id">#GAB-000000</strong>
+        </div>
+
+        <!-- Delivery strip -->
+        <div class="delivery-strip">
+            <div class="delivery-item">
+                <i class="fas fa-truck"></i>
+                <span>Estimated Delivery</span>
+                <strong>5–7 Business Days</strong>
+            </div>
+            <div class="delivery-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>Insured Shipping</span>
+                <strong>Fully Covered</strong>
+            </div>
+            <div class="delivery-item">
+                <i class="fas fa-certificate"></i>
+                <span>Authenticity</span>
+                <strong>BIS Hallmarked</strong>
+            </div>
+        </div>
+
+        <!-- Order items -->
+        <div class="order-summary-box">
+            <div class="order-summary-box-header">
+                <span>Order Summary</span>
+                <span id="item-count" style="color:var(--cream-dim); font-family:'Raleway',sans-serif; font-size:0.65rem; letter-spacing:0.1em;"></span>
+            </div>
+            <div id="confirmed-items-list"></div>
+            <div class="confirmed-total-row" id="confirmed-total-row" style="display:none;">
+                <span class="confirmed-total-label">Total Paid</span>
+                <span class="confirmed-total-value" id="confirmed-total">₹0</span>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="confirmed-actions">
+            <a href="collections.html" class="btn-primary">Continue Shopping</a>
+            <a href="../index.html" class="btn-ghost">Back to Home</a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom" style="max-width:1200px; margin:0 auto; padding:30px 60px;">
+            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ── Read order saved by checkout.html ──
+            const raw = localStorage.getItem('last_order');
+            const container = document.getElementById('confirmed-items-list');
+            const totalRow  = document.getElementById('confirmed-total-row');
+            const totalEl   = document.getElementById('confirmed-total');
+            const countEl   = document.getElementById('item-count');
+
+            if (!raw) {
+                container.innerHTML = '<p class="no-order">Order details are unavailable. Thank you for your purchase!</p>';
+                // Still show a random order ID
+                document.getElementById('order-id').innerText = '#GAB-' + Math.floor(100000 + Math.random() * 900000);
+                return;
+            }
+
+            const order = JSON.parse(raw);
+
+            // Support both old format (array) and new format (object with .jewellery/.advance)
+            const jewItems = Array.isArray(order) ? order : (order.jewellery || []);
+            const advItems = Array.isArray(order) ? [] : (order.advance || []);
+            const orderId  = (order.orderId) ? order.orderId : ('GAB-' + Math.floor(100000 + Math.random() * 900000));
+            let   total    = order.total || 0;
+
+            // Set order ID
+            document.getElementById('order-id').innerText = '#' + orderId;
+
+            const totalItems = jewItems.length + advItems.length;
+            countEl.textContent = totalItems + ' item' + (totalItems !== 1 ? 's' : '');
+
+            // ── Render jewellery items ──
+            jewItems.forEach(item => {
+                if (!total) total += item.price; // fallback if total wasn't saved
+                const div = document.createElement('div');
+                div.className = 'confirmed-item';
+                div.innerHTML = `
+                    <img src="${item.img}" alt="${item.title}" class="confirmed-item-img">
+                    <div class="confirmed-item-info">
+                        <span class="confirmed-item-tag">${item.purity || 'Jewellery'}</span>
+                        <div class="confirmed-item-name">${item.title}</div>
+                    </div>
+                    <div class="confirmed-item-price">₹${item.price.toLocaleString('en-IN')}</div>
+                `;
+                container.appendChild(div);
+            });
+
+            // ── Render advance gold/silver items ──
+            const swatchMap = { gold22: 'swatch--gold22', gold24: 'swatch--gold24', silver: 'swatch--silver' };
+            const shortMap  = { gold22: '22K', gold24: '24K', silver: 'Ag' };
+
+            advItems.forEach(item => {
+                const swatchClass = swatchMap[item.metal] || 'swatch--gold22';
+                const shortLabel  = shortMap[item.metal] || '?';
+                const div = document.createElement('div');
+                div.className = 'confirmed-item';
+                div.innerHTML = `
+                    <div class="confirmed-swatch ${swatchClass}">
+                        ${shortLabel}<small>${item.grams}g</small>
+                    </div>
+                    <div class="confirmed-item-info">
+                        <span class="confirmed-item-tag">Advance Purchase · Rate Locked</span>
+                        <div class="confirmed-item-name">${item.label} · ${item.grams}g</div>
+                    </div>
+                    <div class="confirmed-item-price">₹${item.subtotal.toLocaleString('en-IN', {maximumFractionDigits:0})}</div>
+                `;
+                container.appendChild(div);
+            });
+
+            // ── Show total ──
+            if (total > 0) {
+                totalRow.style.display = 'flex';
+                totalEl.textContent = new Intl.NumberFormat('en-IN', {
+                    style: 'currency', currency: 'INR', maximumFractionDigits: 0
+                }).format(total);
+            }
+
+            if (totalItems === 0) {
+                container.innerHTML = '<p class="no-order">Your order has been placed successfully.</p>';
+            }
+
+            // ── Clean up localStorage ──
+            localStorage.removeItem('last_order');
+        });
+    </script>
+</body>
+</html>
