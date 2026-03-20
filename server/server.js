@@ -1,41 +1,44 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 3000;
 
-// Middleware
-app.use(cors()); // Allows your Netlify frontend to talk to this server
-app.use(express.json()); // Parses incoming JSON data
+app.use(cors()); // Critical for frontend-backend communication
+app.use(express.json());
 
-// API Route: Update Profile
-app.post('/api/settings/update-profile', (req, res) => {
+// Mock database (in a real app, you'd use PostgreSQL or MongoDB)
+let userDatabase = {
+    name: "John Doe",
+    email: "john@example.com",
+    twoFactor: false
+};
+
+// Route to handle profile updates
+app.post('/api/update-profile', (req, res) => {
     const { name, email } = req.body;
 
-    // CYBERSECURITY CHECK: Sanitize input to prevent XSS/Injection
-    if (!email.includes('@')) {
-        return res.status(400).json({ message: "Invalid email format." });
+    // Basic Validation (Cyber Security best practice)
+    if (!name || !email) {
+        return res.status(400).json({ message: "Name and Email are required." });
     }
 
-    console.log(`Saving to Database: Name: ${name}, Email: ${email}`);
-    
-    res.json({ 
-        message: "Success! Your luxury profile has been updated.",
-        status: "success" 
-    });
+    // Update the "database"
+    userDatabase.name = name;
+    userDatabase.email = email;
+
+    console.log("Database Updated:", userDatabase);
+    res.status(200).json({ message: "Jewellery Elite profile updated successfully!" });
 });
 
-// API Route: Toggle 2FA
-app.post('/api/settings/toggle-2fa', (req, res) => {
-    const { enabled } = req.body;
+// Route to handle 2FA status
+app.post('/api/toggle-2fa', (req, res) => {
+    const { twoFactor } = req.body;
+    userDatabase.twoFactor = twoFactor;
     
-    console.log(`User 2FA is now: ${enabled ? 'ENABLED' : 'DISABLED'}`);
-    
-    res.json({ 
-        message: "Security settings updated.",
-        status: enabled ? "2FA_ACTIVE" : "2FA_INACTIVE"
-    });
+    console.log(`Security Update: 2FA is now ${twoFactor ? 'ON' : 'OFF'}`);
+    res.status(200).json({ message: "Security settings saved." });
 });
 
+const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Jewellery Server running at http://localhost:${PORT}`);
+    console.log(`🚀 Jewellery Server running at http://localhost:${PORT}`);
 });
