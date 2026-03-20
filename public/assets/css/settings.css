@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@500;600&display=swap');
+
+:root {
+    --gold: #C5A059; /* A softer, more premium champagne gold */
+    --gold-hover: #b08f4c;
+    --dark: #0A0A0A;
+    --bg-color: #F8F8F8;
+    --surface: #FFFFFF;
+    --text-muted: #888888;
+    --border: #EAEAEA;
+    --shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--dark);
+    margin: 0;
+    padding: 20px;
+}
+
+.settings-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 40px auto;
+    background: var(--surface);
+    min-height: 650px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+/* Sidebar - Deep Matte Black */
+.sidebar {
+    width: 260px;
+    background: var(--dark);
+    color: var(--surface);
+    padding: 40px 0;
+}
+
+.brand {
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 20px;
+}
+
+.brand h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 10px 0 0 0;
+}
+
+.nav-tabs { list-style: none; padding: 0; margin: 0; }
+
+.nav-tabs li {
+    padding: 16px 30px;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-tabs li:hover { color: var(--surface); }
+
+.nav-tabs li.active {
+    background: rgba(197, 160, 89, 0.1);
+    color: var(--gold);
+    border-right: 3px solid var(--gold);
+}
+
+/* Main Content Area */
+.content {
+    flex: 1;
+    padding: 50px 60px;
+    background: var(--surface);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.tab-content.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: var(--dark);
+}
+
+/* Modern Inputs */
+.input-group { margin-bottom: 25px; }
+
+form label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], select {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--bg-color);
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: var(--surface);
+    box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.1);
+}
+
+/* Settings List Items */
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.setting-item strong { font-weight: 500; }
+.setting-item p { font-size: 0.85rem; color: var(--text-muted); margin: 6px 0 0 0; }
+
+/* Luxury Buttons */
+.btn-save {
+    background: var(--dark);
+    color: var(--surface);
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-save:hover { background: var(--gold); }
+
+/* iOS Style Toggle Switch */
+.switch { position: relative; display: inline-block; width: 48px; height: 26px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #EAEAEA; transition: .3s; border-radius: 30px;
+}
+.slider:before {
+    position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+    background-color: white; transition: .3s; border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+input:checked + .slider { background-color: var(--gold); }
+input:checked + .slider:before { transform: translateX(22px); }
+
+/* KYC Upload Box */
+.upload-box {
+    border: 2px dashed #CCC;
+    background: var(--bg-color);
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+}
+.upload-box:hover { border-color: var(--gold); background: rgba(197, 160, 89, 0.02); }
