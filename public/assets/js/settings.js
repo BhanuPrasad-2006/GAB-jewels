@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
     // --- 1. UI LOGIC: Tab Switching ---
-    const tabs = document.querySelectorAll('.nav-tabs li');
+    // ✅ FIXED: Added ':not(.logout-tab)' so the code ignores the logout button here
+    const tabs = document.querySelectorAll('.nav-tabs li:not(.logout-tab)');
     const contents = document.querySelectorAll('.tab-content');
 
     tabs.forEach(tab => {
@@ -69,4 +71,16 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify({ twoFactor: e.target.checked })
         });
     });
+
+    // --- 5. LOGOUT LOGIC (NEW) ---
+    const logoutTab = document.querySelector('.logout-tab');
+    if (logoutTab) {
+        logoutTab.addEventListener('click', () => {
+            // Clear the memory
+            localStorage.removeItem("isLoggedIn");
+            // Send back to the index page
+            window.location.href = "../index.html";
+        });
+    }
+
 });

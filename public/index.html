@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aurum Fine Jewellery</title>
+  <title>Aurum Fine Jewellery | Home</title>
 
   <link rel="stylesheet" href="assets/css/index.css">
   
   <style>
-    /* Added smooth scrolling for your menu links */
-    html {
-        scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
 
@@ -30,31 +27,16 @@
 
 <div id="main-site" style="display:none">
 
-  <div style="position: absolute; top: 15px; right: 20px;">
-    <a href="pages/settings.html" style="text-decoration: none; font-weight: bold; font-family: sans-serif; color: #333;">⚙️ Settings</a>
-  </div>
-
-  <marquee>🎉 Akshaya Tritiya Special — Free Gold Coin on purchases above ₹75,000 | Use Code: AURUM25 for 5% off</marquee>
-
   <hr>
-  <h2>GAB JEWELS</h2>
+  <h2 style="text-align: center;">GAB JEWELS</h2>
 
-  <nav>
+  <nav style="text-align: center;">
     <a href="#categories">Collections</a> |
     <a href="#featured">Featured</a> |
     <a href="#occasions">Occasions</a> |
-    <a href="#appointment">Appointment</a> |
+    <a href="pages/contact.html">Contact Us</a> |
     <a href="pages/settings.html">Settings</a>
   </nav>
-  <hr>
-
-  <section id="hero">
-    <h1>Where Gold Meets Artistry</h1>
-    <p>Handcrafted fine jewellery that tells your story.</p>
-    <a href="#categories"><button>Shop Collections</button></a>
-    <a href="#appointment"><button>Book Appointment</button></a>
-  </section>
-
   <hr>
 
   <section id="categories">
@@ -78,25 +60,18 @@
 
   <hr>
 
-  <section id="appointment">
-    <h2>Book an Appointment</h2>
-    <p>Visit our showroom or schedule a video consultation to find your perfect piece.</p>
-  </section>
-
-  <hr>
-
   <section id="prices">
     <h2>Live Metal Rates</h2>
-    <p>🟢 Live — Updated Every 3 Seconds</p>
+    <p>🟢 Live Market Data</p>
 
     <table border="1">
       <tr>
         <th>Metal</th>
         <th>Price</th>
       </tr>
-      <tr><td>Gold 24K</td><td id="p-24k">₹7220</td></tr>
-      <tr><td>Gold 22K</td><td id="p-22k">₹6620</td></tr>
-      <tr><td>Silver</td><td id="p-silver">₹91</td></tr>
+      <tr><td>Gold 24K (10g)</td><td id="p-24k">Loading...</td></tr>
+      <tr><td>Gold 22K (10g)</td><td id="p-22k">Loading...</td></tr>
+      <tr><td>Silver (1kg)</td><td id="p-silver">Loading...</td></tr>
     </table>
 
     <p id="last-updated"></p>
@@ -113,81 +88,12 @@
 
   <footer>
     <h3>AURUM Fine Jewellery</h3>
-    <p>© 2025 All rights reserved</p>
+    <p>© 2026 All rights reserved</p>
   </footer>
 
 </div>
 
-<script>
-/* LOGIN */
-function doLogin(){
-  const e = document.getElementById('login-email').value;
-  const p = document.getElementById('login-pass').value;
-
-  if((e === 'demo@aurum.com' && p === '1234') || (e.includes('@') && p.length >= 4)){
-    document.getElementById('login-overlay').style.display = 'none';
-    document.getElementById('main-site').style.display = 'block';
-  } else {
-    document.getElementById('login-error').style.display = 'block';
-  }
-}
-
-function guestLogin(){
-  document.getElementById('login-overlay').style.display = 'none';
-  document.getElementById('main-site').style.display = 'block';
-}
-
-/* PRODUCTS */
-const products = [
-  {id:1,name:"Gold Ring",price:"₹18,000"},
-  {id:2,name:"Necklace",price:"₹50,000"},
-  {id:3,name:"Bracelet",price:"₹25,000"}
-];
-
-let cart = [];
-
-function renderProducts(){
-  let html = "";
-  products.forEach(p=>{
-    html += `
-      <div>
-        <b>${p.name}</b><br>
-        ${p.price}<br>
-        <button onclick="addToCart(${p.id})">Add</button>
-      </div><br>
-    `;
-  });
-  document.getElementById("products-grid").innerHTML = html;
-}
-
-function addToCart(id){
-  const p = products.find(x=>x.id===id);
-  cart.push(p);
-  document.getElementById("cart-count").innerText = cart.length;
-  renderCart();
-}
-
-function renderCart(){
-  let html="";
-  cart.forEach(p=>{
-    html += `${p.name} - ${p.price}<br>`;
-  });
-  document.getElementById("cart-body").innerHTML = html;
-}
-
-/* LIVE PRICES */
-function updatePrices(){
-  document.getElementById("p-24k").innerText = "₹" + (7200 + Math.random()*50).toFixed(2);
-  document.getElementById("p-22k").innerText = "₹" + (6600 + Math.random()*50).toFixed(2);
-  document.getElementById("p-silver").innerText = "₹" + (90 + Math.random()*5).toFixed(2);
-  document.getElementById("last-updated").innerText = "Updated: " + new Date().toLocaleTimeString();
-}
-
-setInterval(updatePrices, 3000);
-
-/* INIT */
-renderProducts();
-</script>
+<script src="assets/js/index.js"></script>
 
 </body>
 </html>
