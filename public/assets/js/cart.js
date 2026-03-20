@@ -1,15 +1,15 @@
-// assets/js/cart.js
-
-// 1. Load the cart from the browser's memory (or create an empty one)
+// 1. Load the cart (this only happens once per page load)
 let cart = JSON.parse(localStorage.getItem('gab_cart')) || [];
 
-// 2. Function to update the little red number on the shopping bag icon
+// 2. Modified Badge Function: Always check the LATEST memory
 function updateCartBadge() {
+    // We re-read localStorage here to ensure the number is ALWAYS accurate
+    const latestCart = JSON.parse(localStorage.getItem('gab_cart')) || [];
     const badge = document.getElementById('cart-badge');
+    
     if (badge) {
-        badge.innerText = cart.length;
-        // Hide badge if cart is empty
-        badge.style.display = cart.length > 0 ? 'flex' : 'none'; 
+        badge.innerText = latestCart.length;
+        badge.style.display = latestCart.length > 0 ? 'flex' : 'none'; 
     }
 }
 

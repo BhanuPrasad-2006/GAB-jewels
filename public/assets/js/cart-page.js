@@ -1,79 +1,94 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Render the cart as soon as the page loads
     renderCartPage();
 });
 
 function renderCartPage() {
-    const container = document.getElementById('cart-items-container');
-    const summarySubtotal = document.getElementById('summary-subtotal');
-    const summaryTotal = document.getElementById('summary-total');
-    const emptyState = document.getElementById('empty-cart-message');
-    const summaryCard = document.getElementById('order-summary-card');
+    // 1. Sync local 'cart' variable with storage
+    cart = JSON.parse(localStorage.getItem('gab_cart')) || [];
 
-    // Clear out the container before drawing
+    const container = document.getElementById('cart-items-container');
+    const subtotalEl = document.getElementById('summary-subtotal');
+    const totalEl = document.getElementById('summary-total');
+    const emptyMsg = document.getElementById('empty-cart-message');
+    const summaryCard = document.getElementById('order-summary-card');
+    const headerRow = document.getElementById('cart-header-row');
+    const footerControls = document.getElementById('cart-footer-controls');
+
     container.innerHTML = '';
     let totalAmount = 0;
 
-    // 1. Check if the cart is empty
-    // Note: The 'cart' variable comes from cart.js, which must be linked before this file!
+    // 2. Handle Empty State
     if (!cart || cart.length === 0) {
-        emptyState.style.display = 'block';
+        emptyMsg.style.display = 'block';
         summaryCard.style.display = 'none';
+        headerRow.style.display = 'none';
+        footerControls.style.display = 'none';
         return;
     }
 
-    // 2. Hide empty state, show the summary card
-    emptyState.style.display = 'none';
+    // 3. Show UI Elements
+    emptyMsg.style.display = 'none';
     summaryCard.style.display = 'block';
+    headerRow.style.display = 'grid';
+    footerControls.style.display = 'flex';
 
-    // 3. Loop through the cart array and build the HTML for each item
+    // 4. Render Items with precise Grid Classes from cart.css
     cart.forEach((item, index) => {
-        totalAmount += item.price; // Add to running total
+        totalAmount += item.price;
 
-        // Format price to Indian Rupees (e.g., ₹ 1,25,000)
         const formattedPrice = new Intl.NumberFormat('en-IN', {
             style: 'currency', currency: 'INR', maximumFractionDigits: 0
         }).format(item.price);
 
         const itemDiv = document.createElement('div');
-        itemDiv.className = 'cart-item';
+        itemDiv.className = 'cart-item'; // Matches .cart-item grid in CSS
         
         itemDiv.innerHTML = `
-            <img src="${item.img}" alt="${item.title}" class="cart-item-img">
-            <div class="cart-item-details">
-                <span class="cart-item-purity">${item.purity}</span>
-                <h3 class="cart-item-title">${item.title}</h3>
+            <div class="cart-item-product">
+                <img src="${item.img}" alt="${item.title}" class="cart-item-image">
+                <div class="cart-item-details">
+                    <span class="cart-item-purity">${item.purity}</span>
+                    <h3 class="cart-item-name">${item.title}</h3>
+                </div>
+            </div>
+            <div class="cart-item-price" style="justify-content: center;">${formattedPrice}</div>
+            <div class="cart-item-qty-col" style="justify-content: center;">
+                <div class="qty-stepper">
+                    <span class="qty-input">1</span>
+                </div>
+            </div>
+            <div class="cart-item-subtotal" style="justify-content: center;">${formattedPrice}</div>
+            <div class="cart-item-remove">
                 <button class="btn-remove" onclick="removeFromCart(${index})">
-                    <i class="fas fa-trash"></i> Remove
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="cart-item-price">${formattedPrice}</div>
         `;
         container.appendChild(itemDiv);
     });
 
-    // 4. Update the totals on the right side summary box
-    const formattedTotal = new Intl.NumberFormat('en-IN', {
+    // 5. Update Totals
+    const finalTotal = new Intl.NumberFormat('en-IN', {
         style: 'currency', currency: 'INR', maximumFractionDigits: 0
     }).format(totalAmount);
 
-    summarySubtotal.innerText = formattedTotal;
-    summaryTotal.innerText = formattedTotal;
+    subtotalEl.innerText = finalTotal;
+    totalEl.innerText = finalTotal;
 }
 
-// Function to remove an item from the cart
+// Global functions for buttons
 window.removeFromCart = function(index) {
-    // 1. Remove 1 item at the specific index from the array
-    cart.splice(index, 1); 
-    
-    // 2. Save the updated array back to the browser's LocalStorage
-    localStorage.setItem('gab_cart', JSON.stringify(cart)); 
-    
-    // 3. Update the red badge number in the navbar (this function is in cart.js)
-    if (typeof updateCartBadge === 'function') {
-        updateCartBadge(); 
+    cart.splice(index, 1);
+    localStorage.setItem('gab_cart', JSON.stringify(cart));
+    if (typeof updateCartBadge === 'function') updateCartBadge();
+    renderCartPage();
+};
+
+window.clearFullCart = function() {
+    if (confirm("Clear your entire shopping bag?")) {
+        localStorage.removeItem('gab_cart');
+        cart = [];
+        if (typeof updateCartBadge === 'function') updateCartBadge();
+        renderCartPage();
     }
-    
-    // 4. Re-draw the page so the removed item instantly disappears from the screen
-    renderCartPage(); 
 };

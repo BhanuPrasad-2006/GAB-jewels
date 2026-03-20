@@ -6,12 +6,13 @@
     <title>Your Shopping Bag | GAB Jewels</title>
     
     <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
     <header class="top-nav">
-        <div class="brand"><i class="fas fa-gem"></i> GAB Jewels</div>
+        <a href="index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
         <nav>
             <a href="index.html">Home</a>
             <a href="collections.html">Collections</a>
@@ -23,46 +24,72 @@
         </nav>
     </header>
 
-    <div class="header-text">
-        <h1>Your Shopping Bag</h1>
-        <p>Review your selected masterpieces.</p>
-    </div>
+    <main class="cart-page">
+        <div class="cart-page-title">
+            <h1>Your Shopping Bag</h1>
+            <p>Masterpieces selected for your collection.</p>
+        </div>
 
-    <main class="cart-layout">
-        
-        <section class="cart-items-section">
-            
-            <div id="empty-cart-message" class="empty-state" style="display: none;">
-                <h2>Your bag is empty</h2>
-                <p>Discover our collections to find your perfect piece.</p>
-                <a href="collections.html" class="btn-primary" style="display: inline-block; width: auto; padding: 15px 30px;">Explore Boutiques</a>
-            </div>
-            
-            <div id="cart-items-container">
+        <div class="cart-layout">
+            <div class="cart-items-col">
+                <div id="cart-header-row" class="cart-table-header">
+                    <span>Product</span>
+                    <span style="text-align: center;">Price</span>
+                    <span style="text-align: center;">Quantity</span>
+                    <span style="text-align: center;">Subtotal</span>
+                    <span></span>
                 </div>
-        </section>
 
-        <aside class="order-summary" id="order-summary-card">
-            <h3>Order Summary</h3>
-            <div class="summary-row">
-                <span>Subtotal</span>
-                <span id="summary-subtotal">₹ 0</span>
-            </div>
-            <div class="summary-row">
-                <span>Secure Shipping</span>
-                <span>Complimentary</span>
-            </div>
-            <hr>
-            <div class="summary-row total-row">
-                <span>Total</span>
-                <span id="summary-total">₹ 0</span>
-            </div>
-            <button class="btn-primary">Proceed to Checkout</button>
-        </aside>
+                <div id="empty-cart-message" class="cart-empty" style="display: none;">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h2>Your bag is empty</h2>
+                    <p>Discover our collections to find your perfect piece.</p>
+                    <a href="collections.html" class="btn-primary">Explore Boutiques</a>
+                </div>
+                
+                <div id="cart-items-container"></div>
 
+                <div class="promo-row" id="cart-footer-controls" style="display: none; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" class="promo-input" placeholder="Promo Code">
+                        <button class="btn-apply-promo">Apply</button>
+                    </div>
+                    <button onclick="clearFullCart()" class="btn-secondary">
+                        <i class="fas fa-trash-alt"></i> Clear Bag
+                    </button>
+                </div>
+            </div>
+
+            <aside class="order-summary" id="order-summary-card">
+                <h3>Order Summary</h3>
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <span id="summary-subtotal">₹ 0</span>
+                </div>
+                <div class="summary-line">
+                    <span>Secure Shipping</span>
+                    <span>Complimentary</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-total">
+                    <span class="label">Total</span>
+                    <span class="amount" id="summary-total">₹ 0</span>
+                </div>
+                
+                <button class="btn-place-order" onclick="window.location.href='checkout.html'">
+                    Proceed to Checkout <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <div class="trust-badges">
+                    <div class="trust-badge"><i class="fas fa-shield-alt"></i> 100% Secure Payment</div>
+                    <div class="trust-badge"><i class="fas fa-certificate"></i> Certified Authentic</div>
+                </div>
+                <p class="summary-tax-note">Taxes and shipping calculated at checkout</p>
+            </aside>
+        </div>
     </main>
 
-    <script src="assets/js/cart.js"></script>
-    <script src="assets/js/cart-page.js"></script>
+    <script src="../assets/js/cart.js"></script>
+    <script src="../assets/js/cart-page.js"></script>
 </body>
 </html>
