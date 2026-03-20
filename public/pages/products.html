@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique | GAB Jewels</title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="top-nav">
+        <div class="brand"><i class="fas fa-gem"></i> GAB Jewels</div>
+        <nav>
+    <a href="index.html">Home</a>
+    <a href="collections.html" class="active">Collections</a>
+    <a href="settings.html">My Account</a>
+    <a href="cart.html" class="cart-icon">
+        <i class="fas fa-shopping-bag"></i>
+        <span id="cart-badge" class="badge">0</span>
+    </a>
+</nav>
+    </header>
+
+    <div class="header-text">
+        <h1 id="page-title">The Boutique</h1>
+        <p id="page-subtitle">Curated masterpieces for your collection.</p>
+    </div>
+
+    <main class="shop-layout">
+        
+        <aside class="filters-sidebar">
+            <div class="filter-section">
+                <h4>Material</h4>
+                <label class="filter-label"><input type="checkbox" value="18k"> 18k Yellow Gold</label>
+                <label class="filter-label"><input type="checkbox" value="22k"> 22k Pure Gold</label>
+                <label class="filter-label"><input type="checkbox" value="rose"> 18k Rose Gold</label>
+                <label class="filter-label"><input type="checkbox" value="platinum"> Platinum</label>
+            </div>
+
+            <div class="filter-section">
+                <h4>Price Range</h4>
+                <label class="filter-label"><input type="radio" name="price"> Under ₹50,000</label>
+                <label class="filter-label"><input type="radio" name="price"> ₹50k - ₹2 Lakhs</label>
+                <label class="filter-label"><input type="radio" name="price"> Above ₹2 Lakhs</label>
+            </div>
+        </aside>
+
+        <section class="products-grid" id="products-grid">
+            </section>
+
+    </main>
+
+    <script src="../assets/js/products.js"></script>
+    <script src="../assets/js/cart.js"></script>
+</body>
+</html>
