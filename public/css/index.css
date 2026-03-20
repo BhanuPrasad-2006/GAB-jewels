@@ -1,0 +1,209 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, serif;
+  background-color: #FAF6EE;
+  color: #1A1410;
+}
+
+a {
+  color: #C9A84C;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background-color: #C9A84C;
+  color: #1A1410;
+  border: none;
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 4px 2px;
+}
+
+button:hover {
+  background-color: #a8853a;
+  color: #fff;
+}
+
+input, select, textarea {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  border: 1px solid #C9A84C;
+  background-color: #fff;
+  color: #1A1410;
+  width: 280px;
+  font-family: Georgia, serif;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid #C9A84C;
+}
+
+textarea {
+  width: 400px;
+  resize: vertical;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #C9A84C;
+  margin: 30px 0;
+}
+
+blockquote {
+  border-left: 4px solid #C9A84C;
+  margin: 20px 0;
+  padding: 16px 24px;
+  background-color: #fff8e8;
+  font-style: italic;
+}
+
+blockquote footer {
+  margin-top: 10px;
+  font-style: normal;
+  font-weight: bold;
+  color: #8C7B5E;
+  font-size: 0.85rem;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+ul li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ─── LOGIN ─── */
+#login-overlay {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1A1410, #2C1F0E);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#login-overlay h1 {
+  font-size: 2.8rem;
+  color: #E8C97A;
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+
+#login-overlay p {
+  color: rgba(255, 253, 248, 0.5);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 30px;
+}
+
+#login-overlay input {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: #FFFDF8;
+  width: 340px;
+  margin-bottom: 14px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#login-overlay input::placeholder {
+  color: rgba(255, 253, 248, 0.35);
+}
+
+#login-overlay button {
+  width: 340px;
+  padding: 14px;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+#login-overlay a {
+  display: inline-block;
+  margin-top: 16px;
+  color: #C9A84C;
+  font-size: 0.82rem;
+}
+
+#login-error {
+  color: #E07070;
+  font-size: 0.82rem;
+  margin-bottom: 10px;
+}
+
+/* ─── MARQUEE ─── */
+marquee {
+  background-color: #C9A84C;
+  color: #1A1410;
+  padding: 10px 0;
+  font-size: 0.82rem;
+  font-weight: bold;
+}
+
+/* ─── HEADER ─── */
+#main-site > h2 {
+  font-size: 2rem;
+  text-align: center;
+  padding: 20px;
+}
+
+nav {
+  text-align: center;
+  padding: 12px;
+  background-color: #1A1410;
+}
+
+nav a {
+  color: #E8C97A;
+  margin: 0 10px;
+}
+
+/* ─── HERO ─── */
+#hero {
+  background: linear-gradient(135deg, #1A1410, #2C1F0E);
+  color: white;
+  text-align: center;
+  padding: 80px;
+}
+
+#hero h1 {
+  color: #E8C97A;
+}
+
+/* ─── TABLES ─── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: #1A1410;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
