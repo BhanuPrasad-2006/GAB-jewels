@@ -1,36 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GAB JEWELS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aurum Fine Jewellery</title>
-  <link rel="stylesheet" href="styles.css">
 
-  <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1, h2 {
-      text-align: center;
-    }
-
-    #login-overlay {
-      text-align: center;
-      padding: 50px;
-      background: #f5f5f5;
-    }
-
-    button {
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-  </style>
+  <!-- ✅ External CSS -->
+  <link rel="stylesheet" href="/GAB-jewels/public/css/index.css">
 </head>
+
 <body>
 
 <!-- LOGIN -->
@@ -48,12 +26,11 @@
 <!-- MAIN SITE -->
 <div id="main-site" style="display:none">
 
-  <!-- OFFER BANNER -->
   <marquee>🎉 Akshaya Tritiya Special — Free Gold Coin on purchases above ₹75,000 | Use Code: AURUM25 for 5% off</marquee>
 
-  <!-- HEADER -->
   <hr>
-  <h2>AURUM Fine Jewellery</h2>
+  <h2>GAB JEWELS</h2>
+
   <nav>
     <a href="#prices">Live Rates</a> |
     <a href="#categories">Collections</a> |
@@ -67,373 +44,126 @@
   <!-- HERO -->
   <section id="hero">
     <h1>Where Gold Meets Artistry</h1>
-    <p>Handcrafted fine jewellery that tells your story. From our workshop to your heart — certified, hallmarked, timeless.</p>
+    <p>Handcrafted fine jewellery that tells your story.</p>
     <a href="#categories"><button>Shop Collections</button></a>
     <a href="#appointment"><button>Book Appointment</button></a>
   </section>
+
   <hr>
 
   <!-- LIVE PRICES -->
   <section id="prices">
     <h2>Live Metal Rates</h2>
-    <p>&#x1F7E2; Live — Updated Every 6 Seconds</p>
-    <table border="1" cellpadding="10" cellspacing="0">
-      <thead>
-        <tr>
-          <th>Metal</th>
-          <th>Price (per gram)</th>
-          <th>Purity</th>
-          <th>Change</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Gold 24 Karat</td><td id="p-24k">₹7,220.00</td><td>999</td><td id="pc-24k">▲ 0.28%</td></tr>
-        <tr><td>Gold 22 Karat</td><td id="p-22k">₹6,620.00</td><td>916</td><td id="pc-22k">▲ 0.31%</td></tr>
-        <tr><td>Gold 18 Karat</td><td id="p-18k">₹5,415.00</td><td>750</td><td id="pc-18k">▲ 0.19%</td></tr>
-        <tr><td>Silver</td><td id="p-silver">₹91.40</td><td>999</td><td id="pc-silver">▼ 0.12%</td></tr>
-        <tr><td>Diamond (1 Carat)</td><td>₹3,40,000</td><td>VS1, G Color</td><td>▲ 0.05%</td></tr>
-        <tr><td>Platinum</td><td>₹3,120</td><td>950</td><td>▼ 0.08%</td></tr>
-      </tbody>
+    <p>🟢 Live — Updated Every 6 Seconds</p>
+
+    <table border="1">
+      <tr>
+        <th>Metal</th>
+        <th>Price</th>
+      </tr>
+      <tr><td>Gold 24K</td><td id="p-24k">₹7220</td></tr>
+      <tr><td>Gold 22K</td><td id="p-22k">₹6620</td></tr>
+      <tr><td>Silver</td><td id="p-silver">₹91</td></tr>
     </table>
-    <p id="last-updated">Last updated: —</p>
+
+    <p id="last-updated"></p>
   </section>
+
   <hr>
 
-  <!-- CATEGORIES -->
-  <section id="categories">
-    <h2>Our Collections</h2>
-    <table border="1" cellpadding="10" cellspacing="0">
-      <tr>
-        <td><a href="#featured" onclick="filterProducts('Rings')">💍 Rings<br>148 Designs</a></td>
-        <td><a href="#featured" onclick="filterProducts('Earrings')">✨ Earrings<br>210 Designs</a></td>
-        <td><a href="#featured" onclick="filterProducts('Bangles')">⭕ Bangles<br>96 Designs</a></td>
-        <td><a href="#featured" onclick="filterProducts('Necklace')">📿 Necklaces<br>132 Designs</a></td>
-        <td><a href="#featured" onclick="filterProducts('Haras')">🌟 Haras<br>58 Designs</a></td>
-      </tr>
-      <tr>
-        <td><a href="#featured" onclick="filterProducts('Chains')">🔗 Chains<br>84 Designs</a></td>
-        <td><a href="#featured" onclick="filterProducts('Mangalsutra')">❤️ Mangalsutra<br>72 Designs</a></td>
-        <td><a href="#featured" onclick="filterProducts('Anklets')">🦶 Anklets<br>44 Designs</a></td>
-        <td><a href="#featured" onclick="filterProducts('Pendants')">🔮 Pendants<br>120 Designs</a></td>
-        <td><a href="#featured" onclick="filterProducts('Bracelets')">🌿 Bracelets<br>68 Designs</a></td>
-      </tr>
-    </table>
-    <br>
-    <a href="#featured" onclick="filterProducts(null)"><button>View All Collections</button></a>
-  </section>
-  <hr>
-
-  <!-- FEATURED PRODUCTS -->
+  <!-- PRODUCTS -->
   <section id="featured">
     <h2>Featured Jewellery</h2>
     <div id="products-grid"></div>
   </section>
-  <hr>
 
-  <!-- SHOP BY BUDGET -->
-  <section id="budget">
-    <h2>Shop by Budget</h2>
-    <table border="1" cellpadding="12" cellspacing="0">
-      <tr>
-        <td><b>Under ₹5,000</b><br>Silver &amp; Fashion</td>
-        <td><b>₹5K – ₹25K</b><br>Everyday Wear</td>
-        <td><b>₹25K – ₹1L</b><br>Statement Pieces</td>
-        <td><b>₹1L – ₹5L</b><br>Bridal &amp; Festive</td>
-        <td><b>₹5L+</b><br>Luxury &amp; Diamond</td>
-      </tr>
-    </table>
-  </section>
-  <hr>
-
-  <!-- OCCASIONS -->
-  <section id="occasions">
-    <h2>Shop by Occasion</h2>
-    <table border="1" cellpadding="12" cellspacing="0">
-      <tr>
-        <td>💒 <b>Wedding</b><br>Complete bridal sets, nath, maangtikka</td>
-        <td>💏 <b>Engagement</b><br>Diamond solitaires, couple bands</td>
-        <td>🎁 <b>Gifting</b><br>Curated boxes for loved ones</td>
-      </tr>
-      <tr>
-        <td>🌸 <b>Daily Wear</b><br>Lightweight, comfortable classics</td>
-        <td>🪔 <b>Festive</b><br>Diwali, Navratri, Eid specials</td>
-        <td>🎓 <b>Anniversary</b><br>Timeless pieces to celebrate love</td>
-      </tr>
-    </table>
-  </section>
-  <hr>
-
-  <!-- TRUST / CERTIFICATIONS -->
-  <section id="trust">
-    <h2>Why Choose Aurum?</h2>
-    <ul>
-      <li>🏅 <b>BIS Hallmarked</b> — All gold jewellery carries official BIS hallmark certification</li>
-      <li>💎 <b>IGI Certified</b> — Every diamond comes with an IGI or GIA grading report</li>
-      <li>🔄 <b>30-Day Exchange</b> — Hassle-free exchange or return within 30 days</li>
-      <li>🚚 <b>Insured Delivery</b> — Free insured shipping across India on all orders</li>
-      <li>🔒 <b>Secure Payment</b> — 256-bit encrypted payments with EMI options</li>
-      <li>🪙 <b>Transparent Pricing</b> — Prices linked to live metal rates, no hidden charges</li>
-    </ul>
-  </section>
-  <hr>
-
-  <!-- TESTIMONIALS -->
-  <section id="reviews">
-    <h2>What Our Customers Say</h2>
-
-    <blockquote>
-      <p>★★★★★ "The bridal set I ordered was beyond beautiful. Every piece was crafted with such care. Got so many compliments at my wedding."</p>
-      <footer>— Priya Sharma, Mumbai</footer>
-    </blockquote>
-
-    <blockquote>
-      <p>★★★★★ "Transparent pricing, live gold rates, and stunning designs. Aurum is the only jeweller I trust for all family occasions."</p>
-      <footer>— Rajesh &amp; Kavitha, Bengaluru</footer>
-    </blockquote>
-
-    <blockquote>
-      <p>★★★★★ "Ordered a custom necklace for my mother's birthday. The craftsmanship was exceptional and delivery was fast with proper insured packaging."</p>
-      <footer>— Ananya Iyer, Chennai</footer>
-    </blockquote>
-  </section>
-  <hr>
-
-  <!-- BOOK APPOINTMENT -->
-  <section id="appointment">
-    <h2>Book a Private Appointment</h2>
-    <p>Visit our showroom with dedicated personal assistance. Try on exclusive pieces with our expert jewellery consultants.</p>
-    <br>
-    Full Name: <input type="text" id="appt-name" placeholder="Your full name" /><br><br>
-    Phone: <input type="tel" id="appt-phone" placeholder="Phone number" /><br><br>
-    Date: <input type="date" id="appt-date" /><br><br>
-    Time Slot:
-    <select id="appt-time">
-      <option value="">Select Time</option>
-      <option>10:00 AM</option>
-      <option>11:30 AM</option>
-      <option>1:00 PM</option>
-      <option>3:00 PM</option>
-      <option>4:30 PM</option>
-      <option>6:00 PM</option>
-    </select><br><br>
-    Looking For:
-    <select id="appt-purpose">
-      <option value="">Select Purpose</option>
-      <option>Bridal Jewellery</option>
-      <option>Engagement Ring</option>
-      <option>Custom Design</option>
-      <option>Diamond Jewellery</option>
-      <option>General Browsing</option>
-    </select><br><br>
-    <button onclick="bookAppointment()">Confirm Appointment</button>
-    <p id="appt-confirm" style="display:none; color:green;">✅ Appointment confirmed! We will contact you on WhatsApp.</p>
-  </section>
-  <hr>
-
-  <!-- CUSTOM ORDER FORM -->
-  <section id="custom-order">
-    <h2>Custom Order / Enquiry</h2>
-    <p>Want a unique piece designed just for you? Fill in the details below.</p>
-    <br>
-    Name: <input type="text" placeholder="Your name" /><br><br>
-    Phone: <input type="tel" placeholder="Phone number" /><br><br>
-    Jewellery Type:
-    <select>
-      <option>Ring</option><option>Necklace</option><option>Earrings</option>
-      <option>Bangle</option><option>Bracelet</option><option>Other</option>
-    </select><br><br>
-    Metal:
-    <select>
-      <option>Gold 22K</option><option>Gold 18K</option><option>Gold 24K</option>
-      <option>Silver</option><option>Platinum</option>
-    </select><br><br>
-    Gemstone (optional): <input type="text" placeholder="e.g. Diamond, Ruby, Emerald" /><br><br>
-    Budget: <input type="text" placeholder="e.g. ₹50,000" /><br><br>
-    Description: <textarea rows="4" cols="40" placeholder="Describe your design idea..."></textarea><br><br>
-    <button onclick="alert('Custom order enquiry submitted! Our designer will call you within 24 hours.')">Submit Enquiry</button>
-  </section>
   <hr>
 
   <!-- CART -->
   <section id="cart">
-    <h2>🛍 Your Bag (<span id="cart-count">0</span> items)</h2>
-    <div id="cart-body"><p>Your bag is empty. Browse our collections above.</p></div>
+    <h2>🛍 Your Bag (<span id="cart-count">0</span>)</h2>
+    <div id="cart-body">Your bag is empty</div>
   </section>
+
   <hr>
 
   <!-- FOOTER -->
   <footer>
     <h3>AURUM Fine Jewellery</h3>
-    <p>Crafting timeless jewellery since 1978. Every piece is hallmarked, certified, and created with love.</p>
-    <br>
-    <b>Collections:</b>
-    <a href="#">Rings</a> |
-    <a href="#">Earrings</a> |
-    <a href="#">Necklaces</a> |
-    <a href="#">Bangles</a> |
-    <a href="#">Bridal Sets</a>
-    <br><br>
-    <b>Help:</b>
-    <a href="#">Size Guide</a> |
-    <a href="#">Care Instructions</a> |
-    <a href="#">Shipping Policy</a> |
-    <a href="#">Returns</a> |
-    <a href="#">FAQs</a>
-    <br><br>
-    <b>Company:</b>
-    <a href="#">Our Story</a> |
-    <a href="#">Certifications</a> |
-    <a href="#">Careers</a> |
-    <a href="#">Contact Us</a> |
-    <a href="#">Privacy Policy</a>
-    <br><br>
-    <b>Follow Us:</b>
-    <a href="#">📸 Instagram</a> |
-    <a href="#">📘 Facebook</a> |
-    <a href="#">▶ YouTube</a> |
-    <a href="#">📌 Pinterest</a>
-    <br><br>
-    <small>© 2025 Aurum Fine Jewellery. All rights reserved. BIS Licence No: BISLISENS1234567</small>
+    <p>© 2025 All rights reserved</p>
   </footer>
 
-</div><!-- end main-site -->
+</div>
 
 <script>
-/* ─── LOGIN ─── */
+/* LOGIN */
 function doLogin(){
   const e = document.getElementById('login-email').value;
   const p = document.getElementById('login-pass').value;
-  const err = document.getElementById('login-error');
+
   if((e === 'demo@aurum.com' && p === '1234') || (e.includes('@') && p.length >= 4)){
     document.getElementById('login-overlay').style.display = 'none';
     document.getElementById('main-site').style.display = 'block';
   } else {
-    err.style.display = 'block';
+    document.getElementById('login-error').style.display = 'block';
   }
 }
+
 function guestLogin(){
   document.getElementById('login-overlay').style.display = 'none';
   document.getElementById('main-site').style.display = 'block';
 }
-document.getElementById('login-pass').addEventListener('keydown', e => {
-  if(e.key === 'Enter') doLogin();
-});
 
-/* ─── PRODUCTS ─── */
+/* PRODUCTS */
 const products = [
-  {id:1, name:'Kundan Floral Ring',       cat:'Rings',      metal:'22K Gold',       price:'₹18,500', orig:'₹21,000', icon:'💍', badge:'New'},
-  {id:2, name:'Temple Jhumka Set',        cat:'Earrings',   metal:'22K Gold',       price:'₹24,200', orig:'₹28,000', icon:'✨', badge:'Bestseller'},
-  {id:3, name:'Diamond Tennis Bracelet',  cat:'Bracelets',  metal:'18K White Gold', price:'₹1,25,000',orig:null,     icon:'💎', badge:'Premium'},
-  {id:4, name:'Polki Necklace Set',       cat:'Necklace',   metal:'22K Gold',       price:'₹84,000', orig:'₹95,000', icon:'📿', badge:'Offer'},
-  {id:5, name:'Heritage Bangle Pair',     cat:'Bangles',    metal:'22K Gold',       price:'₹45,600', orig:null,      icon:'⭕', badge:'New'},
-  {id:6, name:'Antique Choker Haras',     cat:'Haras',      metal:'22K Gold',       price:'₹1,12,000',orig:'₹1,30,000',icon:'🌟',badge:'Bridal'},
-  {id:7, name:'Curb Link Chain',          cat:'Chains',     metal:'18K Gold',       price:'₹32,000', orig:null,      icon:'🔗', badge:null},
-  {id:8, name:'Emerald Drop Earrings',    cat:'Earrings',   metal:'18K Gold',       price:'₹67,500', orig:'₹75,000', icon:'💚', badge:'Festive'},
-  {id:9, name:'Classic Mangalsutra',      cat:'Mangalsutra',metal:'22K Gold',       price:'₹28,000', orig:'₹32,000', icon:'❤️', badge:'New'},
-  {id:10,name:'Silver Anklet Pair',       cat:'Anklets',    metal:'Silver',         price:'₹2,800',  orig:null,      icon:'🦶', badge:null},
+  {id:1,name:"Gold Ring",price:"₹18,000"},
+  {id:2,name:"Necklace",price:"₹50,000"},
+  {id:3,name:"Bracelet",price:"₹25,000"}
 ];
 
-let cart = [], wishlist = new Set();
+let cart = [];
 
-function renderProducts(list){
-  const grid = document.getElementById('products-grid');
-  if(!list.length){ grid.innerHTML = '<p>No products found in this category.</p>'; return; }
-  let html = '<table border="1" cellpadding="10" cellspacing="0"><tr>';
-  list.forEach((p, i) => {
-    html += `<td valign="top">
-      ${p.icon} <b>${p.name}</b>${p.badge ? ` [${p.badge}]` : ''}<br>
-      Category: ${p.cat}<br>
-      Metal: ${p.metal}<br>
-      Price: <b>${p.price}</b>${p.orig ? ` <s>${p.orig}</s>` : ''}<br><br>
-      <button onclick="addToCart(${p.id})">Add to Bag</button>
-      <button onclick="toggleWish(${p.id},this)">${wishlist.has(p.id)?'♥ Wishlisted':'♡ Wishlist'}</button>
-    </td>`;
-    if((i+1) % 4 === 0 && i+1 < list.length) html += '</tr><tr>';
+function renderProducts(){
+  let html = "";
+  products.forEach(p=>{
+    html += `
+      <div>
+        <b>${p.name}</b><br>
+        ${p.price}<br>
+        <button onclick="addToCart(${p.id})">Add</button>
+      </div><br>
+    `;
   });
-  html += '</tr></table>';
-  grid.innerHTML = html;
-}
-
-function filterProducts(cat){
-  renderProducts(cat ? products.filter(p => p.cat === cat) : products);
-}
-
-function toggleWish(id, btn){
-  wishlist.has(id) ? wishlist.delete(id) : wishlist.add(id);
-  btn.textContent = wishlist.has(id) ? '♥ Wishlisted' : '♡ Wishlist';
+  document.getElementById("products-grid").innerHTML = html;
 }
 
 function addToCart(id){
-  const p = products.find(x => x.id === id);
-  if(!cart.find(x => x.id === id)) cart.push({...p});
-  document.getElementById('cart-count').textContent = cart.length;
-  renderCart();
-  alert(`${p.name} added to your bag!`);
-}
-
-function removeFromCart(id){
-  cart = cart.filter(x => x.id !== id);
-  document.getElementById('cart-count').textContent = cart.length;
+  const p = products.find(x=>x.id===id);
+  cart.push(p);
+  document.getElementById("cart-count").innerText = cart.length;
   renderCart();
 }
 
 function renderCart(){
-  const body = document.getElementById('cart-body');
-  if(!cart.length){ body.innerHTML = '<p>Your bag is empty.</p>'; return; }
-  let html = '<table border="1" cellpadding="8" cellspacing="0"><tr><th>Item</th><th>Metal</th><th>Price</th><th>Action</th></tr>';
-  cart.forEach(p => {
-    html += `<tr>
-      <td>${p.icon} ${p.name}</td>
-      <td>${p.metal}</td>
-      <td>${p.price}</td>
-      <td><button onclick="removeFromCart(${p.id})">Remove</button></td>
-    </tr>`;
+  let html="";
+  cart.forEach(p=>{
+    html += `${p.name} - ${p.price}<br>`;
   });
-  html += `</table><br><button onclick="alert('Proceeding to checkout!')">Proceed to Checkout (${cart.length} item${cart.length>1?'s':''})</button>`;
-  body.innerHTML = html;
+  document.getElementById("cart-body").innerHTML = html;
 }
 
-/* ─── LIVE PRICES ─── */
-const base = { '24k':7220, '22k':6620, '18k':5415, 'silver':91.4 };
+/* LIVE PRICES */
 function updatePrices(){
-  const fmt = n => n.toFixed(2);
-  const rand = (b, s) => b + (Math.random()-0.5)*s;
-  const g24=rand(base['24k'],30), g22=rand(base['22k'],28), g18=rand(base['18k'],22), sv=rand(base['silver'],1);
-
-  document.getElementById('p-24k').textContent = `₹${fmt(g24)}`;
-  document.getElementById('p-22k').textContent = `₹${fmt(g22)}`;
-  document.getElementById('p-18k').textContent = `₹${fmt(g18)}`;
-  document.getElementById('p-silver').textContent = `₹${fmt(sv)}`;
-
-  const setChange = (el, delta, base) => {
-    const pct = Math.abs(delta/base*100).toFixed(2);
-    const arrow = delta >= 0 ? '▲' : '▼';
-    document.getElementById(el).textContent = `${arrow} ₹${Math.abs(delta).toFixed(2)} (${pct}%)`;
-  };
-  setChange('pc-24k', g24-base['24k'], base['24k']);
-  setChange('pc-22k', g22-base['22k'], base['22k']);
-  setChange('pc-18k', g18-base['18k'], base['18k']);
-  setChange('pc-silver', sv-base['silver'], base['silver']);
-  document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
-}
-updatePrices();
-setInterval(updatePrices, 6000);
-
-/* ─── APPOINTMENT ─── */
-function bookAppointment(){
-  const name = document.getElementById('appt-name').value;
-  const phone = document.getElementById('appt-phone').value;
-  const date = document.getElementById('appt-date').value;
-  const time = document.getElementById('appt-time').value;
-  if(!name || !phone || !date || !time){
-    alert('Please fill in all fields.');
-    return;
-  }
-  document.getElementById('appt-confirm').style.display = 'block';
+  document.getElementById("p-24k").innerText = "₹" + (7200 + Math.random()*50).toFixed(2);
+  document.getElementById("p-22k").innerText = "₹" + (6600 + Math.random()*50).toFixed(2);
+  document.getElementById("p-silver").innerText = "₹" + (90 + Math.random()*5).toFixed(2);
+  document.getElementById("last-updated").innerText = "Updated: " + new Date().toLocaleTimeString();
 }
 
-/* ─── INIT ─── */
-renderProducts(products);
+setInterval(updatePrices, 3000);
+
+/* INIT */
+renderProducts();
 </script>
 
 </body>
