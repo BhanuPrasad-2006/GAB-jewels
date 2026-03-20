@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Settings | Jewellery Elite</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="settings-container">
+        <aside class="sidebar">
+            <h2>Settings</h2>
+            <ul>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#preferences">Preferences</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <section id="profile">
+                <h3>Public Profile</h3>
+                <form id="profile-form">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="John Doe">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="john@example.com">
+                    <button type="submit" class="btn-save">Update Profile</button>
+                </form>
+            </section>
+
+            <hr>
+
+            <section id="security">
+                <h3>Security & Privacy</h3>
+                <div class="setting-item">
+                    <span>Two-Factor Authentication (2FA)</span>
+                    <label class="switch">
+                        <input type="checkbox" id="2fa-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button class="btn-outline">Change Password</button>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
