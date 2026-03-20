@@ -5,26 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aurum Fine Jewellery</title>
 
-  <!-- ✅ External CSS -->
-  <link rel="stylesheet" href="/GAB-jewels/public/css/index.css">
+  <link rel="stylesheet" href="assets/css/index.css">
+  
+  <style>
+    /* Added smooth scrolling for your menu links */
+    html {
+        scroll-behavior: smooth;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
 <div id="login-overlay">
   <h1>GAB JEWELS</h1>
   <p>Fine Jewellery Since 1978</p>
   <br>
   <input type="email" id="login-email" placeholder="Email address" /><br><br>
   <input type="password" id="login-pass" placeholder="Password" /><br><br>
-  <p id="login-error" style="display:none">Invalid credentials. Try demo@gabjewels.com / 1234</p>
+  <p id="login-error" style="display:none; color: red;">Invalid credentials. Try demo@aurum.com / 1234</p>
   <button onclick="doLogin()">Enter the Store</button>
   <a href="#" onclick="guestLogin()">Continue as Guest</a>
 </div>
 
-<!-- MAIN SITE -->
 <div id="main-site" style="display:none">
+
+  <div style="position: absolute; top: 15px; right: 20px;">
+    <a href="pages/settings.html" style="text-decoration: none; font-weight: bold; font-family: sans-serif; color: #333;">⚙️ Settings</a>
+  </div>
 
   <marquee>🎉 Akshaya Tritiya Special — Free Gold Coin on purchases above ₹75,000 | Use Code: AURUM25 for 5% off</marquee>
 
@@ -32,16 +40,14 @@
   <h2>GAB JEWELS</h2>
 
   <nav>
-    <a href="#prices">Live Rates</a> |
     <a href="#categories">Collections</a> |
     <a href="#featured">Featured</a> |
     <a href="#occasions">Occasions</a> |
     <a href="#appointment">Appointment</a> |
-    <a href="#reviews">Reviews</a>
+    <a href="pages/settings.html">Settings</a>
   </nav>
   <hr>
 
-  <!-- HERO -->
   <section id="hero">
     <h1>Where Gold Meets Artistry</h1>
     <p>Handcrafted fine jewellery that tells your story.</p>
@@ -51,10 +57,37 @@
 
   <hr>
 
-  <!-- LIVE PRICES -->
+  <section id="categories">
+    <h2>Our Collections</h2>
+    <p>Explore our timeless wedding, everyday, and luxury collections.</p>
+  </section>
+
+  <hr>
+
+  <section id="occasions">
+    <h2>Shop by Occasion</h2>
+    <p>Find the perfect piece for birthdays, anniversaries, and weddings.</p>
+  </section>
+
+  <hr>
+
+  <section id="featured">
+    <h2>Featured Jewellery</h2>
+    <div id="products-grid"></div>
+  </section>
+
+  <hr>
+
+  <section id="appointment">
+    <h2>Book an Appointment</h2>
+    <p>Visit our showroom or schedule a video consultation to find your perfect piece.</p>
+  </section>
+
+  <hr>
+
   <section id="prices">
     <h2>Live Metal Rates</h2>
-    <p>🟢 Live — Updated Every 6 Seconds</p>
+    <p>🟢 Live — Updated Every 3 Seconds</p>
 
     <table border="1">
       <tr>
@@ -71,15 +104,6 @@
 
   <hr>
 
-  <!-- PRODUCTS -->
-  <section id="featured">
-    <h2>Featured Jewellery</h2>
-    <div id="products-grid"></div>
-  </section>
-
-  <hr>
-
-  <!-- CART -->
   <section id="cart">
     <h2>🛍 Your Bag (<span id="cart-count">0</span>)</h2>
     <div id="cart-body">Your bag is empty</div>
@@ -87,7 +111,6 @@
 
   <hr>
 
-  <!-- FOOTER -->
   <footer>
     <h3>AURUM Fine Jewellery</h3>
     <p>© 2025 All rights reserved</p>
