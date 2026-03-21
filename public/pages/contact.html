@@ -4,46 +4,228 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | GAB Jewels</title>
-    
-    <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/contact.css">
+    <script>
+        // Auth guard
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.replace('../index.html');
+        }
+    </script>
 </head>
 <body>
 
-    <div style="max-width: 600px; margin: 50px auto; text-align: center; font-family: sans-serif;">
-        
-        <h2>Contact GAB Jewels</h2>
-        <p>We are here to assist you with your fine jewellery needs.</p>
-        
-        <hr style="margin: 30px 0;">
+<!-- ── TICKER ────────────────────────────────────── -->
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span>✦ Free shipping on orders above ₹50,000</span>
+        <span>✦ BIS Hallmarked Jewellery</span>
+        <span>✦ Lifetime Exchange &amp; Buyback</span>
+        <span>✦ 30-Day Easy Returns</span>
+        <span>✦ Custom Design Available</span>
+        <span>✦ EMI Available</span>
+        <span>✦ Free shipping on orders above ₹50,000</span>
+        <span>✦ BIS Hallmarked Jewellery</span>
+        <span>✦ Lifetime Exchange &amp; Buyback</span>
+        <span>✦ 30-Day Easy Returns</span>
+        <span>✦ Custom Design Available</span>
+        <span>✦ EMI Available</span>
+    </div>
+</div>
 
-        <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-radius: 8px;">
-            <h3>Get in Touch</h3>
-            
-            <p style="font-size: 18px; margin-top: 20px;">
-                <strong>📧 Email:</strong> <br>
-                <a href="mailto:gbhanuprasad63@gmail.com" style="color: #d4af37; text-decoration: none;">gbhanuprasad63@gmail.com</a>
-            </p>
-            
-            <p style="font-size: 18px; margin-top: 20px;">
-                <strong>📞 Phone / WhatsApp:</strong> <br>
-                <a href="tel:+917780184822" style="color: #d4af37; text-decoration: none;">+91 7780184822</a>
-            </p>
+<!-- ── NAVBAR ─────────────────────────────────────── -->
+<header class="top-nav">
+    <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="collections.html">Collections</a>
+        <a href="advance-buy.html">Buy Gold</a>
+        <a href="settings.html">My Account</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="cart.html" class="cart-icon">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cart-badge" class="badge">0</span>
+        </a>
+    </nav>
+</header>
+
+<!-- ── BREADCRUMB ─────────────────────────────────── -->
+<div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>◆</span>
+    <span style="color:var(--gold)">Contact Us</span>
+</div>
+
+<!-- ── PAGE HEADER ────────────────────────────────── -->
+<div class="header-text reveal">
+    <span class="eyebrow">We're Here For You</span>
+    <h1>Contact GAB Jewels</h1>
+    <p>Speak to our jewellery experts — we are happy to assist.</p>
+    <div class="ornament-line"><div class="ornament-diamond"></div></div>
+</div>
+
+<!-- ── MAIN CONTENT ───────────────────────────────── -->
+<main class="contact-wrap">
+
+    <!-- LEFT: Contact Cards -->
+    <div class="contact-cards reveal">
+
+        <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-phone-alt"></i></div>
+            <div class="contact-card-body">
+                <h4>Phone &amp; WhatsApp</h4>
+                <p>Available Mon–Sat, 10am–7pm IST</p>
+                <a href="tel:+917780184822" class="contact-link">+91 77801 84822</a>
+                <a href="tel:+918884953038" class="contact-link">+91 88849 53038</a>
+                <a href="https://wa.me/917780184822" target="_blank" class="contact-wa">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
         </div>
 
-        <br><br>
+        <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-card-body">
+                <h4>Email Us</h4>
+                <p>We reply within 24 hours</p>
+                <a href="mailto:gbhanuprasad63@gmail.com" class="contact-link">gbhanuprasad63@gmail.com</a>
+                <a href="mailto:yatishb1922@gmail.com" class="contact-link">yatishb1922@gmail.com</a>
+            </div>
+        </div>
 
-        <a href="../index.html" style="display: inline-block; padding: 10px 20px; background: #333; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
-            ⬅ Back to Store
-        </a>
+        <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-card-body">
+                <h4>Visit Our Store</h4>
+                <p>Walk-in welcome, no appointment needed</p>
+                <span class="contact-link">MG Road, Bengaluru — 560 001</span>
+                <span class="contact-link">Karnataka, India</span>
+                <p class="contact-hours">
+                    Mon–Sat: 10:00 AM – 8:00 PM<br>
+                    Sunday: 11:00 AM – 6:00 PM
+                </p>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-card-icon"><i class="fas fa-headset"></i></div>
+            <div class="contact-card-body">
+                <h4>Customer Support</h4>
+                <p>For orders, returns &amp; exchanges</p>
+                <a href="mailto:support@gabjewels.com" class="contact-link">support@gabjewels.com</a>
+                <span class="contact-response">⚡ Avg. response: 2 hours</span>
+            </div>
+        </div>
 
     </div>
 
-    <script>
-        if (localStorage.getItem("isLoggedIn") !== "true") {
-            // If they are not logged in, send them back to the login screen
-            window.location.href = "../index.html";
-        }
-    </script>
+    <!-- RIGHT: Contact Form -->
+    <div class="contact-form-wrap reveal">
+        <div class="contact-form-header">
+            <span class="eyebrow">Send a Message</span>
+            <h3>We'll get back to you</h3>
+        </div>
+
+        <div class="contact-msg" id="contact-msg"></div>
+
+        <form id="contact-form">
+            <div class="cf-group">
+                <label class="cf-label">Full Name</label>
+                <input type="text" id="cf-name" class="cf-input" placeholder="Your name" required>
+            </div>
+            <div class="cf-group">
+                <label class="cf-label">Email Address</label>
+                <input type="email" id="cf-email" class="cf-input" placeholder="your@email.com" required>
+            </div>
+            <div class="cf-group">
+                <label class="cf-label">Phone Number</label>
+                <input type="tel" id="cf-phone" class="cf-input" placeholder="+91 98765 43210">
+            </div>
+            <div class="cf-group">
+                <label class="cf-label">Subject</label>
+                <select id="cf-subject" class="cf-input cf-select">
+                    <option value="">Select a topic…</option>
+                    <option>Order Enquiry</option>
+                    <option>Custom Design Request</option>
+                    <option>Exchange / Buyback</option>
+                    <option>KYC Verification Help</option>
+                    <option>General Question</option>
+                    <option>Complaint / Feedback</option>
+                </select>
+            </div>
+            <div class="cf-group">
+                <label class="cf-label">Message</label>
+                <textarea id="cf-message" class="cf-input cf-textarea" placeholder="Tell us how we can help you…" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn-contact-submit" id="cf-submit">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </form>
+    </div>
+
+</main>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer>
+    <div class="footer-top">
+        <div>
+            <span class="footer-brand-name">GAB JEWELS</span>
+            <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Navigate</h4>
+            <a href="../index.html">Home</a>
+            <a href="collections.html">Collections</a>
+            <a href="advance-buy.html">Buy Gold</a>
+            <a href="cart.html">Your Bag</a>
+        </div>
+        <div class="footer-col">
+            <h4>Policies</h4>
+            <a href="#">Exchange Policy</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:gbhanuprasad63@gmail.com">gbhanuprasad63@gmail.com</a>
+            <a href="tel:+917780184822">+91 77801 84822</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+        <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+    </div>
+</footer>
+
+<script src="../assets/js/cart.js"></script>
+<script>
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Contact form submit
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('cf-submit');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+
+        // Simulate send (replace with real API call if needed)
+        setTimeout(() => {
+            const msg = document.getElementById('contact-msg');
+            msg.textContent = '✦ Your message has been sent. We\'ll get back to you within 24 hours.';
+            msg.className = 'contact-msg show';
+            document.getElementById('contact-form').reset();
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        }, 1200);
+    });
+</script>
 
 </body>
 </html>

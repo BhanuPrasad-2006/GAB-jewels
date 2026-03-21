@@ -9,19 +9,21 @@ const xss          = require("xss");
 const { body, param, validationResult } = require("express-validator");
 const db           = require("./database");
 const path         = require("path");
+const twilio       = require("twilio");
+require("dotenv").config();
 
-// ─── CONFIG ──────────────────────────────────────────────────
-const PORT       = process.env.PORT       || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || "gab_jewels_secret_change_in_production";
-const JWT_EXPIRY = process.env.JWT_EXPIRY || "2h";
+// ─── CONFIG ──────────────────────────────────────────
+const PORT       = process.env.PORT        || 3000;
+const JWT_SECRET = process.env.JWT_SECRET  || "gab_jewels_secret_change_in_production";
+const JWT_EXPIRY = process.env.JWT_EXPIRY  || "2h";
 
 const app = express();
 
-// ─── MIDDLEWARE ───────────────────────────────────────────────
+// ─── MIDDLEWARE ───────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: "50kb" }));
 
-// ─── SQLITE HELPERS ───────────────────────────────────────────
+// ─── SQLITE HELPERS ───────────────────────────────────
 const dbGet = (sql, params = []) => new Promise((res, rej) =>
     db.get(sql, params, (err, row) => err ? rej(err) : res(row))
 );
@@ -34,7 +36,7 @@ const dbRun = (sql, params = []) => new Promise((res, rej) =>
     })
 );
 
-// ─── HELPERS ──────────────────────────────────────────────────
+// ─── HELPERS ──────────────────────────────────────────
 function sanitise(str) {
     return xss(String(str).trim());
 }
@@ -60,17 +62,28 @@ function validateRequest(req, res) {
     return true;
 }
 
-// ─── RATE LIMITERS ────────────────────────────────────────────
+function generateOTP() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+// In-memory OTP store — use Redis in production
+const otpStore = new Map();
+
+// ─── RATE LIMITERS ────────────────────────────────────
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, max: 100,
-    message: { error: "Too many requests." },
+    message: { error: "Too many requests. Please slow down." },
 });
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, max: 10,
     message: { error: "Too many login attempts. Try again in 15 minutes." },
 });
+const otpLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, max: 5,
+    message: { error: "Too many OTP requests. Try again in 15 minutes." },
+});
 
-// ─── AUTH MIDDLEWARE ──────────────────────────────────────────
+// ─── AUTH MIDDLEWARE ──────────────────────────────────
 function requireAuth(req, res, next) {
     const auth = req.headers.authorization;
     if (!auth || !auth.startsWith("Bearer ")) {
@@ -93,30 +106,112 @@ function requireAdmin(req, res, next) {
     next();
 }
 
-// ─── AUTH ROUTES ──────────────────────────────────────────────
+// ─────────────────────────────────────────────────────
+//  AUTH ROUTES
+// ─────────────────────────────────────────────────────
 
-app.post("/api/auth/register", apiLimiter,
+// POST /api/auth/send-otp
+app.post("/api/auth/send-otp", otpLimiter,
+    body("phone").notEmpty().withMessage("Phone number is required."),
     body("email").isEmail().normalizeEmail(),
-    body("password").isLength({ min: 8 }),
     async (req, res) => {
         if (!validateRequest(req, res)) return;
-        const { email, password } = req.body;
+        const { phone, email } = req.body;
+
+        // Check email not already registered
+        try {
+            const existing = await dbGet("SELECT id FROM users WHERE email = ?", [email]);
+            if (existing) {
+                return res.status(409).json({ error: "Email already registered. Please sign in." });
+            }
+        } catch (err) {
+            console.error("OTP check error:", err.message);
+            return res.status(500).json({ error: "Server error." });
+        }
+
+        const otp     = generateOTP();
+        const expires = Date.now() + 5 * 60 * 1000; // 5 min
+        otpStore.set(phone, { otp, expires, verified: false });
+
+        // Send via Twilio
+        try {
+            const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+            await client.messages.create({
+                body: `Your GAB Jewels verification code is: ${otp}. Valid for 5 minutes.`,
+                from: process.env.TWILIO_PHONE,
+                to:   phone,
+            });
+            console.log(`✦ OTP sent to ${phone}`);
+        } catch (err) {
+            // In development, log to console so you can still test
+            console.log(`✦ [DEV] OTP for ${phone} → ${otp}`);
+        }
+
+        res.json({ message: "OTP sent successfully." });
+    }
+);
+
+// POST /api/auth/verify-otp
+app.post("/api/auth/verify-otp",
+    body("phone").notEmpty(),
+    body("otp").isLength({ min: 6, max: 6 }).withMessage("OTP must be 6 digits."),
+    async (req, res) => {
+        if (!validateRequest(req, res)) return;
+        const { phone, otp } = req.body;
+
+        const record = otpStore.get(phone);
+        if (!record) {
+            return res.status(400).json({ error: "No OTP found. Please request a new one." });
+        }
+        if (Date.now() > record.expires) {
+            otpStore.delete(phone);
+            return res.status(400).json({ error: "OTP has expired. Please request a new one." });
+        }
+        if (record.otp !== otp) {
+            return res.status(400).json({ error: "Incorrect OTP. Please try again." });
+        }
+
+        record.verified = true;
+        otpStore.set(phone, record);
+        res.json({ message: "OTP verified successfully." });
+    }
+);
+
+// POST /api/auth/register
+app.post("/api/auth/register", apiLimiter,
+    body("email").isEmail().normalizeEmail(),
+    body("password").isLength({ min: 8 }).withMessage("Password must be at least 8 characters."),
+    async (req, res) => {
+        if (!validateRequest(req, res)) return;
+        const { email, password, name, phone } = req.body;
+
+        // If phone provided, verify OTP was completed
+        if (phone) {
+            const record = otpStore.get(phone);
+            if (!record || !record.verified) {
+                return res.status(400).json({ error: "Phone not verified. Please complete OTP verification." });
+            }
+        }
+
         try {
             const hash = await bcrypt.hash(password, 12);
             const result = await dbRun(
-                `INSERT INTO users (email, password_hash) VALUES (?, ?)`,
-                [email, hash]
+                `INSERT INTO users (email, password_hash, name, phone) VALUES (?, ?, ?, ?)`,
+                [email, hash, sanitise(name || ""), phone || null]
             );
+            if (phone) otpStore.delete(phone);
             res.status(201).json({ id: result.lastID, email, role: "customer" });
         } catch (err) {
             if (err.message.includes("UNIQUE")) {
                 return res.status(409).json({ error: "Email already registered." });
             }
+            console.error("Register error:", err.message);
             res.status(500).json({ error: "Registration failed." });
         }
     }
 );
 
+// POST /api/auth/login
 app.post("/api/auth/login", loginLimiter,
     body("email").isEmail().normalizeEmail(),
     body("password").notEmpty(),
@@ -129,13 +224,13 @@ app.post("/api/auth/login", loginLimiter,
                 return res.status(401).json({ error: "Invalid credentials." });
             }
             if (user.is_banned) {
-                return res.status(403).json({ error: "Account suspended." });
+                return res.status(403).json({ error: "Account suspended. Contact support." });
             }
             const token = jwt.sign(
-                { id: user.id, email: user.email, role: user.role },
+                { id: user.id, email: user.email, role: user.role, name: user.name },
                 JWT_SECRET, { expiresIn: JWT_EXPIRY }
             );
-            res.json({ token, role: user.role });
+            res.json({ token, role: user.role, name: user.name });
         } catch (err) {
             console.error("Login error:", err.message);
             res.status(500).json({ error: "Login failed." });
@@ -143,11 +238,14 @@ app.post("/api/auth/login", loginLimiter,
     }
 );
 
+// POST /api/auth/logout
 app.post("/api/auth/logout", requireAuth, (req, res) => {
-    res.json({ message: "Logged out." });
+    res.json({ message: "Logged out successfully." });
 });
 
-// ─── ADMIN — STATS ────────────────────────────────────────────
+// ─────────────────────────────────────────────────────
+//  ADMIN — STATS
+// ─────────────────────────────────────────────────────
 app.get("/api/admin/stats", requireAuth, requireAdmin, async (req, res) => {
     try {
         const [products, users, settings, logs] = await Promise.all([
@@ -168,7 +266,9 @@ app.get("/api/admin/stats", requireAuth, requireAdmin, async (req, res) => {
     }
 });
 
-// ─── ADMIN — PRODUCTS ─────────────────────────────────────────
+// ─────────────────────────────────────────────────────
+//  ADMIN — PRODUCTS CRUD
+// ─────────────────────────────────────────────────────
 
 app.get("/api/admin/products", requireAuth, requireAdmin, async (req, res) => {
     try {
@@ -263,12 +363,14 @@ app.delete("/api/admin/products/:id", requireAuth, requireAdmin,
     }
 );
 
-// ─── ADMIN — USERS ────────────────────────────────────────────
+// ─────────────────────────────────────────────────────
+//  ADMIN — USERS
+// ─────────────────────────────────────────────────────
 
 app.get("/api/admin/users", requireAuth, requireAdmin, async (req, res) => {
     try {
         const rows = await dbAll(
-            "SELECT id, email, role, is_banned, created_at FROM users ORDER BY created_at DESC"
+            "SELECT id, email, name, phone, role, is_banned, created_at FROM users ORDER BY created_at DESC"
         );
         res.json(rows);
     } catch (err) {
@@ -320,7 +422,9 @@ app.post("/api/admin/users/:id/reset-password", requireAuth, requireAdmin,
     }
 );
 
-// ─── ADMIN — GOLD SETTINGS ────────────────────────────────────
+// ─────────────────────────────────────────────────────
+//  ADMIN — GOLD SETTINGS
+// ─────────────────────────────────────────────────────
 
 app.get("/api/admin/gold-settings", requireAuth, requireAdmin, async (req, res) => {
     try {
@@ -355,7 +459,9 @@ app.patch("/api/admin/gold-settings", requireAuth, requireAdmin,
     }
 );
 
-// ─── ADMIN — AUDIT LOGS ───────────────────────────────────────
+// ─────────────────────────────────────────────────────
+//  ADMIN — AUDIT LOGS
+// ─────────────────────────────────────────────────────
 
 app.get("/api/admin/logs", requireAuth, requireAdmin, async (req, res) => {
     const limit  = Math.min(parseInt(req.query.limit)  || 50, 200);
@@ -376,7 +482,9 @@ app.get("/api/admin/logs", requireAuth, requireAdmin, async (req, res) => {
     }
 });
 
-// ─── PUBLIC STOREFRONT API ────────────────────────────────────
+// ─────────────────────────────────────────────────────
+//  PUBLIC STOREFRONT API
+// ─────────────────────────────────────────────────────
 
 app.get("/api/products", async (req, res) => {
     try {
@@ -390,16 +498,20 @@ app.get("/api/products", async (req, res) => {
     }
 });
 
-// ─── STATIC FILES — MUST come after all /api routes ──────────
+// ─────────────────────────────────────────────────────
+//  STATIC + CATCH-ALL — must be LAST
+// ─────────────────────────────────────────────────────
 app.use(express.static(path.join(__dirname, "../public")));
 
-// ─── CATCH-ALL — MUST be absolutely last ─────────────────────
 app.get("/{*path}", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
-// ─── START ────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────
+//  START
+// ─────────────────────────────────────────────────────
 app.listen(PORT, () => {
-    console.log(`✦ GAB Jewels server running → http://localhost:${PORT}`);
-    console.log(`✦ Admin login → http://localhost:${PORT}/login.html`);
+    console.log(`✦ GAB Jewels server running  → http://localhost:${PORT}`);
+    console.log(`✦ Admin dashboard            → http://localhost:${PORT}/pages/admin/dashboard.html`);
+    console.log(`✦ Login page                 → http://localhost:${PORT}/login.html`);
 });

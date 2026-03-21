@@ -1,102 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>GAB Jewels | Luxury</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAB Jewels | Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/index.css">
-    <style>
-        .auth-overlay {
-            display: flex;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .auth-card {
-            background: white;
-            padding: 40px;
-            width: 350px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .auth-card input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-        }
-
-        .auth-card button {
-            width: 100%;
-            padding: 12px;
-            background: #1a1a1a;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        #main-content {
-            padding: 50px;
-            text-align: center;
-        }
-    </style>
+    <script>
+        (function() {
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.replace('login.html');
+            } else if (localStorage.getItem('aurum_role') === 'admin') {
+                window.location.replace('/pages/admin/dashboard.html');
+            }
+        })();
+    </script>
 </head>
-
 <body>
 
-    <div id="auth-modal" class="auth-overlay">
-        <div class="auth-card">
-            <h2 id="modal-title">GAB JEWELS</h2>
-            <div id="login-view">
-                <input type="email" id="l-email" placeholder="Email">
-                <input type="password" id="l-pass" placeholder="Password">
-                <button onclick="authLogic.login()">Login</button>
-                <p onclick="authLogic.showSignup()" style="cursor:pointer; font-size:12px;">New? Sign Up</p>
-            </div>
-            <div id="signup-view" style="display:none;">
-                <input type="email" id="s-email" placeholder="Email">
-                <input type="text" id="s-phone" placeholder="Phone (10 digits)">
-                <button onclick="authLogic.triggerOTP()">Get OTP</button>
-            </div>
-            <div id="otp-view" style="display:none;">
-                <input type="text" id="otp-code" placeholder="Enter OTP">
-                <button onclick="authLogic.verifyOTP()">Verify OTP</button>
-            </div>
-            <div id="password-view" style="display:none;">
-                <input type="password" id="new-password" placeholder="Set Password">
-                <button onclick="authLogic.finalizeSignup()">Enter Store</button>
-            </div>
+<!-- ── TICKER ──────────────────────────────────────── -->
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span>✦ Free shipping on orders above ₹50,000</span>
+        <span>✦ BIS Hallmarked Jewellery</span>
+        <span>✦ Lifetime Exchange &amp; Buyback</span>
+        <span>✦ 30-Day Easy Returns</span>
+        <span>✦ Custom Design Available</span>
+        <span>✦ EMI Available</span>
+        <span>✦ Free shipping on orders above ₹50,000</span>
+        <span>✦ BIS Hallmarked Jewellery</span>
+        <span>✦ Lifetime Exchange &amp; Buyback</span>
+        <span>✦ 30-Day Easy Returns</span>
+        <span>✦ Custom Design Available</span>
+        <span>✦ EMI Available</span>
+    </div>
+</div>
+
+<!-- ── NAVBAR ───────────────────────────────────────── -->
+<header class="top-nav">
+    <a href="index.html" class="brand">
+        <i class="fas fa-gem"></i> GAB Jewels
+    </a>
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="pages/collections.html">Collections</a>
+        <a href="pages/advance-buy.html">Buy Gold</a>
+        <a href="pages/settings.html">My Account</a>
+        <a href="pages/contact.html">Contact</a>
+        <a href="pages/cart.html" class="cart-icon">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cart-count" class="badge">0</span>
+        </a>
+        <a href="#" onclick="doLogout();return false;" class="nav-logout" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+    </nav>
+</header>
+
+<!-- ── HERO ─────────────────────────────────────────── -->
+<section class="hero reveal" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <span class="eyebrow">The Royal Collection · 2026</span>
+        <h1 class="hero-title">Crafted for<br><em>Eternity</em></h1>
+        <p class="hero-sub">
+            Heirlooms handcrafted in Bengaluru since 1978.<br>
+            BIS Hallmarked. Lifetime Exchange.
+        </p>
+        <div class="hero-actions">
+            <a href="pages/collections.html" class="btn-primary">Explore Collections</a>
+            <a href="pages/advance-buy.html" class="btn-ghost">Buy Gold Today</a>
         </div>
     </div>
-
-    <div id="main-content">
-        <h1>Welcome to the Royal Collection</h1>
-        <button onclick="localStorage.removeItem('isLoggedIn'); location.reload();">Logout</button>
+    <div class="hero-ornament">
+        <div class="orn-circle"></div>
+        <div class="orn-circle orn-circle-2"></div>
     </div>
+</section>
 
-    <!-- Replace this -->
-    <script src="assets/js/auth.js"></script>
-    <script>
-        if (localStorage.getItem("isLoggedIn") === "true") document.getElementById('auth-modal').style.display = 'none';
-    </script>
+<!-- ── LIVE GOLD RATES ───────────────────────────────── -->
+<section class="gold-rates-bar reveal">
+    <div class="rates-inner">
+        <div class="rates-label">
+            <i class="fas fa-chart-line"></i> Live Rates
+        </div>
+        <div class="rate-item">
+            <span class="rate-name">24K Gold / 10g</span>
+            <span class="rate-val" id="p-24k">Loading…</span>
+        </div>
+        <div class="rate-divider"></div>
+        <div class="rate-item">
+            <span class="rate-name">22K Gold / 10g</span>
+            <span class="rate-val" id="p-22k">Loading…</span>
+        </div>
+        <div class="rate-divider"></div>
+        <div class="rate-item">
+            <span class="rate-name">Silver / g</span>
+            <span class="rate-val" id="p-silver">Loading…</span>
+        </div>
+        <div class="rates-updated" id="last-updated">Fetching…</div>
+    </div>
+</section>
 
-    <!-- With this -->
-    <script src="../public/assets/js/auth.js"></script>
-    <script>
-        if (localStorage.getItem("isLoggedIn") === "true") {
-            document.getElementById('auth-modal').style.display = 'none';
+<!-- ── CATEGORIES ───────────────────────────────────── -->
+<section class="section-wrap reveal">
+    <div class="section-header">
+        <span class="eyebrow">Shop by Category</span>
+        <h2>Find Your Perfect Piece</h2>
+        <div class="ornament-line"><div class="ornament-diamond"></div></div>
+    </div>
+    <div class="categories-grid">
+        <a href="pages/collections.html?dept=women" class="cat-card">
+            <div class="cat-img cat-women"></div>
+            <div class="cat-label"><span>Women</span><i class="fas fa-arrow-right"></i></div>
+        </a>
+        <a href="pages/collections.html?dept=men" class="cat-card">
+            <div class="cat-img cat-men"></div>
+            <div class="cat-label"><span>Men</span><i class="fas fa-arrow-right"></i></div>
+        </a>
+        <a href="pages/collections.html?dept=kids" class="cat-card">
+            <div class="cat-img cat-kids"></div>
+            <div class="cat-label"><span>Kids</span><i class="fas fa-arrow-right"></i></div>
+        </a>
+    </div>
+</section>
+
+<!-- ── FEATURED PRODUCTS ─────────────────────────────── -->
+<section class="section-wrap reveal">
+    <div class="section-header">
+        <span class="eyebrow">Handpicked For You</span>
+        <h2>Featured Collection</h2>
+        <div class="ornament-line"><div class="ornament-diamond"></div></div>
+    </div>
+    <div class="products-grid" id="products-grid"></div>
+    <div style="text-align:center;margin-top:2.5rem">
+        <a href="pages/collections.html" class="btn-primary">View All Collections</a>
+    </div>
+</section>
+
+<!-- ── CART SIDEBAR ──────────────────────────────────── -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+        <h3>Your Bag</h3>
+        <button onclick="closeCart()" class="cart-close">✕</button>
+    </div>
+    <div class="cart-body" id="cart-body">Your bag is empty</div>
+    <div class="cart-footer">
+        <a href="pages/cart.html" class="btn-primary" style="display:block;text-align:center;">
+            View Bag &amp; Checkout
+        </a>
+    </div>
+</div>
+
+<!-- ── TRUST BADGES ──────────────────────────────────── -->
+<section class="section-wrap section-dark reveal">
+    <div class="section-header">
+        <span class="eyebrow">The GAB Promise</span>
+        <h2>Why Choose Us</h2>
+        <div class="ornament-line"><div class="ornament-diamond"></div></div>
+    </div>
+    <div class="trust-grid">
+        <div class="trust-card">
+            <div class="trust-icon"><i class="fas fa-certificate"></i></div>
+            <h4>BIS Hallmarked</h4>
+            <p>Every piece certified for purity and quality by the Bureau of Indian Standards.</p>
+        </div>
+        <div class="trust-card">
+            <div class="trust-icon"><i class="fas fa-sync-alt"></i></div>
+            <h4>Lifetime Exchange</h4>
+            <p>Exchange your jewellery at full current market value, whenever you wish.</p>
+        </div>
+        <div class="trust-card">
+            <div class="trust-icon"><i class="fas fa-undo"></i></div>
+            <h4>30-Day Returns</h4>
+            <p>Not satisfied? Return within 30 days — no questions asked.</p>
+        </div>
+        <div class="trust-card">
+            <div class="trust-icon"><i class="fas fa-pencil-ruler"></i></div>
+            <h4>Custom Design</h4>
+            <p>Work with our master artisans to create your one-of-a-kind heirloom.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── CONTACT STRIP ─────────────────────────────────── -->
+<section class="contact-strip reveal">
+    <div class="contact-strip-inner">
+        <div class="cs-text">
+            <span class="eyebrow">We're Here For You</span>
+            <h3>Have a question or need help?</h3>
+        </div>
+        <div class="cs-contacts">
+            <a href="tel:+917780184822" class="cs-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>+91 77801 84822</span>
+            </a>
+            <a href="tel:+918884953038" class="cs-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>+91 88849 53038</span>
+            </a>
+            <a href="mailto:gbhanuprasad63@gmail.com" class="cs-item">
+                <i class="fas fa-envelope"></i>
+                <span>gbhanuprasad63@gmail.com</span>
+            </a>
+            <a href="mailto:yatishb1922@gmail.com" class="cs-item">
+                <i class="fas fa-envelope"></i>
+                <span>yatishb1922@gmail.com</span>
+            </a>
+        </div>
+        <a href="pages/contact.html" class="btn-primary">
+            Contact Us <i class="fas fa-arrow-right" style="margin-left:8px;font-size:0.8em"></i>
+        </a>
+    </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────────────── -->
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+            <span class="footer-brand-name">GAB JEWELS</span>
+            <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru. Every piece carries the weight of tradition and the brilliance of modern artistry.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Navigate</h4>
+            <a href="index.html">Home</a>
+            <a href="pages/collections.html">Collections</a>
+            <a href="pages/advance-buy.html">Buy Gold</a>
+            <a href="pages/cart.html">Your Bag</a>
+            <a href="pages/settings.html">My Account</a>
+            <a href="pages/contact.html">Contact Us</a>
+        </div>
+        <div class="footer-col">
+            <h4>Policies</h4>
+            <a href="#">Exchange Policy</a>
+            <a href="#">Buyback Terms</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <a href="mailto:gbhanuprasad63@gmail.com">gbhanuprasad63@gmail.com</a>
+            <a href="mailto:yatishb1922@gmail.com">yatishb1922@gmail.com</a>
+            <a href="tel:+917780184822">+91 77801 84822</a>
+            <a href="tel:+918884953038">+91 88849 53038</a>
+            <a href="https://wa.me/917780184822" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp Us
+            </a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+        <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+    </div>
+</footer>
+
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/index.js"></script>
+<script>
+    // ── LOGOUT ───────────────────────────────────────
+    function doLogout() {
+        const token = localStorage.getItem('aurum_token');
+        if (token) {
+            fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` }
+            }).catch(() => {});
         }
-        if (localStorage.getItem("aurum_role") === "admin") {
-            window.location.href = '../pages/admin/dashboard.html';
-        }
-    </script>
+        localStorage.removeItem('aurum_token');
+        localStorage.removeItem('aurum_role');
+        localStorage.removeItem('isLoggedIn');
+        window.location.replace('login.html');
+    }
+
+    // ── CART SIDEBAR ──────────────────────────────────
+    document.querySelector('.cart-icon')?.addEventListener('click', function(e) {
+        e.preventDefault(); openCart();
+    });
+    function openCart() {
+        document.getElementById('cart-overlay').classList.add('open');
+        document.getElementById('cart-sidebar').classList.add('open');
+    }
+    function closeCart() {
+        document.getElementById('cart-overlay').classList.remove('open');
+        document.getElementById('cart-sidebar').classList.remove('open');
+    }
+
+    // ── SCROLL REVEAL ────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

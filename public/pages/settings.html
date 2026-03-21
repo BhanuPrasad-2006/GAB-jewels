@@ -7,344 +7,705 @@
     <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="../assets/css/settings.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.replace('../index.html');
+        }
+    </script>
 </head>
 <body>
 
-    <!-- Ticker -->
-    <div class="ticker-wrap">
-        <div class="ticker-track">
-            <span>✦ Free shipping on orders above ₹50,000</span>
-            <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
-            <span>✦ 30-Day Easy Returns</span>
-            <span>✦ Custom Design Available</span>
-            <span>✦ EMI Available</span>
-            <span>✦ Free shipping on orders above ₹50,000</span>
-            <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
-            <span>✦ 30-Day Easy Returns</span>
-            <span>✦ Custom Design Available</span>
-            <span>✦ EMI Available</span>
-        </div>
+<!-- Ticker -->
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span>✦ Free shipping on orders above ₹50,000</span>
+        <span>✦ BIS Hallmarked Jewellery</span>
+        <span>✦ Lifetime Exchange &amp; Buyback</span>
+        <span>✦ 30-Day Easy Returns</span>
+        <span>✦ Custom Design Available</span>
+        <span>✦ EMI Available</span>
+        <span>✦ Free shipping on orders above ₹50,000</span>
+        <span>✦ BIS Hallmarked Jewellery</span>
+        <span>✦ Lifetime Exchange &amp; Buyback</span>
+        <span>✦ 30-Day Easy Returns</span>
+        <span>✦ Custom Design Available</span>
+        <span>✦ EMI Available</span>
     </div>
+</div>
 
-    <!-- Nav -->
-    <header class="top-nav">
-        <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
-        <nav>
+<!-- Nav -->
+<header class="top-nav">
+    <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="collections.html">Collections</a>
+        <a href="advance-buy.html">Buy Gold</a>
+        <a href="settings.html" class="active">My Account</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html" class="cart-icon">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cart-badge" class="badge">0</span>
+        </a>
+    </nav>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>◆</span>
+    <span style="color:var(--gold)">My Account</span>
+</div>
+
+<!-- Settings Layout -->
+<div class="settings-wrapper">
+
+    <!-- Sidebar -->
+    <aside class="settings-sidebar">
+        <div class="settings-brand">
+            <div class="settings-avatar" id="settings-avatar">Y</div>
+            <div class="settings-user-info">
+                <span class="settings-username" id="sidebar-name">Yatish</span>
+                <span class="settings-useremail" id="sidebar-email">yatish@example.com</span>
+            </div>
+        </div>
+
+        <ul class="settings-nav">
+            <li class="active" data-tab="profile">
+                <i class="fas fa-user"></i> Profile
+            </li>
+            <li data-tab="security">
+                <i class="fas fa-shield-alt"></i> Security
+            </li>
+            <li data-tab="preferences">
+                <i class="fas fa-sliders-h"></i> Preferences
+            </li>
+            <li data-tab="appearance">
+                <i class="fas fa-palette"></i> Appearance
+            </li>
+            <li data-tab="wishlist">
+                <i class="fas fa-heart"></i> Wishlist Settings
+            </li>
+            <li data-tab="addresses">
+                <i class="fas fa-map-marker-alt"></i> Saved Addresses
+            </li>
+            <li data-tab="kyc">
+                <i class="fas fa-id-card"></i> KYC Verification
+            </li>
+            <li class="settings-logout" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Log Out
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="settings-main">
+
+        <div class="settings-toast" id="settings-toast"></div>
+
+        <!-- ── PROFILE TAB ── -->
+        <section id="profile" class="settings-tab active">
+            <div class="settings-tab-header">
+                <span class="eyebrow">Account</span>
+                <h2>Public Profile</h2>
+                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+            </div>
+
+            <form id="profile-form" class="settings-form">
+                <div class="settings-input-group">
+                    <label class="settings-label">Full Name</label>
+                    <input type="text" id="user-name" class="settings-input" value="Yatish" placeholder="Your full name">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Email Address</label>
+                    <input type="email" id="user-email" class="settings-input" value="yatish@example.com" placeholder="your@email.com">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Date of Birth</label>
+                    <input type="date" id="user-dob" class="settings-input">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Gender</label>
+                    <select id="user-gender" class="settings-input settings-select">
+                        <option value="">Prefer not to say</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Phone Number</label>
+                    <div class="phone-row">
+                        <input type="tel" id="user-phone" class="settings-input" placeholder="+91 98765 43210">
+                        <button type="button" class="btn-verify-phone" id="btn-send-otp">
+                            Verify <i class="fas fa-mobile-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="settings-input-group" id="otp-row" style="display:none;">
+                    <label class="settings-label">OTP sent to your number</label>
+                    <div class="phone-row">
+                        <input type="text" id="otp-input" class="settings-input" placeholder="Enter 6-digit OTP" maxlength="6">
+                        <button type="button" class="btn-verify-phone" id="btn-verify-otp">
+                            Confirm <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                    <span class="otp-status" id="otp-status"></span>
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Address Line 1</label>
+                    <input type="text" id="user-address" class="settings-input" placeholder="Flat No, Building, Street">
+                </div>
+                <div class="settings-row-2">
+                    <div class="settings-input-group">
+                        <label class="settings-label">City</label>
+                        <input type="text" id="user-city" class="settings-input" placeholder="Bengaluru">
+                    </div>
+                    <div class="settings-input-group">
+                        <label class="settings-label">PIN Code</label>
+                        <input type="text" id="user-pin" class="settings-input" placeholder="560001">
+                    </div>
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Anniversary Date <span style="color:rgba(250,246,238,0.3);font-size:0.8em">(Optional — get special offers)</span></label>
+                    <input type="date" id="user-anniversary" class="settings-input">
+                </div>
+                <button type="submit" class="btn-settings-save">
+                    <i class="fas fa-save"></i> Save Profile
+                </button>
+            </form>
+        </section>
+
+        <!-- ── SECURITY TAB ── -->
+        <section id="security" class="settings-tab">
+            <div class="settings-tab-header">
+                <span class="eyebrow">Account</span>
+                <h2>Security Centre</h2>
+                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Two-Factor Authentication</strong>
+                    <p>Protect your account with OTP verification on every login.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="2fa-toggle">
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Login Activity Alerts</strong>
+                    <p>Email me whenever a new device logs into my account.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="login-alert" checked>
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Change Password</strong>
+                    <p>Update your account password regularly for security.</p>
+                </div>
+                <button class="btn-settings-outline" id="btn-change-password">Update</button>
+            </div>
+
+            <div id="password-form-wrap" style="display:none;" class="settings-form">
+                <div class="settings-input-group">
+                    <label class="settings-label">Current Password</label>
+                    <input type="password" id="current-password" class="settings-input" placeholder="••••••••">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">New Password</label>
+                    <input type="password" id="new-password" class="settings-input" placeholder="••••••••">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Confirm New Password</label>
+                    <input type="password" id="confirm-password" class="settings-input" placeholder="••••••••">
+                </div>
+                <button type="button" class="btn-settings-save" id="btn-save-password">
+                    <i class="fas fa-lock"></i> Update Password
+                </button>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Export Account Data</strong>
+                    <p>Download a copy of your purchase history and profile data.</p>
+                </div>
+                <button class="btn-settings-outline" id="btn-export">Export</button>
+            </div>
+
+            <div class="settings-item danger-zone">
+                <div class="settings-item-text">
+                    <strong>Delete Account</strong>
+                    <p>Permanently remove your account and all data. This cannot be undone.</p>
+                </div>
+                <button class="btn-settings-danger">Delete</button>
+            </div>
+        </section>
+
+        <!-- ── PREFERENCES TAB ── -->
+        <section id="preferences" class="settings-tab">
+            <div class="settings-tab-header">
+                <span class="eyebrow">Account</span>
+                <h2>Preferences</h2>
+                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+            </div>
+
+            <div class="settings-input-group">
+                <label class="settings-label">Preferred Currency</label>
+                <select id="currency" class="settings-input settings-select">
+                    <option value="INR">INR (₹) — Indian Rupee</option>
+                    <option value="USD">USD ($) — US Dollar</option>
+                    <option value="AED">AED (د.إ) — UAE Dirham</option>
+                    <option value="GBP">GBP (£) — British Pound</option>
+                </select>
+            </div>
+
+            <div class="settings-input-group">
+                <label class="settings-label">Default Jewellery Category</label>
+                <select id="default-category" class="settings-input settings-select">
+                    <option>All Categories</option>
+                    <option>Women</option>
+                    <option>Men</option>
+                    <option>Kids</option>
+                    <option>Rings</option>
+                    <option>Necklaces</option>
+                    <option>Earrings</option>
+                    <option>Bracelets</option>
+                </select>
+            </div>
+
+            <div class="settings-input-group">
+                <label class="settings-label">Preferred Gold Purity</label>
+                <select id="preferred-purity" class="settings-input settings-select">
+                    <option>No Preference</option>
+                    <option>22K</option>
+                    <option>18K</option>
+                    <option>14K</option>
+                    <option>Platinum</option>
+                </select>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Gold Price Alerts</strong>
+                    <p>Notify me via email when the 24K rate drops significantly.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="price-alert" checked>
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Order Update Notifications</strong>
+                    <p>Receive SMS and email updates on your shipment status.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="order-notif" checked>
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Restock Alerts</strong>
+                    <p>Notify me when a wishlisted item is back in stock.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="restock-notif" checked>
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Promotional Emails</strong>
+                    <p>Hear about exclusive offers and new collections.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="promo-notif">
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Birthday &amp; Anniversary Offers</strong>
+                    <p>Receive special discount codes on your special days.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="special-notif" checked>
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+
+            <button class="btn-settings-save" id="btn-save-prefs" style="margin-top:24px;">
+                <i class="fas fa-save"></i> Save Preferences
+            </button>
+        </section>
+
+        <!-- ── APPEARANCE TAB (NEW) ── -->
+        <section id="appearance" class="settings-tab">
+            <div class="settings-tab-header">
+                <span class="eyebrow">Customise</span>
+                <h2>Appearance</h2>
+                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Dark Mode</strong>
+                    <p>Switch between the classic dark and light themes.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="dark-mode" checked>
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Compact View</strong>
+                    <p>Show more products per row in collections.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="compact-view">
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+
+            <div class="settings-input-group" style="margin-top:20px;">
+                <label class="settings-label">Gold Accent Colour</label>
+                <div class="accent-colors">
+                    <div class="accent-swatch active" data-color="classic" style="background:#C9A84C" title="Classic Gold"></div>
+                    <div class="accent-swatch" data-color="rose"    style="background:#C07050" title="Rose Gold"></div>
+                    <div class="accent-swatch" data-color="silver"  style="background:#A0A8B0" title="Silver"></div>
+                    <div class="accent-swatch" data-color="platinum" style="background:#8090A0" title="Platinum"></div>
+                </div>
+                <p style="font-size:0.65rem;color:rgba(250,246,238,0.3);margin-top:8px;font-family:'Raleway',sans-serif;letter-spacing:0.1em;">
+                    Changes the accent colour across the site
+                </p>
+            </div>
+
+            <div class="settings-input-group">
+                <label class="settings-label">Product Image Size</label>
+                <select id="img-size" class="settings-input settings-select">
+                    <option value="medium" selected>Medium (Default)</option>
+                    <option value="large">Large</option>
+                    <option value="small">Small (Compact)</option>
+                </select>
+            </div>
+
+            <button class="btn-settings-save" id="btn-save-appearance" style="margin-top:24px;">
+                <i class="fas fa-palette"></i> Save Appearance
+            </button>
+        </section>
+
+        <!-- ── WISHLIST SETTINGS TAB (NEW) ── -->
+        <section id="wishlist" class="settings-tab">
+            <div class="settings-tab-header">
+                <span class="eyebrow">Your Favourites</span>
+                <h2>Wishlist Settings</h2>
+                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Public Wishlist</strong>
+                    <p>Let family and friends view your wishlist for gifting ideas.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="public-wishlist">
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+
+            <div class="settings-item">
+                <div class="settings-item-text">
+                    <strong>Auto-add to Wishlist on View</strong>
+                    <p>Automatically save products you spend time viewing.</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="auto-wishlist">
+                    <span class="toggle-track"></span>
+                </label>
+            </div>
+
+            <div class="settings-input-group" style="margin-top:20px;">
+                <label class="settings-label">Wishlist Name</label>
+                <input type="text" id="wishlist-name" class="settings-input" value="My Dream Jewels" placeholder="Give your wishlist a name">
+            </div>
+
+            <div class="settings-input-group">
+                <label class="settings-label">Sort Wishlist By</label>
+                <select id="wishlist-sort" class="settings-input settings-select">
+                    <option>Date Added (Newest First)</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Purity</option>
+                </select>
+            </div>
+
+            <div class="wishlist-preview">
+                <p class="wishlist-empty-msg">
+                    <i class="fas fa-heart" style="color:rgba(201,168,76,0.3);font-size:2rem;display:block;margin-bottom:12px;"></i>
+                    Your wishlist is empty.<br>
+                    <a href="collections.html" style="color:var(--gold)">Browse collections</a> to add pieces.
+                </p>
+            </div>
+
+            <button class="btn-settings-save" style="margin-top:24px;">
+                <i class="fas fa-heart"></i> Save Wishlist Settings
+            </button>
+        </section>
+
+        <!-- ── SAVED ADDRESSES TAB (NEW) ── -->
+        <section id="addresses" class="settings-tab">
+            <div class="settings-tab-header">
+                <span class="eyebrow">Delivery</span>
+                <h2>Saved Addresses</h2>
+                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+            </div>
+
+            <div class="address-list" id="address-list">
+                <!-- Address card -->
+                <div class="address-card">
+                    <div class="address-card-top">
+                        <span class="address-tag default-tag">Default</span>
+                        <div class="address-actions">
+                            <button class="btn-addr-edit"><i class="fas fa-pen"></i></button>
+                            <button class="btn-addr-delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <p class="address-name">Yatish B</p>
+                    <p class="address-line">Flat 4B, Prestige Towers</p>
+                    <p class="address-line">MG Road, Bengaluru — 560 001</p>
+                    <p class="address-line">Karnataka, India</p>
+                    <p class="address-phone">+91 77801 84822</p>
+                </div>
+            </div>
+
+            <button class="btn-settings-outline" id="btn-add-address" style="margin-top:20px;width:100%;">
+                <i class="fas fa-plus"></i> Add New Address
+            </button>
+
+            <!-- Add address form (hidden) -->
+            <div id="add-address-form" style="display:none;" class="settings-form" style="margin-top:20px;">
+                <div class="settings-input-group">
+                    <label class="settings-label">Full Name</label>
+                    <input type="text" id="addr-name" class="settings-input" placeholder="Recipient name">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Phone</label>
+                    <input type="tel" id="addr-phone" class="settings-input" placeholder="+91 XXXXX XXXXX">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Address Line 1</label>
+                    <input type="text" id="addr-line1" class="settings-input" placeholder="Flat No, Building, Street">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Address Line 2</label>
+                    <input type="text" id="addr-line2" class="settings-input" placeholder="Area, Landmark (optional)">
+                </div>
+                <div class="settings-row-2">
+                    <div class="settings-input-group">
+                        <label class="settings-label">City</label>
+                        <input type="text" id="addr-city" class="settings-input" placeholder="Bengaluru">
+                    </div>
+                    <div class="settings-input-group">
+                        <label class="settings-label">PIN Code</label>
+                        <input type="text" id="addr-pin" class="settings-input" placeholder="560001">
+                    </div>
+                </div>
+                <div class="settings-item" style="margin-top:12px;">
+                    <div class="settings-item-text">
+                        <strong>Set as Default Address</strong>
+                        <p>Use this address for all future orders.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="addr-default">
+                        <span class="toggle-track"></span>
+                    </label>
+                </div>
+                <button type="button" class="btn-settings-save" id="btn-save-address">
+                    <i class="fas fa-save"></i> Save Address
+                </button>
+            </div>
+        </section>
+
+        <!-- ── KYC TAB ── -->
+        <section id="kyc" class="settings-tab">
+            <div class="settings-tab-header">
+                <span class="eyebrow">Compliance</span>
+                <h2>KYC Verification</h2>
+                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+            </div>
+
+            <div class="kyc-note">
+                <i class="fas fa-info-circle"></i>
+                KYC verification is required for purchases above ₹2,00,000 as per RBI guidelines.
+            </div>
+
+            <div class="kyc-status-bar" id="kyc-status-bar">
+                <div class="kyc-step done"><i class="fas fa-check"></i><span>Identity</span></div>
+                <div class="kyc-step-line"></div>
+                <div class="kyc-step active"><i class="fas fa-file-alt"></i><span>Documents</span></div>
+                <div class="kyc-step-line"></div>
+                <div class="kyc-step"><i class="fas fa-shield-alt"></i><span>Verified</span></div>
+            </div>
+
+            <div class="settings-form">
+                <div class="settings-input-group">
+                    <label class="settings-label">PAN Card Number</label>
+                    <input type="text" id="pan-number" class="settings-input" placeholder="ABCDE1234F"
+                           maxlength="10" style="text-transform:uppercase;letter-spacing:0.2em;">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">Aadhaar Number (last 4 digits)</label>
+                    <input type="text" id="aadhaar-last4" class="settings-input" placeholder="XXXX" maxlength="4">
+                </div>
+                <div class="settings-input-group">
+                    <label class="settings-label">GST Number <span style="color:rgba(250,246,238,0.3);font-size:0.8em">(Optional — for business purchases)</span></label>
+                    <input type="text" id="gst-number" class="settings-input" placeholder="22AAAAA0000A1Z5"
+                           style="letter-spacing:0.1em;">
+                </div>
+
+                <label class="settings-label" style="margin-bottom:12px;">Upload PAN Card (PDF or JPG, max 5MB)</label>
+                <div class="kyc-upload-box" id="kyc-upload-box">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag &amp; drop or <span>click to browse</span></p>
+                    <span class="kyc-file-name" id="kyc-file-name">No file selected</span>
+                    <input type="file" id="kyc-file" accept=".pdf,.jpg,.jpeg,.png" hidden>
+                </div>
+
+                <button class="btn-settings-save" id="btn-submit-kyc" style="margin-top:20px;">
+                    <i class="fas fa-paper-plane"></i> Submit for Verification
+                </button>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-top">
+        <div>
+            <span class="footer-brand-name">GAB JEWELS</span>
+            <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Navigate</h4>
             <a href="../index.html">Home</a>
             <a href="collections.html">Collections</a>
             <a href="advance-buy.html">Buy Gold</a>
-            <a href="settings.html" class="active">My Account</a>
-            <a href="cart.html" class="cart-icon">
-                <i class="fas fa-shopping-bag"></i>
-                <span id="cart-badge" class="badge">0</span>
-            </a>
-        </nav>
-    </header>
-
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <a href="../index.html">Home</a>
-        <span>◆</span>
-        <span style="color: var(--gold);">My Account</span>
-    </div>
-
-    <!-- Settings Layout -->
-    <div class="settings-wrapper">
-
-        <!-- Sidebar -->
-        <aside class="settings-sidebar">
-            <div class="settings-brand">
-                <div class="settings-avatar" id="settings-avatar">Y</div>
-                <div class="settings-user-info">
-                    <span class="settings-username" id="sidebar-name">Yatish</span>
-                    <span class="settings-useremail" id="sidebar-email">yatish@example.com</span>
-                </div>
-            </div>
-
-            <ul class="settings-nav">
-                <li class="active" data-tab="profile">
-                    <i class="fas fa-user"></i> Profile
-                </li>
-                <li data-tab="security">
-                    <i class="fas fa-shield-alt"></i> Security
-                </li>
-                <li data-tab="preferences">
-                    <i class="fas fa-sliders-h"></i> Preferences
-                </li>
-                <li data-tab="kyc">
-                    <i class="fas fa-id-card"></i> KYC Verification
-                </li>
-                <li class="settings-logout" id="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i> Log Out
-                </li>
-            </ul>
-        </aside>
-
-        <!-- Main content -->
-        <main class="settings-main">
-
-            <!-- Toast notification -->
-            <div class="settings-toast" id="settings-toast"></div>
-
-            <!-- ── PROFILE TAB ── -->
-            <section id="profile" class="settings-tab active">
-                <div class="settings-tab-header">
-                    <span class="eyebrow">Account</span>
-                    <h2>Public Profile</h2>
-                    <div class="ornament-line"><div class="ornament-diamond"></div></div>
-                </div>
-
-                <form id="profile-form" class="settings-form">
-                    <div class="settings-input-group">
-                        <label class="settings-label">Full Name</label>
-                        <input type="text" id="user-name" class="settings-input" value="Yatish" placeholder="Your full name">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">Email Address</label>
-                        <input type="email" id="user-email" class="settings-input" value="yatish@example.com" placeholder="your@email.com">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">Phone Number</label>
-                        <div class="phone-row">
-                            <input type="tel" id="user-phone" class="settings-input" placeholder="+91 98765 43210">
-                            <button type="button" class="btn-verify-phone" id="btn-send-otp">
-                                Verify <i class="fas fa-mobile-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- OTP row (hidden until Send OTP clicked) -->
-                    <div class="settings-input-group" id="otp-row" style="display:none;">
-                        <label class="settings-label">OTP sent to your number</label>
-                        <div class="phone-row">
-                            <input type="text" id="otp-input" class="settings-input" placeholder="Enter 6-digit OTP" maxlength="6">
-                            <button type="button" class="btn-verify-phone" id="btn-verify-otp">
-                                Confirm <i class="fas fa-check"></i>
-                            </button>
-                        </div>
-                        <span class="otp-status" id="otp-status"></span>
-                    </div>
-
-                    <div class="settings-input-group">
-                        <label class="settings-label">Address Line 1</label>
-                        <input type="text" id="user-address" class="settings-input" placeholder="Flat No, Building, Street">
-                    </div>
-                    <div class="settings-row-2">
-                        <div class="settings-input-group">
-                            <label class="settings-label">City</label>
-                            <input type="text" id="user-city" class="settings-input" placeholder="Bengaluru">
-                        </div>
-                        <div class="settings-input-group">
-                            <label class="settings-label">PIN Code</label>
-                            <input type="text" id="user-pin" class="settings-input" placeholder="560001">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-settings-save">
-                        <i class="fas fa-save"></i> Save Profile
-                    </button>
-                </form>
-            </section>
-
-            <!-- ── SECURITY TAB ── -->
-            <section id="security" class="settings-tab">
-                <div class="settings-tab-header">
-                    <span class="eyebrow">Account</span>
-                    <h2>Security Centre</h2>
-                    <div class="ornament-line"><div class="ornament-diamond"></div></div>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Two-Factor Authentication</strong>
-                        <p>Protect your account with OTP verification on login.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="2fa-toggle">
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Change Password</strong>
-                        <p>Update your account password regularly for security.</p>
-                    </div>
-                    <button class="btn-settings-outline" id="btn-change-password">Update</button>
-                </div>
-
-                <!-- Change password form (hidden by default) -->
-                <div id="password-form-wrap" style="display:none;" class="settings-form">
-                    <div class="settings-input-group">
-                        <label class="settings-label">Current Password</label>
-                        <input type="password" id="current-password" class="settings-input" placeholder="••••••••">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">New Password</label>
-                        <input type="password" id="new-password" class="settings-input" placeholder="••••••••">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">Confirm New Password</label>
-                        <input type="password" id="confirm-password" class="settings-input" placeholder="••••••••">
-                    </div>
-                    <button type="button" class="btn-settings-save" id="btn-save-password">
-                        <i class="fas fa-lock"></i> Update Password
-                    </button>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Export Account Data</strong>
-                        <p>Download a copy of your purchase history and profile data.</p>
-                    </div>
-                    <button class="btn-settings-outline" id="btn-export">Export</button>
-                </div>
-
-                <div class="settings-item danger-zone">
-                    <div class="settings-item-text">
-                        <strong>Delete Account</strong>
-                        <p>Permanently remove your account and all data. This cannot be undone.</p>
-                    </div>
-                    <button class="btn-settings-danger">Delete</button>
-                </div>
-            </section>
-
-            <!-- ── PREFERENCES TAB ── -->
-            <section id="preferences" class="settings-tab">
-                <div class="settings-tab-header">
-                    <span class="eyebrow">Account</span>
-                    <h2>Preferences</h2>
-                    <div class="ornament-line"><div class="ornament-diamond"></div></div>
-                </div>
-
-                <div class="settings-input-group">
-                    <label class="settings-label">Preferred Currency</label>
-                    <select id="currency" class="settings-input settings-select">
-                        <option value="INR">INR (₹) — Indian Rupee</option>
-                        <option value="USD">USD ($) — US Dollar</option>
-                        <option value="AED">AED (د.إ) — UAE Dirham</option>
-                        <option value="GBP">GBP (£) — British Pound</option>
-                    </select>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Gold Price Alerts</strong>
-                        <p>Notify me via email when the 24K rate drops significantly.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="price-alert" checked>
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Order Update Notifications</strong>
-                        <p>Receive SMS and email updates on your shipment status.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="order-notif" checked>
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Promotional Emails</strong>
-                        <p>Hear about exclusive offers and new collections.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="promo-notif">
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-
-                <button class="btn-settings-save" id="btn-save-prefs" style="margin-top:24px;">
-                    <i class="fas fa-save"></i> Save Preferences
-                </button>
-            </section>
-
-            <!-- ── KYC TAB ── -->
-            <section id="kyc" class="settings-tab">
-                <div class="settings-tab-header">
-                    <span class="eyebrow">Compliance</span>
-                    <h2>KYC Verification</h2>
-                    <div class="ornament-line"><div class="ornament-diamond"></div></div>
-                </div>
-
-                <div class="kyc-note">
-                    <i class="fas fa-info-circle"></i>
-                    KYC verification is required for purchases above ₹2,00,000 as per RBI guidelines.
-                </div>
-
-                <div class="kyc-status-bar" id="kyc-status-bar">
-                    <div class="kyc-step done"><i class="fas fa-check"></i><span>Identity</span></div>
-                    <div class="kyc-step-line"></div>
-                    <div class="kyc-step active"><i class="fas fa-file-alt"></i><span>Documents</span></div>
-                    <div class="kyc-step-line"></div>
-                    <div class="kyc-step"><i class="fas fa-shield-check"></i><span>Verified</span></div>
-                </div>
-
-                <div class="settings-form">
-                    <div class="settings-input-group">
-                        <label class="settings-label">PAN Card Number</label>
-                        <input type="text" id="pan-number" class="settings-input" placeholder="ABCDE1234F" maxlength="10"
-                               style="text-transform:uppercase; letter-spacing:0.2em;">
-                    </div>
-
-                    <div class="settings-input-group">
-                        <label class="settings-label">Aadhaar Number (last 4 digits)</label>
-                        <input type="text" id="aadhaar-last4" class="settings-input" placeholder="XXXX" maxlength="4">
-                    </div>
-
-                    <label class="settings-label" style="margin-bottom:12px;">Upload PAN Card (PDF or JPG, max 5MB)</label>
-                    <div class="kyc-upload-box" id="kyc-upload-box">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Drag & drop or <span>click to browse</span></p>
-                        <span class="kyc-file-name" id="kyc-file-name">No file selected</span>
-                        <input type="file" id="kyc-file" accept=".pdf,.jpg,.jpeg,.png" hidden>
-                    </div>
-
-                    <button class="btn-settings-save" id="btn-submit-kyc">
-                        <i class="fas fa-paper-plane"></i> Submit for Verification
-                    </button>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-top">
-            <div>
-                <span class="footer-brand-name">GAB JEWELS</span>
-                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Navigate</h4>
-                <a href="../index.html">Home</a>
-                <a href="collections.html">Collections</a>
-                <a href="advance-buy.html">Buy Gold</a>
-                <a href="cart.html">Your Bag</a>
-            </div>
-            <div class="footer-col">
-                <h4>Policies</h4>
-                <a href="#">Exchange Policy</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Use</a>
-            </div>
+            <a href="cart.html">Your Bag</a>
         </div>
-        <div class="footer-bottom">
-            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
-            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+        <div class="footer-col">
+            <h4>Policies</h4>
+            <a href="#">Exchange Policy</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
         </div>
-    </footer>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+        <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+    </div>
+</footer>
 
-    <script src="../assets/js/cart.js"></script>
-    <script src="../assets/js/settings.js"></script>
+<script src="../assets/js/cart.js"></script>
+<script src="../assets/js/settings.js"></script>
+<script>
+// ── TAB SWITCHING ─────────────────────────────────
+document.querySelectorAll('.settings-nav li[data-tab]').forEach(li => {
+    li.addEventListener('click', function() {
+        document.querySelectorAll('.settings-nav li').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById(this.dataset.tab).classList.add('active');
+    });
+});
+
+// ── LOGOUT ────────────────────────────────────────
+document.getElementById('logout-btn').addEventListener('click', function() {
+    localStorage.removeItem('aurum_token');
+    localStorage.removeItem('aurum_role');
+    localStorage.removeItem('isLoggedIn');
+    window.location.replace('../index.html');
+});
+
+// ── APPEARANCE: accent swatches ───────────────────
+document.querySelectorAll('.accent-swatch').forEach(sw => {
+    sw.addEventListener('click', function() {
+        document.querySelectorAll('.accent-swatch').forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+// ── ADD ADDRESS TOGGLE ────────────────────────────
+const btnAddAddr = document.getElementById('btn-add-address');
+if (btnAddAddr) {
+    btnAddAddr.addEventListener('click', function() {
+        const form = document.getElementById('add-address-form');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+}
+
+// ── CHANGE PASSWORD TOGGLE ────────────────────────
+const btnChangePw = document.getElementById('btn-change-password');
+if (btnChangePw) {
+    btnChangePw.addEventListener('click', function() {
+        const form = document.getElementById('password-form-wrap');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+}
+
+// ── TOAST HELPER ─────────────────────────────────
+function showToast(msg, ok = true) {
+    const t = document.getElementById('settings-toast');
+    t.textContent = msg;
+    t.style.background = ok ? 'rgba(109,191,138,0.15)' : 'rgba(224,112,112,0.15)';
+    t.style.borderColor = ok ? '#6DBF8A' : '#E07070';
+    t.style.color       = ok ? '#6DBF8A' : '#E07070';
+    t.style.display     = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+// ── SAVE BUTTONS ──────────────────────────────────
+document.getElementById('profile-form')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    showToast('✦ Profile saved successfully.');
+});
+document.getElementById('btn-save-prefs')?.addEventListener('click', function() {
+    showToast('✦ Preferences saved.');
+});
+document.getElementById('btn-save-appearance')?.addEventListener('click', function() {
+    showToast('✦ Appearance settings saved.');
+});
+document.getElementById('btn-save-address')?.addEventListener('click', function() {
+    showToast('✦ Address saved.');
+    document.getElementById('add-address-form').style.display = 'none';
+});
+document.getElementById('btn-submit-kyc')?.addEventListener('click', function() {
+    showToast('✦ KYC documents submitted. Verification takes 2–3 business days.');
+});
+document.getElementById('btn-export')?.addEventListener('click', function() {
+    showToast('✦ Your data export has been requested. Check your email within 24 hours.');
+});
+
+// ── KYC FILE UPLOAD ───────────────────────────────
+document.getElementById('kyc-upload-box')?.addEventListener('click', () => {
+    document.getElementById('kyc-file').click();
+});
+document.getElementById('kyc-file')?.addEventListener('change', function() {
+    const name = this.files[0]?.name || 'No file selected';
+    document.getElementById('kyc-file-name').textContent = name;
+});
+</script>
+
 </body>
 </html>
