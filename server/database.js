@@ -15,11 +15,25 @@ db.serialize(() => {
         id            INTEGER PRIMARY KEY AUTOINCREMENT,
         email         TEXT    UNIQUE NOT NULL,
         password_hash TEXT    NOT NULL,
+        name          TEXT    DEFAULT '',
+        phone         TEXT,
         role          TEXT    NOT NULL DEFAULT 'customer'
                               CHECK(role IN ('customer','admin')),
         is_banned     INTEGER NOT NULL DEFAULT 0,
         created_at    TEXT    NOT NULL DEFAULT (datetime('now'))
     )`);
+
+    // Backfill columns for existing DB files created before these fields existed.
+    db.run(`ALTER TABLE users ADD COLUMN name TEXT DEFAULT ''`, (err) => {
+        if (err && !err.message.includes("duplicate column name")) {
+            console.error("Failed adding users.name:", err.message);
+        }
+    });
+    db.run(`ALTER TABLE users ADD COLUMN phone TEXT`, (err) => {
+        if (err && !err.message.includes("duplicate column name")) {
+            console.error("Failed adding users.phone:", err.message);
+        }
+    });
 
     // ── PRODUCTS ──────────────────────────────────────────
     db.run(`CREATE TABLE IF NOT EXISTS products (
