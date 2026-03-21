@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GAB Jewels | Enter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale: #F5E6B8;
+      --dark: #0E0B07;
+      --dark-2: #1A1410;
+      --dark-3: #2C1F0E;
+      --cream: #FAF6EE;
+      --text-muted: rgba(232,201,122,0.45);
+      --error: #E07070;
+      --success: #6DBF8A;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background-color: var(--dark);
+      color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      overflow-x: hidden;
+    }
+
+    /* ── AMBIENT BACKGROUND ── */
+    .bg-ambient {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    }
+    .bg-ambient::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 10%, rgba(201,168,76,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 90%, rgba(201,168,76,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(44,31,14,0.6) 0%, transparent 80%);
+    }
+    .bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    /* ── LAYOUT ── */
+    .auth-wrapper {
+      position: relative; z-index: 1;
+      width: 100%; min-height: 100vh;
+      display: flex;
+    }
+
+    /* LEFT PANEL */
+    .panel-left {
+      flex: 1;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 60px 40px;
+      border-right: 1px solid rgba(201,168,76,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-left-inner {
+      max-width: 420px; width: 100%;
+      text-align: center;
+    }
+
+    /* BRAND */
+    .brand-lockup { margin-bottom: 56px; }
+    .brand-ornament {
+      display: flex; align-items: center; justify-content: center;
+      gap: 14px; margin-bottom: 20px;
+    }
+    .orn-line {
+      width: 50px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .orn-line.right { background: linear-gradient(90deg, var(--gold), transparent); }
+    .orn-diamond {
+      width: 7px; height: 7px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+    .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 0.35em;
+    }
+    .brand-sub {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* TABS */
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid rgba(201,168,76,0.18);
+      margin-bottom: 36px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 13px 0;
+      background: none; border: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(250,246,238,0.35);
+      cursor: pointer;
+      position: relative;
+      transition: color 0.35s;
+    }
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .tab-btn.active { color: var(--gold-light); }
+    .tab-btn.active::after { width: 100%; }
+
+    /* SCREENS */
+    .screen { display: none; animation: screenIn 0.45s ease forwards; }
+    .screen.active { display: block; }
+
+    @keyframes screenIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* FORM ELEMENTS */
+    .form-group { margin-bottom: 18px; text-align: left; }
+    .form-label {
+      display: block;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(250,246,238,0.45);
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(201,168,76,0.055);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      transition: border-color 0.3s, background 0.3s;
+      -webkit-appearance: none;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.09);
+    }
+    .form-input::placeholder { color: rgba(250,246,238,0.2); font-style: italic; }
+    .form-input.error-field { border-color: var(--error); }
+
+    /* PHONE ROW */
+    .phone-row { display: flex; gap: 10px; }
+    .country-code {
+      width: 90px; flex-shrink: 0;
+      padding: 13px 10px;
+      background: rgba(201,168,76,0.055);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+      text-align: center;
+    }
+    .country-code:focus { outline: none; border-color: var(--gold); }
+    .country-code option { background: var(--dark-2); }
+
+    /* OTP BOXES */
+    .otp-row {
+      display: flex; gap: 10px;
+      justify-content: center;
+      margin: 24px 0;
+    }
+    .otp-box {
+      width: 52px; height: 58px;
+      background: rgba(201,168,76,0.055);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--cream);
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      text-align: center;
+      transition: border-color 0.3s, background 0.3s;
+      caret-color: var(--gold);
+    }
+    .otp-box:focus { outline: none; border-color: var(--gold); background: rgba(201,168,76,0.1); }
+    .otp-box.filled { border-color: rgba(201,168,76,0.5); }
+
+    /* PASSWORD STRENGTH */
+    .strength-bar-wrap {
+      display: flex; gap: 5px; margin-top: 8px;
+    }
+    .strength-seg {
+      height: 3px; flex: 1;
+      background: rgba(201,168,76,0.1);
+      border-radius: 2px;
+      transition: background 0.4s;
+    }
+    .strength-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-top: 5px;
+      text-align: right;
+    }
+
+    /* BUTTONS */
+    .btn-gold {
+      width: 100%;
+      padding: 15px;
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-gold::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: transform 0.5s;
+    }
+    .btn-gold:hover::before { transform: translateX(120%) skewX(-15deg); }
+    .btn-gold:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 30px rgba(201,168,76,0.3);
+    }
+    .btn-gold:active { transform: translateY(0); }
+    .btn-gold:disabled {
+      opacity: 0.45; cursor: not-allowed;
+      transform: none; box-shadow: none;
+    }
+
+    .btn-ghost {
+      background: none; border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold); width: 100%; padding: 13px;
+      font-family: 'Cinzel', serif; font-size: 0.7rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      cursor: pointer; margin-top: 10px;
+      transition: all 0.3s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.07);
+    }
+
+    /* MESSAGES */
+    .msg {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: none;
+      text-align: left;
+      line-height: 1.5;
+    }
+    .msg.error { color: var(--error); background: rgba(224,112,112,0.08); border-left: 2px solid var(--error); }
+    .msg.success { color: var(--success); background: rgba(109,191,138,0.08); border-left: 2px solid var(--success); }
+    .msg.show { display: block; animation: msgIn 0.3s ease; }
+    @keyframes msgIn { from { opacity:0; transform:translateX(-6px); } to { opacity:1; transform:none; } }
+
+    /* STEP INDICATOR */
+    .steps {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; margin-bottom: 32px;
+    }
+    .step-node {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      color: rgba(250,246,238,0.35);
+      transition: all 0.4s;
+    }
+    .step-node.done {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark);
+    }
+    .step-node.current {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .step-connector {
+      width: 48px; height: 1px;
+      background: rgba(201,168,76,0.18);
+      transition: background 0.4s;
+    }
+    .step-connector.done { background: var(--gold); }
+
+    .step-labels {
+      display: flex; justify-content: space-between;
+      margin-top: 8px; margin-bottom: 28px;
+    }
+    .step-lbl {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,246,238,0.3);
+      text-align: center;
+      flex: 1;
+      transition: color 0.4s;
+    }
+    .step-lbl.active { color: var(--gold); }
+
+    /* OTP SCREEN INFO */
+    .otp-info {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: rgba(250,246,238,0.5);
+      margin-bottom: 6px;
+      line-height: 1.6;
+    }
+    .otp-phone-highlight {
+      color: var(--gold-light);
+      font-style: normal;
+    }
+    .resend-row {
+      text-align: center;
+      margin-top: 16px;
+    }
+    .resend-link {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      cursor: pointer;
+      background: none; border: none;
+      transition: color 0.3s;
+    }
+    .resend-link:hover { color: var(--gold); }
+    .resend-timer {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+    }
+
+    /* RIGHT DECORATIVE PANEL */
+    .panel-right {
+      width: 360px;
+      flex-shrink: 0;
+      background: var(--dark-3);
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 50% 100%, rgba(201,168,76,0.08) 0%, transparent 60%);
+    }
+
+    .deco-quote {
+      position: relative; z-index: 1;
+      text-align: center;
+    }
+    .deco-mark {
+      font-family: 'Cinzel', serif;
+      font-size: 5rem;
+      color: rgba(201,168,76,0.12);
+      line-height: 0.7;
+      margin-bottom: 20px;
+    }
+    .deco-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: rgba(250,246,238,0.55);
+      margin-bottom: 24px;
+    }
+    .deco-author {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .deco-gems {
+      position: absolute; bottom: 50px;
+      display: flex; gap: 12px;
+      z-index: 1;
+    }
+    .gem {
+      width: 10px; height: 10px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      opacity: 0.3;
+      animation: gemPulse 3s ease-in-out infinite;
+    }
+    .gem:nth-child(2) { opacity: 0.5; animation-delay: 0.5s; }
+    .gem:nth-child(3) { opacity: 0.2; animation-delay: 1s; }
+    @keyframes gemPulse {
+      0%,100% { transform: rotate(45deg) scale(1); }
+      50% { transform: rotate(45deg) scale(1.3); opacity: 0.7; }
+    }
+
+    .since-badge {
+      position: absolute; top: 36px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      z-index: 1;
+    }
+
+    /* SUCCESS SCREEN */
+    .success-screen {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .success-icon {
+      width: 64px; height: 64px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      animation: successPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    @keyframes successPop {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .success-icon svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; stroke-width: 2; }
+    .success-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .success-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: rgba(250,246,238,0.5);
+      font-size: 1rem;
+      margin-bottom: 32px;
+    }
+
+    /* DIVIDER */
+    .text-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 20px 0;
+    }
+    .text-divider::before, .text-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(201,168,76,0.15);
+    }
+    .text-divider span {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* FORGOT PW */
+    .forgot-link {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-align: right;
+      display: block;
+      margin-top: -10px;
+      margin-bottom: 18px;
+      cursor: pointer;
+      background: none; border: none;
+      transition: color 0.3s;
+    }
+    .forgot-link:hover { color: var(--gold); }
+
+    /* LOADING SPINNER */
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(14,11,7,0.3);
+      border-top-color: var(--dark);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle; margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ADMIN BADGE */
+    .admin-badge {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 18px;
+      border: 1px solid var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.45em;
+      color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+    .admin-info-row {
+      display: flex; gap: 0;
+      border: 1px solid rgba(201,168,76,0.15);
+      margin: 24px 0 8px;
+      text-align: left;
+    }
+    .admin-info-item {
+      flex: 1; padding: 14px 18px;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .admin-info-item:first-child {
+      border-right: 1px solid rgba(201,168,76,0.15);
+    }
+    .admin-info-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .admin-info-val {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+    }
+
+    /* SHOW/HIDE PW */
+    .input-wrap { position: relative; }
+    .eye-btn {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; padding: 0;
+      color: rgba(250,246,238,0.3); transition: color 0.3s;
+    }
+    .eye-btn:hover { color: var(--gold); }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      .panel-right { display: none; }
+      .panel-left { padding: 40px 24px; }
+    }
+    @media (max-width: 480px) {
+      .otp-box { width: 42px; height: 50px; font-size: 1.2rem; }
+      .panel-left-inner { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-ambient"><div class="bg-grid"></div></div>
+
+<div class="auth-wrapper">
+
+  <!-- LEFT: FORM PANEL -->
+  <div class="panel-left">
+    <div class="panel-left-inner">
+
+      <!-- BRAND -->
+      <div class="brand-lockup">
+        <div class="brand-ornament">
+          <div class="orn-line"></div>
+          <div class="orn-diamond"></div>
+          <div class="orn-line right"></div>
+        </div>
+        <div class="brand-name">GAB JEWELS</div>
+        <div class="brand-sub">Fine Jewellery Since 1978</div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div style="width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);margin-bottom:36px;"></div>
+
+      <!-- ══════════ LOGIN SCREEN ══════════ -->
+      <div class="screen active" id="screen-login">
+        <div class="msg error" id="login-err"></div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-wrap">
+            <input class="form-input" type="password" id="login-pw" placeholder="Enter your password" autocomplete="current-password" style="padding-right:44px"/>
+            <button class="eye-btn" type="button" onclick="toggleEye('login-pw',this)">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <button class="forgot-link" onclick="showForgot()">Forgot password?</button>
+
+        <button class="btn-gold" id="login-btn" onclick="doLogin()">Enter the Vault</button>
+        <p style="text-align:center;margin-top:20px;font-family:'Raleway',sans-serif;font-size:0.7rem;letter-spacing:0.12em;color:var(--text-muted);">
+          New member? <button onclick="switchTab('signup')" style="background:none;border:none;color:var(--gold);cursor:pointer;font-family:'Raleway',sans-serif;font-size:0.7rem;letter-spacing:0.12em;border-bottom:1px solid var(--gold);padding:0;transition:opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Create an account</button>
+        </p>
+      </div>
+
+      <!-- ══════════ FORGOT PASSWORD SCREEN ══════════ -->
+      <div class="screen" id="screen-forgot">
+        <div class="msg error" id="forgot-err"></div>
+        <div class="msg success" id="forgot-ok"></div>
+        <p class="otp-info" style="margin-bottom:24px;">Enter your email and we'll send a reset link to your inbox.

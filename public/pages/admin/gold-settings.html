@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAB Jewels Admin — Gold Settings</title>
+    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span class="logo-mark">✦</span>
+            <div>
+                <div class="logo-text">AURUM</div>
+                <div class="logo-sub">Admin Console</div>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
+                </svg><span>Dashboard</span></a>
+            <a href="../admin/product.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg><span>Products</span></a>
+            <a href="users.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                </svg><span>Users</span></a>
+            <a href="logs.html" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                </svg><span>Audit Logs</span></a>
+            <a href="gold-settings.html" class="nav-item active"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg><span>Settings</span></a>
+        </nav>
+        <button class="logout-btn" id="logoutBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Secure Logout
+        </button>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h1 class="page-title">Settings</h1>
+                <p class="page-subtitle">Gold Price Control &amp; System Configuration</p>
+            </div>
+        </header>
+
+        <!-- Gold Rate Settings -->
+        <section class="panel settings-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">✦ Live Price Override</h2>
+            </div>
+            <div class="settings-description">
+                <p>Gold prices fluctuate daily. The system fetches the live rate via API and applies your markup below.
+                    You may also pin a manual rate during high-volatility periods.</p>
+            </div>
+
+            <div class="live-rate-display">
+                <div class="rate-box">
+                    <div class="rate-label">API Live Rate (22K/g)</div>
+                    <div class="rate-value" id="liveRateDisplay">₹6,842</div>
+                </div>
+                <div class="rate-arrow">→</div>
+                <div class="rate-box rate-box-gold">
+                    <div class="rate-label">Effective Customer Rate</div>
+                    <div class="rate-value" id="effectiveRateDisplay">₹7,184</div>
+                </div>
+            </div>
+
+            <form id="goldForm" class="settings-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Markup Percentage (%)</label>
+                        <input type="number" id="markupInput" min="0" max="100" step="0.01" placeholder="5.00"
+                            value="5.00">
+                        <span class="form-hint">Applied on top of live API rate. Set 0 for no markup.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Manual Rate Override (₹/g)</label>
+                        <input type="number" id="manualRateInput" min="0" step="0.01"
+                            placeholder="Leave blank to use live API">
+                        <span class="form-hint">If set, this overrides the live API rate entirely.</span>
+                    </div>
+                </div>
+                <div class="settings-actions">
+                    <button type="submit" class="btn-gold">Save Gold Settings</button>
+                    <button type="button" class="btn-ghost" id="clearManualRate">Clear Manual Override</button>
+                </div>
+            </form>
+
+            <div class="settings-last-updated" id="lastUpdated"></div>
+        </section>
+
+        <!-- Security Info Panel -->
+        <section class="panel settings-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">🔐 Security Information</h2>
+            </div>
+            <div class="security-info-grid">
+                <div class="security-info-item">
+                    <div class="security-info-label">Password Hashing</div>
+                    <div class="security-info-value good">bcrypt · cost factor 12</div>
+                </div>
+                <div class="security-info-item">
+                    <div class="security-info-label">Session Tokens</div>
+                    <div class="security-info-value good">JWT · 2-hour expiry</div>
+                </div>
+                <div class="security-info-item">
+                    <div class="security-info-label">Input Sanitisation</div>
+                    <div class="security-info-value good">XSS filter on all string fields</div>
+                </div>
+                <div class="security-info-item">
+                    <div class="security-info-label">Role Middleware</div>
+                    <div class="security-info-value good">requireAdmin on all /api/admin/* routes</div>
+                </div>
+                <div class="security-info-item">
+                    <div class="security-info-label">Rate Limiting</div>
+                    <div class="security-info-value good">100 req / 15 min · login: 10 / 15 min</div>
+                </div>
+                <div class="security-info-item">
+                    <div class="security-info-label">Audit Trail</div>
+                    <div class="security-info-value good">Append-only · all mutations logged</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast" id="toast"></div>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin-gold-settings.js"></script>
+</body>
+
+</html>
