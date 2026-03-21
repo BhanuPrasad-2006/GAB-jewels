@@ -1,1059 +1,853 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Account | GAB Jewels</title>
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/settings.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account | GAB Jewels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/global.css">
+
+  <style>
+    /* ── TOKENS ──────────────────────────────────── */
+    :root {
+      --gold: #C9A84C; --gold-l: #E8C97A;
+      --dark: #0E0B07; --dark2: #1A1410; --dark3: #2C1F0E;
+      --cream: #FAF6EE; --muted: rgba(232,201,122,0.45);
+      --border: rgba(201,168,76,0.15); --border-h: rgba(201,168,76,0.35);
+      --err: #E07070; --ok: #6DBF8A;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* ── LAYOUT ──────────────────────────────────── */
+    .sw {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      max-width: 1280px;
+      margin: 0 auto;
+      min-height: calc(100vh - 160px);
+    }
+
+    /* ── SIDEBAR ─────────────────────────────────── */
+    .ss {
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      height: fit-content;
+    }
+    .ss-profile {
+      padding: 2.5rem 1.8rem;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      background: rgba(201,168,76,0.02);
+    }
+    .ss-av {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem; color: var(--gold);
+      margin: 0 auto 1rem;
+      position: relative;
+    }
+    .ss-av::after {
+      content: '';
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    .ss-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.92rem; letter-spacing: 0.08em;
+      color: var(--cream); display: block; margin-bottom: 4px;
+    }
+    .ss-email {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.63rem; letter-spacing: 0.06em;
+      color: rgba(250,246,238,0.35); display: block;
+    }
+    .ss-badge {
+      display: inline-block; margin-top: 10px;
+      padding: 3px 12px;
+      border: 1px solid rgba(201,168,76,0.25);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.57rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      background: rgba(201,168,76,0.06);
+    }
+    .ss-nav { padding: 0.8rem 0; list-style: none; margin: 0; }
+    .ss-nav li {
+      display: flex; align-items: center; gap: 0.85rem;
+      padding: 0.78rem 1.8rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.74rem; letter-spacing: 0.07em;
+      color: rgba(250,246,238,0.42);
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all 0.22s;
+    }
+    .ss-nav li i { width: 15px; text-align: center; font-size: 0.82rem; opacity: 0.7; transition: opacity 0.22s; }
+    .ss-nav li:hover { color: var(--cream); background: rgba(201,168,76,0.04); border-left-color: rgba(201,168,76,0.3); }
+    .ss-nav li:hover i { opacity: 1; }
+    .ss-nav li.on { color: var(--gold); background: rgba(201,168,76,0.07); border-left-color: var(--gold); }
+    .ss-nav li.on i { opacity: 1; color: var(--gold); }
+    .ss-nav .divider { height: 1px; background: var(--border); margin: 0.5rem 1.8rem; padding: 0; border: none; cursor: default; }
+    .ss-nav .logout { color: rgba(224,112,112,0.55); }
+    .ss-nav .logout:hover { color: var(--err); background: rgba(224,112,112,0.05); border-left-color: var(--err); }
+
+    /* ── MAIN ────────────────────────────────────── */
+    .sm { padding: 3rem 3.5rem; min-width: 0; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 1.8rem; right: 1.8rem;
+      padding: 12px 20px; border: 1px solid;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.74rem; letter-spacing: 0.06em;
+      z-index: 9999; display: none;
+      animation: toastIn 0.3s ease; max-width: 360px;
+      pointer-events: none;
+    }
+    @keyframes toastIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* TABS */
+    .tab { display: none; }
+    .tab.on { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+    /* TAB HEADER */
+    .thdr { margin-bottom: 2.2rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--border); }
+    .thdr .ey {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.59rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 0.45rem;
+    }
+    .thdr h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.55rem; font-weight: 400;
+      color: var(--cream); letter-spacing: 0.04em; margin-bottom: 0.3rem;
+    }
+    .thdr p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; color: rgba(250,246,238,0.42);
+      font-size: 0.98rem;
+    }
+    .orn { display: flex; align-items: center; gap: 10px; margin-top: 0.7rem; }
+    .ol { width: 40px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4)); }
+    .od { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); }
+
+    /* FORM */
+    .fg { margin-bottom: 1.2rem; }
+    .fg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+    .fg3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+    .fl {
+      display: block;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.59rem; letter-spacing: 0.26em;
+      text-transform: uppercase; color: rgba(250,246,238,0.38);
+      margin-bottom: 7px;
+    }
+    .fl span { color: rgba(250,246,238,0.2); font-size: 0.8em; }
+    .fi {
+      width: 100%; padding: 12px 14px;
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.18);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; outline: none;
+      transition: border-color 0.28s, background 0.28s;
+    }
+    .fi:focus { border-color: var(--gold); background: rgba(201,168,76,0.09); }
+    .fi::placeholder { color: rgba(250,246,238,0.2); font-style: italic; }
+    .fsel {
+      cursor: pointer; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+    }
+    .fsel option { background: var(--dark2); }
+    .ftxt { resize: vertical; min-height: 90px; }
+
+    /* PHONE ROW */
+    .prow { display: flex; gap: 8px; }
+    .csel {
+      width: 82px; flex-shrink: 0;
+      padding: 12px 8px;
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.18);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem; cursor: pointer;
+      -webkit-appearance: none; outline: none; text-align: center;
+    }
+    .csel:focus { border-color: var(--gold); }
+    .csel option { background: var(--dark2); }
+    .btn-otp {
+      padding: 0 16px; flex-shrink: 0;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.28);
+      color: var(--gold);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.12em;
+      cursor: pointer; white-space: nowrap;
+      transition: all 0.25s;
+    }
+    .btn-otp:hover { background: rgba(201,168,76,0.16); border-color: var(--gold); }
+
+    /* SECTION DIVIDER */
+    .sdiv { height: 1px; background: var(--border); margin: 2rem 0; }
+    .ssec {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.59rem; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 1.1rem; margin-top: 0.2rem;
+    }
+
+    /* TOGGLE ROW */
+    .trow {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 1.05rem 1.3rem;
+      border: 1px solid var(--border);
+      background: rgba(201,168,76,0.02);
+      margin-bottom: 0.75rem;
+      transition: border-color 0.25s;
+    }
+    .trow:hover { border-color: var(--border-h); }
+    .trow-txt strong {
+      display: block;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.76rem; color: var(--cream);
+      letter-spacing: 0.04em; margin-bottom: 3px;
+    }
+    .trow-txt p {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.64rem; color: rgba(250,246,238,0.36);
+      letter-spacing: 0.04em; line-height: 1.5;
+    }
+
+    /* TOGGLE SWITCH */
+    .tog { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .tog input { opacity: 0; width: 0; height: 0; }
+    .tog-tr {
+      position: absolute; inset: 0;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.22);
+      cursor: pointer; border-radius: 12px;
+      transition: all 0.3s;
+    }
+    .tog-tr::before {
+      content: '';
+      position: absolute; left: 3px; top: 3px;
+      width: 16px; height: 16px;
+      background: rgba(201,168,76,0.45);
+      border-radius: 50%; transition: transform 0.3s, background 0.3s;
+    }
+    .tog input:checked + .tog-tr { background: rgba(201,168,76,0.18); border-color: var(--gold); }
+    .tog input:checked + .tog-tr::before { transform: translateX(20px); background: var(--gold); }
+
+    /* SECURITY ITEM */
+    .sitem {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 1.05rem 1.3rem;
+      border: 1px solid var(--border);
+      background: rgba(201,168,76,0.02);
+      margin-bottom: 0.75rem;
+      transition: border-color 0.25s;
+    }
+    .sitem:hover { border-color: var(--border-h); }
+    .sitem strong { display: block; font-family: 'Raleway', sans-serif; font-size: 0.76rem; color: var(--cream); margin-bottom: 3px; }
+    .sitem p { font-family: 'Raleway', sans-serif; font-size: 0.64rem; color: rgba(250,246,238,0.36); }
+    .danger { border-color: rgba(224,112,112,0.18) !important; background: rgba(224,112,112,0.025) !important; }
+
+    /* BUTTONS */
+    .btn-save {
+      padding: 12px 26px;
+      background: var(--gold); color: var(--dark);
+      border: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.71rem; letter-spacing: 0.26em;
+      text-transform: uppercase; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.28s, transform 0.18s;
+      position: relative; overflow: hidden;
+    }
+    .btn-save::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.14);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: transform 0.5s;
+    }
+    .btn-save:hover::before { transform: translateX(120%) skewX(-15deg); }
+    .btn-save:hover { background: var(--gold-l); transform: translateY(-1px); }
+    .btn-outline {
+      padding: 11px 20px;
+      background: none; border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      text-transform: uppercase; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      transition: all 0.25s;
+    }
+    .btn-outline:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+    .btn-danger {
+      padding: 11px 20px;
+      background: none; border: 1px solid rgba(224,112,112,0.3);
+      color: var(--err);
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      text-transform: uppercase; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      transition: all 0.25s;
+    }
+    .btn-danger:hover { background: rgba(224,112,112,0.07); border-color: var(--err); }
+    .btn-row { display: flex; gap: 0.75rem; margin-top: 1.4rem; flex-wrap: wrap; }
+
+    /* PASSWORD FORM */
+    .pw-form {
+      display: none; padding: 1.4rem;
+      border: 1px solid var(--border);
+      background: rgba(201,168,76,0.02);
+      margin-bottom: 0.75rem;
+    }
+
+    /* KYC */
+    .kyc-note {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      padding: 1rem 1.2rem;
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.18);
+      margin-bottom: 2rem;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.7rem; color: rgba(250,246,238,0.58);
+      line-height: 1.6; letter-spacing: 0.04em;
+    }
+    .kyc-note i { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+    .kyc-steps { display: flex; align-items: center; margin-bottom: 1.8rem; }
+    .ksd {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif; font-size: 0.64rem;
+      color: rgba(250,246,238,0.32); flex-shrink: 0; transition: all 0.4s;
+    }
+    .ksd.done { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+    .ksd.cur { border-color: var(--gold); color: var(--gold); }
+    .ksl { flex: 1; height: 1px; background: rgba(201,168,76,0.18); transition: background 0.4s; }
+    .ksl.done { background: var(--gold); }
+    .kyc-lbls { display: flex; justify-content: space-between; margin-top: 5px; margin-bottom: 2rem; }
+    .kyc-lbl {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.57rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(250,246,238,0.28);
+      flex: 1; text-align: center;
+    }
+    .kyc-lbl.cur { color: var(--gold); }
+    .upload-box {
+      border: 1px dashed rgba(201,168,76,0.24);
+      padding: 2.5rem; text-align: center;
+      cursor: pointer; transition: all 0.28s;
+      background: rgba(201,168,76,0.02); margin-bottom: 1.2rem;
+    }
+    .upload-box:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+    .upload-box i { font-size: 2rem; color: rgba(201,168,76,0.3); display: block; margin-bottom: 0.7rem; }
+    .upload-box p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: rgba(250,246,238,0.38); }
+    .upload-box span { color: var(--gold); border-bottom: 1px solid rgba(201,168,76,0.3); }
+    .upload-fname { font-family: 'Raleway', sans-serif; font-size: 0.64rem; color: var(--gold); letter-spacing: 0.06em; display: block; margin-top: 0.5rem; }
+
+    /* ACCENT SWATCHES */
+    .swatches { display: flex; gap: 12px; margin-top: 8px; }
+    .swatch {
+      width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; border: 2px solid transparent;
+      transition: all 0.22s;
+    }
+    .swatch:hover, .swatch.on { border-color: rgba(250,246,238,0.65); transform: scale(1.15); }
+
+    /* ADDRESS CARDS */
+    .addr-card {
+      padding: 1.2rem 1.4rem;
+      border: 1px solid var(--border);
+      background: rgba(201,168,76,0.02);
+      margin-bottom: 0.75rem;
+      transition: border-color 0.25s;
+    }
+    .addr-card:hover { border-color: var(--border-h); }
+    .addr-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+    .addr-tag {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.57rem; letter-spacing: 0.18em;
+      text-transform: uppercase; padding: 3px 10px;
+      border: 1px solid rgba(201,168,76,0.28);
+      color: var(--gold); background: rgba(201,168,76,0.07);
+    }
+    .addr-acts { display: flex; gap: 6px; }
+    .addr-btn {
+      background: none; border: 1px solid rgba(201,168,76,0.18);
+      color: rgba(250,246,238,0.32); padding: 5px 9px;
+      cursor: pointer; font-size: 0.7rem; transition: all 0.2s;
+    }
+    .addr-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .addr-btn.del:hover { border-color: var(--err); color: var(--err); }
+    .addr-name { font-family: 'Cormorant Garamond', serif; font-size: 1.02rem; color: var(--cream); margin-bottom: 4px; }
+    .addr-line { font-family: 'Raleway', sans-serif; font-size: 0.7rem; color: rgba(250,246,238,0.42); line-height: 1.7; }
+    .addr-phone { font-family: 'Raleway', sans-serif; font-size: 0.7rem; color: var(--gold); margin-top: 6px; }
+
+    /* WISHLIST EMPTY */
+    .wl-empty {
+      padding: 3rem; border: 1px dashed rgba(201,168,76,0.2);
+      text-align: center; margin-top: 1.5rem;
+    }
+    .wl-empty i { color: rgba(201,168,76,0.22); font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+    .wl-empty p { font-family: 'Cormorant Garamond', serif; font-style: italic; color: rgba(250,246,238,0.32); font-size: 1rem; }
+    .wl-empty a { color: var(--gold); font-family: 'Raleway', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; border-bottom: 1px solid rgba(201,168,76,0.3); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .sw { grid-template-columns: 1fr; }
+      .ss { position: static; border-right: none; border-bottom: 1px solid var(--border); }
+      .ss-nav { display: flex; flex-wrap: wrap; padding: 0.5rem; }
+      .ss-nav li { flex: 1 1 auto; border-left: none; border-bottom: 2px solid transparent; padding: 0.6rem 0.9rem; justify-content: center; font-size: 0.68rem; }
+      .ss-nav li.on { border-bottom-color: var(--gold); border-left: none; }
+      .ss-nav .divider { display: none; }
+      .sm { padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .fg2, .fg3 { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script>
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      window.location.replace('../index.html');
+    }
+  </script>
 </head>
 <body>
 
-    <!-- Ticker -->
-    <div class="ticker-wrap">
-        <div class="ticker-track">
-            <span>✦ Free shipping on orders above ₹50,000</span>
-            <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
-            <span>✦ 30-Day Easy Returns</span>
-            <span>✦ Custom Design Available</span>
-            <span>✦ EMI Available</span>
-            <span>✦ Free shipping on orders above ₹50,000</span>
-            <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
-            <span>✦ 30-Day Easy Returns</span>
-            <span>✦ Custom Design Available</span>
-            <span>✦ EMI Available</span>
-        </div>
-    </div>
-
-    <!-- Nav -->
-    <header class="top-nav">
-        <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="collections.html">Collections</a>
-            <a href="advance-buy.html">Buy Gold</a>
-            <a href="settings.html" class="active">My Account</a>
-            <a href="cart.html" class="cart-icon">
-                <i class="fas fa-shopping-bag"></i>
-                <span id="cart-badge" class="badge">0</span>
-            </a>
-        </nav>
-    </header>
-
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
-        <a href="../index.html">Home</a>
-        <span>◆</span>
-        <span style="color: var(--gold);">My Account</span>
-    </div>
-
-    <!-- Settings Layout -->
-    <div class="settings-wrapper">
-
-        <!-- Sidebar -->
-        <aside class="settings-sidebar">
-            <div class="settings-brand">
-                <div class="settings-avatar" id="settings-avatar">Y</div>
-                <div class="settings-user-info">
-                    <span class="settings-username" id="sidebar-name">Yatish</span>
-                    <span class="settings-useremail" id="sidebar-email">yatish@example.com</span>
-                </div>
-            </div>
-
-            <ul class="settings-nav">
-                <li class="active" data-tab="profile">
-                    <i class="fas fa-user"></i> Profile
-                </li>
-                <li data-tab="security">
-                    <i class="fas fa-shield-alt"></i> Security
-                </li>
-                <li data-tab="preferences">
-                    <i class="fas fa-sliders-h"></i> Preferences
-                </li>
-                <li data-tab="kyc">
-                    <i class="fas fa-id-card"></i> KYC Verification
-                </li>
-                <li class="settings-logout" id="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i> Log Out
-                </li>
-            </ul>
-        </aside>
-
-        <!-- Main content -->
-        <main class="settings-main">
-
-            <!-- Toast notification -->
-            <div class="settings-toast" id="settings-toast"></div>
-
-            <!-- ── PROFILE TAB ── -->
-            <section id="profile" class="settings-tab active">
-                <div class="settings-tab-header">
-                    <span class="eyebrow">Account</span>
-                    <h2>Public Profile</h2>
-                    <div class="ornament-line"><div class="ornament-diamond"></div></div>
-                </div>
-
-                <form id="profile-form" class="settings-form">
-                    <div class="settings-input-group">
-                        <label class="settings-label">Full Name</label>
-                        <input type="text" id="user-name" class="settings-input" value="Yatish" placeholder="Your full name">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">Email Address</label>
-                        <input type="email" id="user-email" class="settings-input" value="yatish@example.com" placeholder="your@email.com">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">Phone Number</label>
-                        <div class="phone-row">
-                            <input type="tel" id="user-phone" class="settings-input" placeholder="+91 98765 43210">
-                            <button type="button" class="btn-verify-phone" id="btn-send-otp">
-                                Verify <i class="fas fa-mobile-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- OTP row (hidden until Send OTP clicked) -->
-                    <div class="settings-input-group" id="otp-row" style="display:none;">
-                        <label class="settings-label">OTP sent to your number</label>
-                        <div class="phone-row">
-                            <input type="text" id="otp-input" class="settings-input" placeholder="Enter 6-digit OTP" maxlength="6">
-                            <button type="button" class="btn-verify-phone" id="btn-verify-otp">
-                                Confirm <i class="fas fa-check"></i>
-                            </button>
-                        </div>
-                        <span class="otp-status" id="otp-status"></span>
-                    </div>
-
-                    <div class="settings-input-group">
-                        <label class="settings-label">Address Line 1</label>
-                        <input type="text" id="user-address" class="settings-input" placeholder="Flat No, Building, Street">
-                    </div>
-                    <div class="settings-row-2">
-                        <div class="settings-input-group">
-                            <label class="settings-label">City</label>
-                            <input type="text" id="user-city" class="settings-input" placeholder="Bengaluru">
-                        </div>
-                        <div class="settings-input-group">
-                            <label class="settings-label">PIN Code</label>
-                            <input type="text" id="user-pin" class="settings-input" placeholder="560001">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-settings-save">
-                        <i class="fas fa-save"></i> Save Profile
-                    </button>
-                </form>
-            </section>
-
-            <!-- ── SECURITY TAB ── -->
-            <section id="security" class="settings-tab">
-                <div class="settings-tab-header">
-                    <span class="eyebrow">Account</span>
-                    <h2>Security Centre</h2>
-                    <div class="ornament-line"><div class="ornament-diamond"></div></div>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Two-Factor Authentication</strong>
-                        <p>Protect your account with OTP verification on login.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="2fa-toggle">
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Change Password</strong>
-                        <p>Update your account password regularly for security.</p>
-                    </div>
-                    <button class="btn-settings-outline" id="btn-change-password">Update</button>
-                </div>
-
-                <!-- Change password form (hidden by default) -->
-                <div id="password-form-wrap" style="display:none;" class="settings-form">
-                    <div class="settings-input-group">
-                        <label class="settings-label">Current Password</label>
-                        <input type="password" id="current-password" class="settings-input" placeholder="••••••••">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">New Password</label>
-                        <input type="password" id="new-password" class="settings-input" placeholder="••••••••">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">Confirm New Password</label>
-                        <input type="password" id="confirm-password" class="settings-input" placeholder="••••••••">
-                    </div>
-                    <button type="button" class="btn-settings-save" id="btn-save-password">
-                        <i class="fas fa-lock"></i> Update Password
-                    </button>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Export Account Data</strong>
-                        <p>Download a copy of your purchase history and profile data.</p>
-                    </div>
-                    <button class="btn-settings-outline" id="btn-export">Export</button>
-                </div>
-
-                <div class="settings-item danger-zone">
-                    <div class="settings-item-text">
-                        <strong>Delete Account</strong>
-                        <p>Permanently remove your account and all data. This cannot be undone.</p>
-                    </div>
-                    <button class="btn-settings-danger">Delete</button>
-                </div>
-            </section>
-
-            <!-- ── PREFERENCES TAB ── -->
-            <section id="preferences" class="settings-tab">
-                <div class="settings-tab-header">
-                    <span class="eyebrow">Account</span>
-                    <h2>Preferences</h2>
-                    <div class="ornament-line"><div class="ornament-diamond"></div></div>
-                </div>
-
-                <div class="settings-input-group">
-                    <label class="settings-label">Preferred Currency</label>
-                    <select id="currency" class="settings-input settings-select">
-                        <option value="INR">INR (₹) — Indian Rupee</option>
-                        <option value="USD">USD ($) — US Dollar</option>
-                        <option value="AED">AED (د.إ) — UAE Dirham</option>
-                        <option value="GBP">GBP (£) — British Pound</option>
-                    </select>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Gold Price Alerts</strong>
-                        <p>Notify me via email when the 24K rate drops significantly.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="price-alert" checked>
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Order Update Notifications</strong>
-                        <p>Receive SMS and email updates on your shipment status.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="order-notif" checked>
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-
-                <div class="settings-item">
-                    <div class="settings-item-text">
-                        <strong>Promotional Emails</strong>
-                        <p>Hear about exclusive offers and new collections.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="promo-notif">
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-
-                <button class="btn-settings-save" id="btn-save-prefs" style="margin-top:24px;">
-                    <i class="fas fa-save"></i> Save Preferences
-                </button>
-            </section>
-
-            <!-- ── KYC TAB ── -->
-            <section id="kyc" class="settings-tab">
-                <div class="settings-tab-header">
-                    <span class="eyebrow">Compliance</span>
-                    <h2>KYC Verification</h2>
-                    <div class="ornament-line"><div class="ornament-diamond"></div></div>
-                </div>
-
-                <div class="kyc-note">
-                    <i class="fas fa-info-circle"></i>
-                    KYC verification is required for purchases above ₹2,00,000 as per RBI guidelines.
-                </div>
-
-                <div class="kyc-status-bar" id="kyc-status-bar">
-                    <div class="kyc-step done"><i class="fas fa-check"></i><span>Identity</span></div>
-                    <div class="kyc-step-line"></div>
-                    <div class="kyc-step active"><i class="fas fa-file-alt"></i><span>Documents</span></div>
-                    <div class="kyc-step-line"></div>
-                    <div class="kyc-step"><i class="fas fa-shield-check"></i><span>Verified</span></div>
-                </div>
-
-                <div class="settings-form">
-                    <div class="settings-input-group">
-                        <label class="settings-label">PAN Card Number</label>
-                        <input type="text" id="pan-number" class="settings-input" placeholder="ABCDE1234F" maxlength="10"
-                               style="text-transform:uppercase; letter-spacing:0.2em;">
-                    </div>
-
-                    <div class="settings-input-group">
-                        <label class="settings-label">Aadhaar Number (last 4 digits)</label>
-                        <input type="text" id="aadhaar-last4" class="settings-input" placeholder="XXXX" maxlength="4">
-                    </div>
-
-                    <label class="settings-label" style="margin-bottom:12px;">Upload PAN Card (PDF or JPG, max 5MB)</label>
-                    <div class="kyc-upload-box" id="kyc-upload-box">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Drag & drop or <span>click to browse</span></p>
-                        <span class="kyc-file-name" id="kyc-file-name">No file selected</span>
-                        <input type="file" id="kyc-file" accept=".pdf,.jpg,.jpeg,.png" hidden>
-                    </div>
-
-                    <button class="btn-settings-save" id="btn-submit-kyc">
-                        <i class="fas fa-paper-plane"></i> Submit for Verification
-                    </button>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-top">
-            <div>
-                <span class="footer-brand-name">GAB JEWELS</span>
-                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Navigate</h4>
-                <a href="../index.html">Home</a>
-                <a href="collections.html">Collections</a>
-                <a href="advance-buy.html">Buy Gold</a>
-                <a href="cart.html">Your Bag</a>
-            </div>
-            <div class="footer-col">
-                <h4>Policies</h4>
-                <a href="#">Exchange Policy</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Use</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
-            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
-        </div>
-    </footer>
-
-    <script src="../assets/js/cart.js"></script>
-    <script src="../assets/js/settings.js"></script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Account | GAB Jewels</title>
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/settings.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script>
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.replace('../index.html');
-        }
-    </script>
-</head>
-<body>
-
-<!-- Ticker -->
+<!-- TICKER -->
 <div class="ticker-wrap">
-    <div class="ticker-track">
-        <span>✦ Free shipping on orders above ₹50,000</span>
-        <span>✦ BIS Hallmarked Jewellery</span>
-        <span>✦ Lifetime Exchange &amp; Buyback</span>
-        <span>✦ 30-Day Easy Returns</span>
-        <span>✦ Custom Design Available</span>
-        <span>✦ EMI Available</span>
-        <span>✦ Free shipping on orders above ₹50,000</span>
-        <span>✦ BIS Hallmarked Jewellery</span>
-        <span>✦ Lifetime Exchange &amp; Buyback</span>
-        <span>✦ 30-Day Easy Returns</span>
-        <span>✦ Custom Design Available</span>
-        <span>✦ EMI Available</span>
-    </div>
+  <div class="ticker-track">
+    <span>✦ Free shipping on orders above ₹50,000</span><span>✦ BIS Hallmarked Jewellery</span>
+    <span>✦ Lifetime Exchange &amp; Buyback</span><span>✦ 30-Day Easy Returns</span>
+    <span>✦ Custom Design Available</span><span>✦ EMI Available</span>
+    <span>✦ Free shipping on orders above ₹50,000</span><span>✦ BIS Hallmarked Jewellery</span>
+    <span>✦ Lifetime Exchange &amp; Buyback</span><span>✦ 30-Day Easy Returns</span>
+    <span>✦ Custom Design Available</span><span>✦ EMI Available</span>
+  </div>
 </div>
 
-<!-- Nav -->
+<!-- NAV -->
 <header class="top-nav">
-    <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="collections.html">Collections</a>
-        <a href="advance-buy.html">Buy Gold</a>
-        <a href="settings.html" class="active">My Account</a>
-        <a href="contact.html">Contact</a>
-        <a href="cart.html" class="cart-icon">
-            <i class="fas fa-shopping-bag"></i>
-            <span id="cart-badge" class="badge">0</span>
-        </a>
-    </nav>
+  <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="collections.html">Collections</a>
+    <a href="advance-buy.html">Buy Gold</a>
+    <a href="settings.html" class="active">My Account</a>
+    <a href="contact.html">Contact</a>
+    <a href="cart.html" class="cart-icon">
+      <i class="fas fa-shopping-bag"></i>
+      <span id="cart-badge" class="badge">0</span>
+    </a>
+  </nav>
 </header>
 
-<!-- Breadcrumb -->
+<!-- BREADCRUMB -->
 <div class="breadcrumb">
-    <a href="../index.html">Home</a>
-    <span>◆</span>
-    <span style="color:var(--gold)">My Account</span>
+  <a href="../index.html">Home</a><span>◆</span>
+  <span style="color:var(--gold)">My Account</span>
 </div>
 
-<!-- Settings Layout -->
-<div class="settings-wrapper">
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-    <!-- Sidebar -->
-    <aside class="settings-sidebar">
-        <div class="settings-brand">
-            <div class="settings-avatar" id="settings-avatar">Y</div>
-            <div class="settings-user-info">
-                <span class="settings-username" id="sidebar-name">Yatish</span>
-                <span class="settings-useremail" id="sidebar-email">yatish@example.com</span>
-            </div>
+<div class="sw">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="ss">
+    <div class="ss-profile">
+      <div class="ss-av" id="ss-av">Y</div>
+      <span class="ss-name" id="ss-name">Yatish B</span>
+      <span class="ss-email" id="ss-email">yatish@example.com</span>
+      <div class="ss-badge">Member</div>
+    </div>
+    <ul class="ss-nav">
+      <li class="on" data-tab="profile"><i class="fas fa-user"></i> Profile</li>
+      <li data-tab="security"><i class="fas fa-shield-alt"></i> Security</li>
+      <li data-tab="preferences"><i class="fas fa-sliders-h"></i> Preferences</li>
+      <li data-tab="appearance"><i class="fas fa-palette"></i> Appearance</li>
+      <li data-tab="addresses"><i class="fas fa-map-marker-alt"></i> Addresses</li>
+      <li data-tab="wishlist"><i class="fas fa-heart"></i> Wishlist</li>
+      <li data-tab="kyc"><i class="fas fa-id-card"></i> KYC</li>
+      <li class="divider"></li>
+      <li class="logout" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Log Out</li>
+    </ul>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="sm">
+
+    <!-- ── PROFILE ── -->
+    <section class="tab on" id="tab-profile">
+      <div class="thdr">
+        <span class="ey">Account</span>
+        <h2>Public Profile</h2>
+        <p>Manage your personal information and delivery details</p>
+        <div class="orn"><div class="ol"></div><div class="od"></div></div>
+      </div>
+      <form id="profile-form">
+        <div class="fg2">
+          <div class="fg"><label class="fl">Full Name</label><input class="fi" type="text" id="u-name" value="Yatish B" placeholder="Your full name"></div>
+          <div class="fg"><label class="fl">Display Name</label><input class="fi" type="text" placeholder="How we address you"></div>
         </div>
-
-        <ul class="settings-nav">
-            <li class="active" data-tab="profile">
-                <i class="fas fa-user"></i> Profile
-            </li>
-            <li data-tab="security">
-                <i class="fas fa-shield-alt"></i> Security
-            </li>
-            <li data-tab="preferences">
-                <i class="fas fa-sliders-h"></i> Preferences
-            </li>
-            <li data-tab="appearance">
-                <i class="fas fa-palette"></i> Appearance
-            </li>
-            <li data-tab="wishlist">
-                <i class="fas fa-heart"></i> Wishlist Settings
-            </li>
-            <li data-tab="addresses">
-                <i class="fas fa-map-marker-alt"></i> Saved Addresses
-            </li>
-            <li data-tab="kyc">
-                <i class="fas fa-id-card"></i> KYC Verification
-            </li>
-            <li class="settings-logout" id="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> Log Out
-            </li>
-        </ul>
-    </aside>
-
-    <!-- Main content -->
-    <main class="settings-main">
-
-        <div class="settings-toast" id="settings-toast"></div>
-
-        <!-- ── PROFILE TAB ── -->
-        <section id="profile" class="settings-tab active">
-            <div class="settings-tab-header">
-                <span class="eyebrow">Account</span>
-                <h2>Public Profile</h2>
-                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+        <div class="fg2">
+          <div class="fg"><label class="fl">Email Address</label><input class="fi" type="email" id="u-email" value="yatish@example.com" placeholder="your@email.com"></div>
+          <div class="fg"><label class="fl">Date of Birth <span>(for special offers)</span></label><input class="fi" type="date" id="u-dob"></div>
+        </div>
+        <div class="fg2">
+          <div class="fg">
+            <label class="fl">Mobile Number</label>
+            <div class="prow">
+              <select class="csel"><option>🇮🇳 +91</option><option>🇺🇸 +1</option><option>🇬🇧 +44</option><option>🇦🇪 +971</option></select>
+              <input class="fi" type="tel" id="u-phone" placeholder="98765 43210" style="flex:1">
+              <button type="button" class="btn-otp" id="btn-otp">Verify</button>
             </div>
+          </div>
+          <div class="fg">
+            <label class="fl">Gender</label>
+            <select class="fi fsel"><option value="">Prefer not to say</option><option>Male</option><option>Female</option><option>Other</option></select>
+          </div>
+        </div>
+        <!-- OTP row -->
+        <div class="fg" id="otp-row" style="display:none">
+          <label class="fl">OTP sent to your number</label>
+          <div class="prow">
+            <input class="fi" type="text" id="otp-inp" placeholder="Enter 6-digit OTP" maxlength="6" style="flex:1">
+            <button type="button" class="btn-otp" id="btn-verify-otp">Confirm</button>
+          </div>
+          <span style="font-family:'Raleway',sans-serif;font-size:.62rem;color:var(--ok);display:block;margin-top:5px" id="otp-status"></span>
+        </div>
+        <div class="fg2">
+          <div class="fg"><label class="fl">Anniversary <span>(optional)</span></label><input class="fi" type="date" id="u-anni"></div>
+          <div class="fg"><label class="fl">Preferred Language</label><select class="fi fsel"><option>English</option><option>Kannada</option><option>Hindi</option><option>Telugu</option></select></div>
+        </div>
+        <div class="sdiv"></div>
+        <span class="ssec">Default Delivery Address</span>
+        <div class="fg"><label class="fl">Address Line 1</label><input class="fi" type="text" placeholder="Flat No, Building, Street"></div>
+        <div class="fg"><label class="fl">Address Line 2</label><input class="fi" type="text" placeholder="Area, Landmark (optional)"></div>
+        <div class="fg3">
+          <div class="fg" style="margin-bottom:0"><label class="fl">City</label><input class="fi" type="text" placeholder="Bengaluru"></div>
+          <div class="fg" style="margin-bottom:0"><label class="fl">State</label><select class="fi fsel"><option>Karnataka</option><option>Tamil Nadu</option><option>Maharashtra</option><option>Delhi</option></select></div>
+          <div class="fg" style="margin-bottom:0"><label class="fl">PIN Code</label><input class="fi" type="text" placeholder="560001"></div>
+        </div>
+        <div class="btn-row"><button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Profile</button></div>
+      </form>
+    </section>
 
-            <form id="profile-form" class="settings-form">
-                <div class="settings-input-group">
-                    <label class="settings-label">Full Name</label>
-                    <input type="text" id="user-name" class="settings-input" value="Yatish" placeholder="Your full name">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Email Address</label>
-                    <input type="email" id="user-email" class="settings-input" value="yatish@example.com" placeholder="your@email.com">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Date of Birth</label>
-                    <input type="date" id="user-dob" class="settings-input">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Gender</label>
-                    <select id="user-gender" class="settings-input settings-select">
-                        <option value="">Prefer not to say</option>
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
-                    </select>
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Phone Number</label>
-                    <div class="phone-row">
-                        <input type="tel" id="user-phone" class="settings-input" placeholder="+91 98765 43210">
-                        <button type="button" class="btn-verify-phone" id="btn-send-otp">
-                            Verify <i class="fas fa-mobile-alt"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="settings-input-group" id="otp-row" style="display:none;">
-                    <label class="settings-label">OTP sent to your number</label>
-                    <div class="phone-row">
-                        <input type="text" id="otp-input" class="settings-input" placeholder="Enter 6-digit OTP" maxlength="6">
-                        <button type="button" class="btn-verify-phone" id="btn-verify-otp">
-                            Confirm <i class="fas fa-check"></i>
-                        </button>
-                    </div>
-                    <span class="otp-status" id="otp-status"></span>
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Address Line 1</label>
-                    <input type="text" id="user-address" class="settings-input" placeholder="Flat No, Building, Street">
-                </div>
-                <div class="settings-row-2">
-                    <div class="settings-input-group">
-                        <label class="settings-label">City</label>
-                        <input type="text" id="user-city" class="settings-input" placeholder="Bengaluru">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">PIN Code</label>
-                        <input type="text" id="user-pin" class="settings-input" placeholder="560001">
-                    </div>
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Anniversary Date <span style="color:rgba(250,246,238,0.3);font-size:0.8em">(Optional — get special offers)</span></label>
-                    <input type="date" id="user-anniversary" class="settings-input">
-                </div>
-                <button type="submit" class="btn-settings-save">
-                    <i class="fas fa-save"></i> Save Profile
-                </button>
-            </form>
-        </section>
+    <!-- ── SECURITY ── -->
+    <section class="tab" id="tab-security">
+      <div class="thdr">
+        <span class="ey">Account</span>
+        <h2>Security Centre</h2>
+        <p>Keep your account protected</p>
+        <div class="orn"><div class="ol"></div><div class="od"></div></div>
+      </div>
+      <div class="trow"><div class="trow-txt"><strong>Two-Factor Authentication</strong><p>Verify with OTP on every login.</p></div><label class="tog"><input type="checkbox" id="2fa"><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Login Activity Alerts</strong><p>Email me when a new device signs in.</p></div><label class="tog"><input type="checkbox" checked><span class="tog-tr"></span></label></div>
+      <div class="sitem"><div><strong>Change Password</strong><p>Update regularly for security.</p></div><button class="btn-outline" id="btn-chpw"><i class="fas fa-lock"></i> Update</button></div>
+      <div class="pw-form" id="pw-form">
+        <div class="fg"><label class="fl">Current Password</label><input class="fi" type="password" placeholder="••••••••"></div>
+        <div class="fg2">
+          <div class="fg"><label class="fl">New Password</label><input class="fi" type="password" placeholder="Min 8 characters"></div>
+          <div class="fg"><label class="fl">Confirm New Password</label><input class="fi" type="password" placeholder="Re-enter password"></div>
+        </div>
+        <button class="btn-save"><i class="fas fa-lock"></i> Update Password</button>
+      </div>
+      <div class="sitem"><div><strong>Export Account Data</strong><p>Download your purchase history and profile.</p></div><button class="btn-outline" id="btn-export"><i class="fas fa-download"></i> Export</button></div>
+      <div class="sitem danger"><div><strong>Delete Account</strong><p>Permanently remove your account. Cannot be undone.</p></div><button class="btn-danger"><i class="fas fa-trash-alt"></i> Delete</button></div>
+    </section>
 
-        <!-- ── SECURITY TAB ── -->
-        <section id="security" class="settings-tab">
-            <div class="settings-tab-header">
-                <span class="eyebrow">Account</span>
-                <h2>Security Centre</h2>
-                <div class="ornament-line"><div class="ornament-diamond"></div></div>
+    <!-- ── PREFERENCES ── -->
+    <section class="tab" id="tab-preferences">
+      <div class="thdr">
+        <span class="ey">Account</span>
+        <h2>Preferences</h2>
+        <p>Customise your shopping experience</p>
+        <div class="orn"><div class="ol"></div><div class="od"></div></div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label class="fl">Preferred Currency</label><select class="fi fsel"><option>INR (₹) — Indian Rupee</option><option>USD ($) — US Dollar</option><option>AED (د.إ) — UAE Dirham</option><option>GBP (£) — British Pound</option></select></div>
+        <div class="fg"><label class="fl">Default Category</label><select class="fi fsel"><option>All Categories</option><option>Women</option><option>Men</option><option>Kids</option><option>Rings</option><option>Necklaces</option></select></div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label class="fl">Preferred Purity</label><select class="fi fsel"><option>No Preference</option><option>22K</option><option>18K</option><option>14K</option><option>Platinum</option></select></div>
+        <div class="fg"><label class="fl">Price Range</label><select class="fi fsel"><option>Show All</option><option>Under ₹50,000</option><option>₹50K – ₹2L</option><option>Above ₹2 Lakhs</option></select></div>
+      </div>
+      <div class="sdiv"></div>
+      <span class="ssec">Notifications</span>
+      <div class="trow"><div class="trow-txt"><strong>Gold Price Alerts</strong><p>Email when 24K rate drops significantly.</p></div><label class="tog"><input type="checkbox" checked><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Order Updates</strong><p>SMS &amp; email on shipment status.</p></div><label class="tog"><input type="checkbox" checked><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Restock Alerts</strong><p>Notify when wishlisted items return.</p></div><label class="tog"><input type="checkbox" checked><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Promotional Emails</strong><p>New collections and exclusive offers.</p></div><label class="tog"><input type="checkbox"><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Birthday &amp; Anniversary Offers</strong><p>Special discounts on your special days.</p></div><label class="tog"><input type="checkbox" checked><span class="tog-tr"></span></label></div>
+      <div class="btn-row"><button class="btn-save" onclick="toast('✦ Preferences saved.')"><i class="fas fa-save"></i> Save Preferences</button></div>
+    </section>
+
+    <!-- ── APPEARANCE ── -->
+    <section class="tab" id="tab-appearance">
+      <div class="thdr">
+        <span class="ey">Customise</span>
+        <h2>Appearance</h2>
+        <p>Personalise how GAB Jewels looks for you</p>
+        <div class="orn"><div class="ol"></div><div class="od"></div></div>
+      </div>
+      <div class="trow"><div class="trow-txt"><strong>Dark Mode</strong><p>Classic dark luxury theme — recommended.</p></div><label class="tog"><input type="checkbox" checked><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Compact Product Grid</strong><p>Show more items per row in collections.</p></div><label class="tog"><input type="checkbox"><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Animated Transitions</strong><p>Smooth page and element animations.</p></div><label class="tog"><input type="checkbox" checked><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Show Prices on Hover Only</strong><p>Reveal prices only when hovering a product.</p></div><label class="tog"><input type="checkbox"><span class="tog-tr"></span></label></div>
+      <div class="sdiv"></div>
+      <div class="fg">
+        <label class="fl">Gold Accent Colour</label>
+        <div class="swatches">
+          <div class="swatch on" style="background:#C9A84C" title="Classic Gold"></div>
+          <div class="swatch" style="background:#C07050" title="Rose Gold"></div>
+          <div class="swatch" style="background:#A0A8B0" title="Silver"></div>
+          <div class="swatch" style="background:#8090A0" title="Platinum"></div>
+          <div class="swatch" style="background:#7A9060" title="Emerald"></div>
+        </div>
+        <p style="font-family:'Raleway',sans-serif;font-size:.6rem;color:rgba(250,246,238,.28);letter-spacing:.08em;margin-top:7px">Changes accent colour across the site</p>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label class="fl">Product Image Size</label><select class="fi fsel"><option>Medium (Default)</option><option>Large</option><option>Small (Compact)</option></select></div>
+        <div class="fg"><label class="fl">Font Size</label><select class="fi fsel"><option>Normal</option><option selected>Comfortable</option><option>Large</option></select></div>
+      </div>
+      <div class="btn-row"><button class="btn-save" onclick="toast('✦ Appearance saved.')"><i class="fas fa-palette"></i> Save Appearance</button></div>
+    </section>
+
+    <!-- ── ADDRESSES ── -->
+    <section class="tab" id="tab-addresses">
+      <div class="thdr">
+        <span class="ey">Delivery</span>
+        <h2>Saved Addresses</h2>
+        <p>Manage your delivery locations</p>
+        <div class="orn"><div class="ol"></div><div class="od"></div></div>
+      </div>
+      <div id="addr-list">
+        <div class="addr-card">
+          <div class="addr-top">
+            <span class="addr-tag">Default</span>
+            <div class="addr-acts">
+              <button class="addr-btn"><i class="fas fa-pen"></i></button>
+              <button class="addr-btn del"><i class="fas fa-trash"></i></button>
             </div>
+          </div>
+          <div class="addr-name">Yatish B</div>
+          <div class="addr-line">Flat 4B, Prestige Towers, MG Road</div>
+          <div class="addr-line">Bengaluru — 560 001, Karnataka</div>
+          <div class="addr-phone">+91 77801 84822</div>
+        </div>
+      </div>
+      <button class="btn-outline" id="btn-addaddr" style="margin-top:1rem;width:100%;justify-content:center"><i class="fas fa-plus"></i> Add New Address</button>
+      <div id="addr-form" style="display:none;margin-top:1.2rem;padding:1.4rem;border:1px solid var(--border);background:rgba(201,168,76,.02)">
+        <div class="fg2">
+          <div class="fg"><label class="fl">Recipient Name</label><input class="fi" type="text" placeholder="Full name"></div>
+          <div class="fg"><label class="fl">Phone</label><input class="fi" type="tel" placeholder="+91 XXXXX XXXXX"></div>
+        </div>
+        <div class="fg"><label class="fl">Address Line 1</label><input class="fi" type="text" placeholder="Flat, Building, Street"></div>
+        <div class="fg"><label class="fl">Address Line 2</label><input class="fi" type="text" placeholder="Area, Landmark (optional)"></div>
+        <div class="fg3">
+          <div class="fg" style="margin-bottom:0"><label class="fl">City</label><input class="fi" type="text" placeholder="Bengaluru"></div>
+          <div class="fg" style="margin-bottom:0"><label class="fl">State</label><select class="fi fsel"><option>Karnataka</option><option>Tamil Nadu</option><option>Maharashtra</option></select></div>
+          <div class="fg" style="margin-bottom:0"><label class="fl">PIN Code</label><input class="fi" type="text" placeholder="560001"></div>
+        </div>
+        <div class="trow" style="margin-top:1rem"><div class="trow-txt"><strong>Set as Default</strong><p>Use for all future orders.</p></div><label class="tog"><input type="checkbox"><span class="tog-tr"></span></label></div>
+        <div class="btn-row">
+          <button class="btn-save" onclick="toast('✦ Address saved.');document.getElementById('addr-form').style.display='none'"><i class="fas fa-save"></i> Save Address</button>
+          <button class="btn-outline" onclick="document.getElementById('addr-form').style.display='none'">Cancel</button>
+        </div>
+      </div>
+    </section>
 
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Two-Factor Authentication</strong>
-                    <p>Protect your account with OTP verification on every login.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="2fa-toggle">
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
+    <!-- ── WISHLIST ── -->
+    <section class="tab" id="tab-wishlist">
+      <div class="thdr">
+        <span class="ey">Favourites</span>
+        <h2>Wishlist Settings</h2>
+        <p>Control how your wishlist works</p>
+        <div class="orn"><div class="ol"></div><div class="od"></div></div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label class="fl">Wishlist Name</label><input class="fi" type="text" value="My Dream Jewels" placeholder="Name your wishlist"></div>
+        <div class="fg"><label class="fl">Sort By</label><select class="fi fsel"><option>Date Added (Newest)</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Purity</option></select></div>
+      </div>
+      <div class="trow"><div class="trow-txt"><strong>Public Wishlist</strong><p>Let family &amp; friends see your wishlist for gifting.</p></div><label class="tog"><input type="checkbox"><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Auto-save Viewed Items</strong><p>Automatically add products you spend time viewing.</p></div><label class="tog"><input type="checkbox"><span class="tog-tr"></span></label></div>
+      <div class="trow"><div class="trow-txt"><strong>Price Drop Alerts</strong><p>Notify me when a wishlisted item goes on sale.</p></div><label class="tog"><input type="checkbox" checked><span class="tog-tr"></span></label></div>
+      <div class="wl-empty">
+        <i class="fas fa-heart"></i>
+        <p>Your wishlist is empty.</p>
+        <a href="collections.html" style="display:inline-block;margin-top:0.7rem">Browse Collections</a>
+      </div>
+      <div class="btn-row"><button class="btn-save" onclick="toast('✦ Wishlist settings saved.')"><i class="fas fa-heart"></i> Save Settings</button></div>
+    </section>
 
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Login Activity Alerts</strong>
-                    <p>Email me whenever a new device logs into my account.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="login-alert" checked>
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
+    <!-- ── KYC ── -->
+    <section class="tab" id="tab-kyc">
+      <div class="thdr">
+        <span class="ey">Compliance</span>
+        <h2>KYC Verification</h2>
+        <p>Required for purchases above ₹2,00,000 as per RBI</p>
+        <div class="orn"><div class="ol"></div><div class="od"></div></div>
+      </div>
+      <div class="kyc-note"><i class="fas fa-info-circle"></i> KYC is mandatory for purchases above ₹2,00,000. Your documents are encrypted and securely stored.</div>
+      <div class="kyc-steps">
+        <div class="ksd done"><i class="fas fa-check"></i></div>
+        <div class="ksl done"></div>
+        <div class="ksd cur">2</div>
+        <div class="ksl"></div>
+        <div class="ksd">3</div>
+      </div>
+      <div class="kyc-lbls">
+        <span class="kyc-lbl">Identity</span>
+        <span class="kyc-lbl cur">Documents</span>
+        <span class="kyc-lbl">Verified</span>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label class="fl">PAN Card Number</label><input class="fi" type="text" placeholder="ABCDE1234F" maxlength="10" style="text-transform:uppercase;letter-spacing:.2em"></div>
+        <div class="fg"><label class="fl">Aadhaar (last 4 digits)</label><input class="fi" type="text" placeholder="XXXX" maxlength="4"></div>
+      </div>
+      <div class="fg"><label class="fl">GST Number <span>(Optional — for business)</span></label><input class="fi" type="text" placeholder="22AAAAA0000A1Z5" style="letter-spacing:.1em"></div>
+      <div class="upload-box" id="upload-box" onclick="document.getElementById('kyc-file').click()">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Drag &amp; drop or <span>click to browse</span></p>
+        <p style="font-family:'Raleway',sans-serif;font-size:.6rem;color:rgba(250,246,238,.22);margin-top:4px;letter-spacing:.06em">PDF, JPG, PNG · Max 5MB</p>
+        <span class="upload-fname" id="fname">No file selected</span>
+        <input type="file" id="kyc-file" accept=".pdf,.jpg,.jpeg,.png" hidden>
+      </div>
+      <div class="btn-row"><button class="btn-save" onclick="toast('✦ KYC submitted. Verification takes 2–3 business days.')"><i class="fas fa-paper-plane"></i> Submit for Verification</button></div>
+    </section>
 
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Change Password</strong>
-                    <p>Update your account password regularly for security.</p>
-                </div>
-                <button class="btn-settings-outline" id="btn-change-password">Update</button>
-            </div>
-
-            <div id="password-form-wrap" style="display:none;" class="settings-form">
-                <div class="settings-input-group">
-                    <label class="settings-label">Current Password</label>
-                    <input type="password" id="current-password" class="settings-input" placeholder="••••••••">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">New Password</label>
-                    <input type="password" id="new-password" class="settings-input" placeholder="••••••••">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Confirm New Password</label>
-                    <input type="password" id="confirm-password" class="settings-input" placeholder="••••••••">
-                </div>
-                <button type="button" class="btn-settings-save" id="btn-save-password">
-                    <i class="fas fa-lock"></i> Update Password
-                </button>
-            </div>
-
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Export Account Data</strong>
-                    <p>Download a copy of your purchase history and profile data.</p>
-                </div>
-                <button class="btn-settings-outline" id="btn-export">Export</button>
-            </div>
-
-            <div class="settings-item danger-zone">
-                <div class="settings-item-text">
-                    <strong>Delete Account</strong>
-                    <p>Permanently remove your account and all data. This cannot be undone.</p>
-                </div>
-                <button class="btn-settings-danger">Delete</button>
-            </div>
-        </section>
-
-        <!-- ── PREFERENCES TAB ── -->
-        <section id="preferences" class="settings-tab">
-            <div class="settings-tab-header">
-                <span class="eyebrow">Account</span>
-                <h2>Preferences</h2>
-                <div class="ornament-line"><div class="ornament-diamond"></div></div>
-            </div>
-
-            <div class="settings-input-group">
-                <label class="settings-label">Preferred Currency</label>
-                <select id="currency" class="settings-input settings-select">
-                    <option value="INR">INR (₹) — Indian Rupee</option>
-                    <option value="USD">USD ($) — US Dollar</option>
-                    <option value="AED">AED (د.إ) — UAE Dirham</option>
-                    <option value="GBP">GBP (£) — British Pound</option>
-                </select>
-            </div>
-
-            <div class="settings-input-group">
-                <label class="settings-label">Default Jewellery Category</label>
-                <select id="default-category" class="settings-input settings-select">
-                    <option>All Categories</option>
-                    <option>Women</option>
-                    <option>Men</option>
-                    <option>Kids</option>
-                    <option>Rings</option>
-                    <option>Necklaces</option>
-                    <option>Earrings</option>
-                    <option>Bracelets</option>
-                </select>
-            </div>
-
-            <div class="settings-input-group">
-                <label class="settings-label">Preferred Gold Purity</label>
-                <select id="preferred-purity" class="settings-input settings-select">
-                    <option>No Preference</option>
-                    <option>22K</option>
-                    <option>18K</option>
-                    <option>14K</option>
-                    <option>Platinum</option>
-                </select>
-            </div>
-
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Gold Price Alerts</strong>
-                    <p>Notify me via email when the 24K rate drops significantly.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="price-alert" checked>
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Order Update Notifications</strong>
-                    <p>Receive SMS and email updates on your shipment status.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="order-notif" checked>
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Restock Alerts</strong>
-                    <p>Notify me when a wishlisted item is back in stock.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="restock-notif" checked>
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Promotional Emails</strong>
-                    <p>Hear about exclusive offers and new collections.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="promo-notif">
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Birthday &amp; Anniversary Offers</strong>
-                    <p>Receive special discount codes on your special days.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="special-notif" checked>
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-
-            <button class="btn-settings-save" id="btn-save-prefs" style="margin-top:24px;">
-                <i class="fas fa-save"></i> Save Preferences
-            </button>
-        </section>
-
-        <!-- ── APPEARANCE TAB (NEW) ── -->
-        <section id="appearance" class="settings-tab">
-            <div class="settings-tab-header">
-                <span class="eyebrow">Customise</span>
-                <h2>Appearance</h2>
-                <div class="ornament-line"><div class="ornament-diamond"></div></div>
-            </div>
-
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Dark Mode</strong>
-                    <p>Switch between the classic dark and light themes.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="dark-mode" checked>
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Compact View</strong>
-                    <p>Show more products per row in collections.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="compact-view">
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-
-            <div class="settings-input-group" style="margin-top:20px;">
-                <label class="settings-label">Gold Accent Colour</label>
-                <div class="accent-colors">
-                    <div class="accent-swatch active" data-color="classic" style="background:#C9A84C" title="Classic Gold"></div>
-                    <div class="accent-swatch" data-color="rose"    style="background:#C07050" title="Rose Gold"></div>
-                    <div class="accent-swatch" data-color="silver"  style="background:#A0A8B0" title="Silver"></div>
-                    <div class="accent-swatch" data-color="platinum" style="background:#8090A0" title="Platinum"></div>
-                </div>
-                <p style="font-size:0.65rem;color:rgba(250,246,238,0.3);margin-top:8px;font-family:'Raleway',sans-serif;letter-spacing:0.1em;">
-                    Changes the accent colour across the site
-                </p>
-            </div>
-
-            <div class="settings-input-group">
-                <label class="settings-label">Product Image Size</label>
-                <select id="img-size" class="settings-input settings-select">
-                    <option value="medium" selected>Medium (Default)</option>
-                    <option value="large">Large</option>
-                    <option value="small">Small (Compact)</option>
-                </select>
-            </div>
-
-            <button class="btn-settings-save" id="btn-save-appearance" style="margin-top:24px;">
-                <i class="fas fa-palette"></i> Save Appearance
-            </button>
-        </section>
-
-        <!-- ── WISHLIST SETTINGS TAB (NEW) ── -->
-        <section id="wishlist" class="settings-tab">
-            <div class="settings-tab-header">
-                <span class="eyebrow">Your Favourites</span>
-                <h2>Wishlist Settings</h2>
-                <div class="ornament-line"><div class="ornament-diamond"></div></div>
-            </div>
-
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Public Wishlist</strong>
-                    <p>Let family and friends view your wishlist for gifting ideas.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="public-wishlist">
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-
-            <div class="settings-item">
-                <div class="settings-item-text">
-                    <strong>Auto-add to Wishlist on View</strong>
-                    <p>Automatically save products you spend time viewing.</p>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="auto-wishlist">
-                    <span class="toggle-track"></span>
-                </label>
-            </div>
-
-            <div class="settings-input-group" style="margin-top:20px;">
-                <label class="settings-label">Wishlist Name</label>
-                <input type="text" id="wishlist-name" class="settings-input" value="My Dream Jewels" placeholder="Give your wishlist a name">
-            </div>
-
-            <div class="settings-input-group">
-                <label class="settings-label">Sort Wishlist By</label>
-                <select id="wishlist-sort" class="settings-input settings-select">
-                    <option>Date Added (Newest First)</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
-                    <option>Purity</option>
-                </select>
-            </div>
-
-            <div class="wishlist-preview">
-                <p class="wishlist-empty-msg">
-                    <i class="fas fa-heart" style="color:rgba(201,168,76,0.3);font-size:2rem;display:block;margin-bottom:12px;"></i>
-                    Your wishlist is empty.<br>
-                    <a href="collections.html" style="color:var(--gold)">Browse collections</a> to add pieces.
-                </p>
-            </div>
-
-            <button class="btn-settings-save" style="margin-top:24px;">
-                <i class="fas fa-heart"></i> Save Wishlist Settings
-            </button>
-        </section>
-
-        <!-- ── SAVED ADDRESSES TAB (NEW) ── -->
-        <section id="addresses" class="settings-tab">
-            <div class="settings-tab-header">
-                <span class="eyebrow">Delivery</span>
-                <h2>Saved Addresses</h2>
-                <div class="ornament-line"><div class="ornament-diamond"></div></div>
-            </div>
-
-            <div class="address-list" id="address-list">
-                <!-- Address card -->
-                <div class="address-card">
-                    <div class="address-card-top">
-                        <span class="address-tag default-tag">Default</span>
-                        <div class="address-actions">
-                            <button class="btn-addr-edit"><i class="fas fa-pen"></i></button>
-                            <button class="btn-addr-delete"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
-                    <p class="address-name">Yatish B</p>
-                    <p class="address-line">Flat 4B, Prestige Towers</p>
-                    <p class="address-line">MG Road, Bengaluru — 560 001</p>
-                    <p class="address-line">Karnataka, India</p>
-                    <p class="address-phone">+91 77801 84822</p>
-                </div>
-            </div>
-
-            <button class="btn-settings-outline" id="btn-add-address" style="margin-top:20px;width:100%;">
-                <i class="fas fa-plus"></i> Add New Address
-            </button>
-
-            <!-- Add address form (hidden) -->
-            <div id="add-address-form" style="display:none;" class="settings-form" style="margin-top:20px;">
-                <div class="settings-input-group">
-                    <label class="settings-label">Full Name</label>
-                    <input type="text" id="addr-name" class="settings-input" placeholder="Recipient name">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Phone</label>
-                    <input type="tel" id="addr-phone" class="settings-input" placeholder="+91 XXXXX XXXXX">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Address Line 1</label>
-                    <input type="text" id="addr-line1" class="settings-input" placeholder="Flat No, Building, Street">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Address Line 2</label>
-                    <input type="text" id="addr-line2" class="settings-input" placeholder="Area, Landmark (optional)">
-                </div>
-                <div class="settings-row-2">
-                    <div class="settings-input-group">
-                        <label class="settings-label">City</label>
-                        <input type="text" id="addr-city" class="settings-input" placeholder="Bengaluru">
-                    </div>
-                    <div class="settings-input-group">
-                        <label class="settings-label">PIN Code</label>
-                        <input type="text" id="addr-pin" class="settings-input" placeholder="560001">
-                    </div>
-                </div>
-                <div class="settings-item" style="margin-top:12px;">
-                    <div class="settings-item-text">
-                        <strong>Set as Default Address</strong>
-                        <p>Use this address for all future orders.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="addr-default">
-                        <span class="toggle-track"></span>
-                    </label>
-                </div>
-                <button type="button" class="btn-settings-save" id="btn-save-address">
-                    <i class="fas fa-save"></i> Save Address
-                </button>
-            </div>
-        </section>
-
-        <!-- ── KYC TAB ── -->
-        <section id="kyc" class="settings-tab">
-            <div class="settings-tab-header">
-                <span class="eyebrow">Compliance</span>
-                <h2>KYC Verification</h2>
-                <div class="ornament-line"><div class="ornament-diamond"></div></div>
-            </div>
-
-            <div class="kyc-note">
-                <i class="fas fa-info-circle"></i>
-                KYC verification is required for purchases above ₹2,00,000 as per RBI guidelines.
-            </div>
-
-            <div class="kyc-status-bar" id="kyc-status-bar">
-                <div class="kyc-step done"><i class="fas fa-check"></i><span>Identity</span></div>
-                <div class="kyc-step-line"></div>
-                <div class="kyc-step active"><i class="fas fa-file-alt"></i><span>Documents</span></div>
-                <div class="kyc-step-line"></div>
-                <div class="kyc-step"><i class="fas fa-shield-alt"></i><span>Verified</span></div>
-            </div>
-
-            <div class="settings-form">
-                <div class="settings-input-group">
-                    <label class="settings-label">PAN Card Number</label>
-                    <input type="text" id="pan-number" class="settings-input" placeholder="ABCDE1234F"
-                           maxlength="10" style="text-transform:uppercase;letter-spacing:0.2em;">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">Aadhaar Number (last 4 digits)</label>
-                    <input type="text" id="aadhaar-last4" class="settings-input" placeholder="XXXX" maxlength="4">
-                </div>
-                <div class="settings-input-group">
-                    <label class="settings-label">GST Number <span style="color:rgba(250,246,238,0.3);font-size:0.8em">(Optional — for business purchases)</span></label>
-                    <input type="text" id="gst-number" class="settings-input" placeholder="22AAAAA0000A1Z5"
-                           style="letter-spacing:0.1em;">
-                </div>
-
-                <label class="settings-label" style="margin-bottom:12px;">Upload PAN Card (PDF or JPG, max 5MB)</label>
-                <div class="kyc-upload-box" id="kyc-upload-box">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Drag &amp; drop or <span>click to browse</span></p>
-                    <span class="kyc-file-name" id="kyc-file-name">No file selected</span>
-                    <input type="file" id="kyc-file" accept=".pdf,.jpg,.jpeg,.png" hidden>
-                </div>
-
-                <button class="btn-settings-save" id="btn-submit-kyc" style="margin-top:20px;">
-                    <i class="fas fa-paper-plane"></i> Submit for Verification
-                </button>
-            </div>
-        </section>
-
-    </main>
+  </main>
 </div>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
-    <div class="footer-top">
-        <div>
-            <span class="footer-brand-name">GAB JEWELS</span>
-            <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
-        </div>
-        <div class="footer-col">
-            <h4>Navigate</h4>
-            <a href="../index.html">Home</a>
-            <a href="collections.html">Collections</a>
-            <a href="advance-buy.html">Buy Gold</a>
-            <a href="cart.html">Your Bag</a>
-        </div>
-        <div class="footer-col">
-            <h4>Policies</h4>
-            <a href="#">Exchange Policy</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Use</a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
-        <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
-    </div>
+  <div class="footer-top">
+    <div><span class="footer-brand-name">GAB JEWELS</span><p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p></div>
+    <div class="footer-col"><h4>Navigate</h4><a href="../index.html">Home</a><a href="collections.html">Collections</a><a href="advance-buy.html">Buy Gold</a><a href="cart.html">Your Bag</a></div>
+    <div class="footer-col"><h4>Policies</h4><a href="#">Exchange Policy</a><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+    <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+  </div>
 </footer>
 
 <script src="../assets/js/cart.js"></script>
-<script src="../assets/js/settings.js"></script>
 <script>
-// ── TAB SWITCHING ─────────────────────────────────
-document.querySelectorAll('.settings-nav li[data-tab]').forEach(li => {
+  // ── TAB SWITCHING ──
+  document.querySelectorAll('.ss-nav li[data-tab]').forEach(li => {
     li.addEventListener('click', function() {
-        document.querySelectorAll('.settings-nav li').forEach(l => l.classList.remove('active'));
-        document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-        document.getElementById(this.dataset.tab).classList.add('active');
+      document.querySelectorAll('.ss-nav li').forEach(l => l.classList.remove('on'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+      this.classList.add('on');
+      document.getElementById('tab-' + this.dataset.tab).classList.add('on');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-});
+  });
 
-// ── LOGOUT ────────────────────────────────────────
-document.getElementById('logout-btn').addEventListener('click', function() {
+  // ── LOGOUT ──
+  document.getElementById('logout-btn').addEventListener('click', () => {
     localStorage.removeItem('aurum_token');
     localStorage.removeItem('aurum_role');
     localStorage.removeItem('isLoggedIn');
     window.location.replace('../index.html');
-});
+  });
 
-// ── APPEARANCE: accent swatches ───────────────────
-document.querySelectorAll('.accent-swatch').forEach(sw => {
-    sw.addEventListener('click', function() {
-        document.querySelectorAll('.accent-swatch').forEach(s => s.classList.remove('active'));
-        this.classList.add('active');
-    });
-});
-
-// ── ADD ADDRESS TOGGLE ────────────────────────────
-const btnAddAddr = document.getElementById('btn-add-address');
-if (btnAddAddr) {
-    btnAddAddr.addEventListener('click', function() {
-        const form = document.getElementById('add-address-form');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    });
-}
-
-// ── CHANGE PASSWORD TOGGLE ────────────────────────
-const btnChangePw = document.getElementById('btn-change-password');
-if (btnChangePw) {
-    btnChangePw.addEventListener('click', function() {
-        const form = document.getElementById('password-form-wrap');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    });
-}
-
-// ── TOAST HELPER ─────────────────────────────────
-function showToast(msg, ok = true) {
-    const t = document.getElementById('settings-toast');
+  // ── TOAST ──
+  let tTimer;
+  function toast(msg, ok = true) {
+    const t = document.getElementById('toast');
     t.textContent = msg;
-    t.style.background = ok ? 'rgba(109,191,138,0.15)' : 'rgba(224,112,112,0.15)';
-    t.style.borderColor = ok ? '#6DBF8A' : '#E07070';
-    t.style.color       = ok ? '#6DBF8A' : '#E07070';
-    t.style.display     = 'block';
-    setTimeout(() => { t.style.display = 'none'; }, 3000);
-}
+    t.style.cssText = `display:block;background:${ok ? 'rgba(109,191,138,.1)' : 'rgba(224,112,112,.1)'};border-color:${ok ? '#6DBF8A' : '#E07070'};color:${ok ? '#6DBF8A' : '#E07070'};`;
+    clearTimeout(tTimer);
+    tTimer = setTimeout(() => t.style.display = 'none', 3500);
+  }
 
-// ── SAVE BUTTONS ──────────────────────────────────
-document.getElementById('profile-form')?.addEventListener('submit', function(e) {
+  // ── PROFILE FORM ──
+  document.getElementById('profile-form').addEventListener('submit', e => {
     e.preventDefault();
-    showToast('✦ Profile saved successfully.');
-});
-document.getElementById('btn-save-prefs')?.addEventListener('click', function() {
-    showToast('✦ Preferences saved.');
-});
-document.getElementById('btn-save-appearance')?.addEventListener('click', function() {
-    showToast('✦ Appearance settings saved.');
-});
-document.getElementById('btn-save-address')?.addEventListener('click', function() {
-    showToast('✦ Address saved.');
-    document.getElementById('add-address-form').style.display = 'none';
-});
-document.getElementById('btn-submit-kyc')?.addEventListener('click', function() {
-    showToast('✦ KYC documents submitted. Verification takes 2–3 business days.');
-});
-document.getElementById('btn-export')?.addEventListener('click', function() {
-    showToast('✦ Your data export has been requested. Check your email within 24 hours.');
-});
+    const name = document.getElementById('u-name').value;
+    document.getElementById('ss-av').textContent = name ? name[0].toUpperCase() : 'Y';
+    document.getElementById('ss-name').textContent = name || 'Yatish B';
+    document.getElementById('ss-email').textContent = document.getElementById('u-email').value || 'yatish@example.com';
+    toast('✦ Profile saved successfully.');
+  });
 
-// ── KYC FILE UPLOAD ───────────────────────────────
-document.getElementById('kyc-upload-box')?.addEventListener('click', () => {
-    document.getElementById('kyc-file').click();
-});
-document.getElementById('kyc-file')?.addEventListener('change', function() {
-    const name = this.files[0]?.name || 'No file selected';
-    document.getElementById('kyc-file-name').textContent = name;
-});
+  // ── OTP TOGGLE ──
+  document.getElementById('btn-otp').addEventListener('click', () => {
+    const row = document.getElementById('otp-row');
+    row.style.display = row.style.display === 'none' ? 'block' : 'none';
+  });
+  document.getElementById('btn-verify-otp').addEventListener('click', () => {
+    const v = document.getElementById('otp-inp').value;
+    if (v.length === 6) {
+      document.getElementById('otp-status').textContent = '✦ Phone number verified';
+      toast('✦ Phone verified successfully.');
+    } else {
+      toast('Please enter a valid 6-digit OTP.', false);
+    }
+  });
+
+  // ── CHANGE PASSWORD ──
+  document.getElementById('btn-chpw').addEventListener('click', () => {
+    const f = document.getElementById('pw-form');
+    f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  });
+
+  // ── ADD ADDRESS ──
+  document.getElementById('btn-addaddr').addEventListener('click', () => {
+    const f = document.getElementById('addr-form');
+    f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  });
+
+  // ── EXPORT ──
+  document.getElementById('btn-export').addEventListener('click', () => {
+    toast('✦ Data export requested. Check your email within 24 hours.');
+  });
+
+  // ── ACCENT SWATCHES ──
+  document.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', function() {
+      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('on'));
+      this.classList.add('on');
+    });
+  });
+
+  // ── KYC FILE ──
+  document.getElementById('kyc-file').addEventListener('change', function() {
+    document.getElementById('fname').textContent = this.files[0]?.name || 'No file selected';
+  });
+
+  // ── LOAD USER FROM STORAGE ──
+  try {
+    const u = JSON.parse(localStorage.getItem('gab_user') || '{}');
+    if (u.name) {
+      document.getElementById('ss-av').textContent = u.name[0].toUpperCase();
+      document.getElementById('ss-name').textContent = u.name;
+      document.getElementById('u-name').value = u.name;
+    }
+    if (u.email) {
+      document.getElementById('ss-email').textContent = u.email;
+      document.getElementById('u-email').value = u.email;
+    }
+  } catch(e) {}
 </script>
 
 </body>

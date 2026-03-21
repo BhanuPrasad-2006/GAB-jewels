@@ -1,279 +1,642 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | GAB Jewels</title>
-    
-    <link rel="stylesheet" href="../assets/css/index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | GAB Jewels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/global.css">
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────── */
+    :root {
+      --gold: #C9A84C;
+      --gold-l: #E8C97A;
+      --dark: #0E0B07;
+      --dark2: #1A1410;
+      --dark3: #2C1F0E;
+      --cream: #FAF6EE;
+      --muted: rgba(232,201,122,0.45);
+      --border: rgba(201,168,76,0.15);
+      --border-h: rgba(201,168,76,0.35);
+      --err: #E07070;
+      --ok: #6DBF8A;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero-contact {
+      position: relative;
+      padding: 5rem 6vw 3rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-contact::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,76,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hc-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .hc-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 400;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 0.8rem;
+    }
+    .hc-title em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 300;
+    }
+    .hc-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: rgba(250,246,238,0.5);
+      margin-bottom: 2rem;
+    }
+    .orn {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+    }
+    .orn-l {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5));
+    }
+    .orn-l.r { background: linear-gradient(90deg, rgba(201,168,76,0.5), transparent); }
+    .orn-d { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
+
+    /* ── QUICK BAR ───────────────────────────────── */
+    .qbar {
+      display: flex;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(201,168,76,0.03);
+    }
+    .qbar-item {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center; gap: 0.9rem;
+      padding: 1.3rem 2vw;
+      text-decoration: none;
+      border-right: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .qbar-item:last-child { border-right: none; }
+    .qbar-item:hover { background: rgba(201,168,76,0.07); }
+    .qi-icon {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 0.85rem; flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .qbar-item:hover .qi-icon { background: rgba(201,168,76,0.12); }
+    .qi-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.58rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(250,246,238,0.35);
+      display: block; margin-bottom: 2px;
+    }
+    .qi-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem; color: var(--cream); display: block;
+    }
+
+    /* ── MAIN GRID ───────────────────────────────── */
+    .c-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5rem 6vw;
+    }
+
+    /* ── LEFT ────────────────────────────────────── */
+    .c-left {
+      padding-right: 4rem;
+      border-right: 1px solid var(--border);
+    }
+    .sec-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 1.8rem;
+    }
+    .c-cards { display: flex; flex-direction: column; gap: 1.1rem; }
+
+    .ccard {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: 1.2rem;
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      background: rgba(201,168,76,0.025);
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .ccard::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s;
+    }
+    .ccard:hover { border-color: var(--border-h); transform: translateX(4px); }
+    .ccard:hover::after { transform: scaleX(1); }
+
+    .ccard-icon {
+      width: 50px; height: 50px;
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 1rem; flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .ccard:hover .ccard-icon { background: rgba(201,168,76,0.1); }
+
+    .ccard-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem; letter-spacing: 0.1em;
+      color: var(--cream); margin-bottom: 3px;
+    }
+    .ccard-desc {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.64rem; color: rgba(250,246,238,0.35);
+      letter-spacing: 0.05em; margin-bottom: 10px; line-height: 1.5;
+    }
+    .clinks { display: flex; flex-direction: column; gap: 4px; }
+    .clink {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; color: var(--gold);
+      text-decoration: none; transition: color 0.2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .clink:hover { color: var(--gold-l); }
+    .clink-badge {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.55rem; letter-spacing: 0.12em;
+      color: rgba(250,246,238,0.28); text-transform: uppercase;
+    }
+    .wa-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      margin-top: 10px; padding: 8px 16px;
+      background: rgba(37,211,102,0.07);
+      border: 1px solid rgba(37,211,102,0.2);
+      color: #4ADE80;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      text-decoration: none; transition: background 0.3s;
+    }
+    .wa-btn:hover { background: rgba(37,211,102,0.14); }
+    .wa-btn i { font-size: 1rem; }
+
+    .hours-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6px; margin-top: 10px;
+    }
+    .hour-box {
+      padding: 8px 10px;
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.1);
+    }
+    .hour-day {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.57rem; letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,246,238,0.3);
+      display: block; margin-bottom: 2px;
+    }
+    .hour-time {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem; color: var(--gold);
+    }
+
+    /* ── RIGHT: FORM ─────────────────────────────── */
+    .c-right { padding-left: 4rem; }
+    .form-hdr { margin-bottom: 2rem; }
+    .form-hdr h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem; font-weight: 400;
+      color: var(--cream); letter-spacing: 0.05em;
+      margin-top: 0.4rem;
+    }
+    .form-hdr-orn {
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 0.8rem;
+    }
+    .form-hdr-orn-l {
+      width: 36px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4));
+    }
+    .form-hdr-orn-d { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); }
+
+    .fgrp { margin-bottom: 1.1rem; }
+    .fgrp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.1rem; }
+    .flbl {
+      display: block;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem; letter-spacing: 0.26em;
+      text-transform: uppercase; color: rgba(250,246,238,0.4);
+      margin-bottom: 7px;
+    }
+    .finp {
+      width: 100%; padding: 12px 14px;
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.18);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; outline: none;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .finp:focus { border-color: var(--gold); background: rgba(201,168,76,0.09); }
+    .finp::placeholder { color: rgba(250,246,238,0.2); font-style: italic; }
+    .fsel {
+      cursor: pointer; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+    .fsel option { background: var(--dark2); }
+    .ftxt { resize: vertical; min-height: 130px; }
+
+    .fmsg {
+      padding: 11px 14px; margin-bottom: 14px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.74rem; letter-spacing: 0.06em;
+      display: none; line-height: 1.6;
+    }
+    .fmsg.ok { color: var(--ok); background: rgba(109,191,138,0.08); border-left: 2px solid var(--ok); }
+    .fmsg.show { display: block; }
+
+    .btn-send {
+      width: 100%; padding: 14px;
+      background: var(--gold); color: var(--dark);
+      border: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem; letter-spacing: 0.35em;
+      text-transform: uppercase; cursor: pointer;
+      margin-top: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      position: relative; overflow: hidden;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-send::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: transform 0.5s;
+    }
+    .btn-send:hover::before { transform: translateX(120%) skewX(-15deg); }
+    .btn-send:hover { background: var(--gold-l); transform: translateY(-2px); }
+    .btn-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ── STATS STRIP ─────────────────────────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .stat-item {
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(201,168,76,0.03); }
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem; color: var(--gold);
+      line-height: 1; margin-bottom: 0.5rem;
+    }
+    .stat-lbl {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(250,246,238,0.35);
+    }
+
+    /* ── REVEAL ──────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 960px) {
+      .c-wrap { grid-template-columns: 1fr; }
+      .c-left { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 3rem; margin-bottom: 3rem; }
+      .c-right { padding-left: 0; }
+      .qbar { flex-wrap: wrap; }
+      .qbar-item { flex: 1 1 50%; border-right: none; border-bottom: 1px solid var(--border); }
+      .stats-strip { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+    @media (max-width: 600px) {
+      .fgrp-row { grid-template-columns: 1fr; }
+      .qbar-item { flex: 1 1 100%; }
+      .hours-row { grid-template-columns: 1fr; }
+      .hero-contact { padding: 3.5rem 5vw 2rem; }
+    }
+  </style>
+
+  <script>
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+      window.location.replace('../index.html');
+    }
+  </script>
 </head>
 <body>
 
-    <div style="max-width: 600px; margin: 50px auto; text-align: center; font-family: sans-serif;">
-        
-        <h2>Contact GAB Jewels</h2>
-        <p>We are here to assist you with your fine jewellery needs.</p>
-        
-        <hr style="margin: 30px 0;">
-
-        <div style="background: #f9f9f9; padding: 30px; border: 1px solid #ddd; border-radius: 8px;">
-            <h3>Get in Touch</h3>
-            
-            <p style="font-size: 18px; margin-top: 20px;">
-                <strong>📧 Email:</strong> <br>
-                <a href="mailto:gbhanuprasad63@gmail.com" style="color: #d4af37; text-decoration: none;">gbhanuprasad63@gmail.com</a>
-            </p>
-            
-            <p style="font-size: 18px; margin-top: 20px;">
-                <strong>📞 Phone / WhatsApp:</strong> <br>
-                <a href="tel:+917780184822" style="color: #d4af37; text-decoration: none;">+91 7780184822</a>
-            </p>
-        </div>
-
-        <br><br>
-
-        <a href="../index.html" style="display: inline-block; padding: 10px 20px; background: #333; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
-            ⬅ Back to Store
-        </a>
-
-    </div>
-
-    <script>
-        if (localStorage.getItem("isLoggedIn") !== "true") {
-            // If they are not logged in, send them back to the login screen
-            window.location.href = "../index.html";
-        }
-    </script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | GAB Jewels</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/global.css">
-    <link rel="stylesheet" href="../assets/css/contact.css">
-    <script>
-        // Auth guard
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.replace('../index.html');
-        }
-    </script>
-</head>
-<body>
-
-<!-- ── TICKER ────────────────────────────────────── -->
+<!-- ── TICKER ─────────────────────────────────────── -->
 <div class="ticker-wrap">
-    <div class="ticker-track">
-        <span>✦ Free shipping on orders above ₹50,000</span>
-        <span>✦ BIS Hallmarked Jewellery</span>
-        <span>✦ Lifetime Exchange &amp; Buyback</span>
-        <span>✦ 30-Day Easy Returns</span>
-        <span>✦ Custom Design Available</span>
-        <span>✦ EMI Available</span>
-        <span>✦ Free shipping on orders above ₹50,000</span>
-        <span>✦ BIS Hallmarked Jewellery</span>
-        <span>✦ Lifetime Exchange &amp; Buyback</span>
-        <span>✦ 30-Day Easy Returns</span>
-        <span>✦ Custom Design Available</span>
-        <span>✦ EMI Available</span>
-    </div>
+  <div class="ticker-track">
+    <span>✦ Free shipping on orders above ₹50,000</span>
+    <span>✦ BIS Hallmarked Jewellery</span>
+    <span>✦ Lifetime Exchange &amp; Buyback</span>
+    <span>✦ 30-Day Easy Returns</span>
+    <span>✦ Custom Design Available</span>
+    <span>✦ EMI Available</span>
+    <span>✦ Free shipping on orders above ₹50,000</span>
+    <span>✦ BIS Hallmarked Jewellery</span>
+    <span>✦ Lifetime Exchange &amp; Buyback</span>
+    <span>✦ 30-Day Easy Returns</span>
+    <span>✦ Custom Design Available</span>
+    <span>✦ EMI Available</span>
+  </div>
 </div>
 
 <!-- ── NAVBAR ─────────────────────────────────────── -->
 <header class="top-nav">
-    <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="collections.html">Collections</a>
-        <a href="advance-buy.html">Buy Gold</a>
-        <a href="settings.html">My Account</a>
-        <a href="contact.html" class="active">Contact</a>
-        <a href="cart.html" class="cart-icon">
-            <i class="fas fa-shopping-bag"></i>
-            <span id="cart-badge" class="badge">0</span>
-        </a>
-    </nav>
+  <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="collections.html">Collections</a>
+    <a href="advance-buy.html">Buy Gold</a>
+    <a href="settings.html">My Account</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="cart.html" class="cart-icon">
+      <i class="fas fa-shopping-bag"></i>
+      <span id="cart-badge" class="badge">0</span>
+    </a>
+  </nav>
 </header>
 
 <!-- ── BREADCRUMB ─────────────────────────────────── -->
 <div class="breadcrumb">
-    <a href="../index.html">Home</a>
-    <span>◆</span>
-    <span style="color:var(--gold)">Contact Us</span>
+  <a href="../index.html">Home</a>
+  <span>◆</span>
+  <span style="color:var(--gold)">Contact Us</span>
 </div>
 
-<!-- ── PAGE HEADER ────────────────────────────────── -->
-<div class="header-text reveal">
-    <span class="eyebrow">We're Here For You</span>
-    <h1>Contact GAB Jewels</h1>
-    <p>Speak to our jewellery experts — we are happy to assist.</p>
-    <div class="ornament-line"><div class="ornament-diamond"></div></div>
+<!-- ── HERO ───────────────────────────────────────── -->
+<div class="hero-contact reveal">
+  <span class="hc-eyebrow">We're Here For You</span>
+  <h1 class="hc-title">Speak to Our <em>Jewellery Experts</em></h1>
+  <p class="hc-sub">Every question deserves a personal answer — reach us any way you prefer.</p>
+  <div class="orn">
+    <div class="orn-l"></div><div class="orn-d"></div><div class="orn-l r"></div>
+  </div>
 </div>
 
-<!-- ── MAIN CONTENT ───────────────────────────────── -->
-<main class="contact-wrap">
+<!-- ── QUICK BAR ──────────────────────────────────── -->
+<div class="qbar reveal">
+  <a href="tel:+917780184822" class="qbar-item">
+    <div class="qi-icon"><i class="fas fa-phone-alt"></i></div>
+    <div><span class="qi-label">Primary Line</span><span class="qi-val">+91 77801 84822</span></div>
+  </a>
+  <a href="tel:+918884953038" class="qbar-item">
+    <div class="qi-icon"><i class="fas fa-phone-alt"></i></div>
+    <div><span class="qi-label">Secondary Line</span><span class="qi-val">+91 88849 53038</span></div>
+  </a>
+  <a href="mailto:gbhanuprasad63@gmail.com" class="qbar-item">
+    <div class="qi-icon"><i class="fas fa-envelope"></i></div>
+    <div><span class="qi-label">Email</span><span class="qi-val">gbhanuprasad63@gmail.com</span></div>
+  </a>
+  <a href="mailto:yatishb1922@gmail.com" class="qbar-item">
+    <div class="qi-icon"><i class="fas fa-envelope-open-text"></i></div>
+    <div><span class="qi-label">Email</span><span class="qi-val">yatishb1922@gmail.com</span></div>
+  </a>
+</div>
 
-    <!-- LEFT: Contact Cards -->
-    <div class="contact-cards reveal">
+<!-- ── MAIN GRID ───────────────────────────────────── -->
+<div class="c-wrap">
 
-        <div class="contact-card">
-            <div class="contact-card-icon"><i class="fas fa-phone-alt"></i></div>
-            <div class="contact-card-body">
-                <h4>Phone &amp; WhatsApp</h4>
-                <p>Available Mon–Sat, 10am–7pm IST</p>
-                <a href="tel:+917780184822" class="contact-link">+91 77801 84822</a>
-                <a href="tel:+918884953038" class="contact-link">+91 88849 53038</a>
-                <a href="https://wa.me/917780184822" target="_blank" class="contact-wa">
-                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
-                </a>
-            </div>
+  <!-- LEFT: Contact cards -->
+  <div class="c-left reveal">
+    <span class="sec-eyebrow">Get in Touch</span>
+    <div class="c-cards">
+
+      <!-- Phone -->
+      <div class="ccard">
+        <div class="ccard-icon"><i class="fas fa-phone-alt"></i></div>
+        <div>
+          <div class="ccard-title">Phone &amp; WhatsApp</div>
+          <div class="ccard-desc">Mon – Sat &nbsp;·&nbsp; 10:00 AM – 7:00 PM IST</div>
+          <div class="clinks">
+            <a href="tel:+917780184822" class="clink">+91 77801 84822 <span class="clink-badge">Primary</span></a>
+            <a href="tel:+918884953038" class="clink">+91 88849 53038 <span class="clink-badge">Secondary</span></a>
+          </div>
+          <a href="https://wa.me/917780184822" target="_blank" class="wa-btn">
+            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+          </a>
         </div>
+      </div>
 
-        <div class="contact-card">
-            <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
-            <div class="contact-card-body">
-                <h4>Email Us</h4>
-                <p>We reply within 24 hours</p>
-                <a href="mailto:gbhanuprasad63@gmail.com" class="contact-link">gbhanuprasad63@gmail.com</a>
-                <a href="mailto:yatishb1922@gmail.com" class="contact-link">yatishb1922@gmail.com</a>
-            </div>
+      <!-- Email -->
+      <div class="ccard">
+        <div class="ccard-icon"><i class="fas fa-envelope"></i></div>
+        <div>
+          <div class="ccard-title">Email Us</div>
+          <div class="ccard-desc">We reply within 24 hours on all working days</div>
+          <div class="clinks">
+            <a href="mailto:gbhanuprasad63@gmail.com" class="clink">gbhanuprasad63@gmail.com</a>
+            <a href="mailto:yatishb1922@gmail.com" class="clink">yatishb1922@gmail.com</a>
+          </div>
         </div>
+      </div>
 
-        <div class="contact-card">
-            <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
-            <div class="contact-card-body">
-                <h4>Visit Our Store</h4>
-                <p>Walk-in welcome, no appointment needed</p>
-                <span class="contact-link">MG Road, Bengaluru — 560 001</span>
-                <span class="contact-link">Karnataka, India</span>
-                <p class="contact-hours">
-                    Mon–Sat: 10:00 AM – 8:00 PM<br>
-                    Sunday: 11:00 AM – 6:00 PM
-                </p>
-            </div>
+      <!-- Store -->
+      <div class="ccard">
+        <div class="ccard-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div>
+          <div class="ccard-title">Visit Our Store</div>
+          <div class="ccard-desc">Walk-ins welcome — no appointment needed</div>
+          <div class="clinks">
+            <span class="clink" style="cursor:default;color:var(--cream)">MG Road, Bengaluru — 560 001</span>
+            <span class="clink" style="cursor:default;color:rgba(250,246,238,0.5)">Karnataka, India</span>
+          </div>
+          <div class="hours-row">
+            <div class="hour-box"><span class="hour-day">Mon – Sat</span><span class="hour-time">10 AM – 8 PM</span></div>
+            <div class="hour-box"><span class="hour-day">Sunday</span><span class="hour-time">11 AM – 6 PM</span></div>
+          </div>
         </div>
+      </div>
 
-        <div class="contact-card">
-            <div class="contact-card-icon"><i class="fas fa-headset"></i></div>
-            <div class="contact-card-body">
-                <h4>Customer Support</h4>
-                <p>For orders, returns &amp; exchanges</p>
-                <a href="mailto:support@gabjewels.com" class="contact-link">support@gabjewels.com</a>
-                <span class="contact-response">⚡ Avg. response: 2 hours</span>
-            </div>
+      <!-- Support -->
+      <div class="ccard">
+        <div class="ccard-icon"><i class="fas fa-headset"></i></div>
+        <div>
+          <div class="ccard-title">Customer Support</div>
+          <div class="ccard-desc">Orders · Returns · Exchanges · KYC Help</div>
+          <div class="clinks">
+            <a href="mailto:support@gabjewels.com" class="clink">support@gabjewels.com</a>
+          </div>
+          <div style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-family:'Raleway',sans-serif;font-size:0.65rem;color:var(--gold);letter-spacing:0.08em">
+            <i class="fas fa-bolt" style="font-size:0.7rem"></i> Average response: 2 hours
+          </div>
         </div>
+      </div>
 
     </div>
+  </div>
 
-    <!-- RIGHT: Contact Form -->
-    <div class="contact-form-wrap reveal">
-        <div class="contact-form-header">
-            <span class="eyebrow">Send a Message</span>
-            <h3>We'll get back to you</h3>
-        </div>
-
-        <div class="contact-msg" id="contact-msg"></div>
-
-        <form id="contact-form">
-            <div class="cf-group">
-                <label class="cf-label">Full Name</label>
-                <input type="text" id="cf-name" class="cf-input" placeholder="Your name" required>
-            </div>
-            <div class="cf-group">
-                <label class="cf-label">Email Address</label>
-                <input type="email" id="cf-email" class="cf-input" placeholder="your@email.com" required>
-            </div>
-            <div class="cf-group">
-                <label class="cf-label">Phone Number</label>
-                <input type="tel" id="cf-phone" class="cf-input" placeholder="+91 98765 43210">
-            </div>
-            <div class="cf-group">
-                <label class="cf-label">Subject</label>
-                <select id="cf-subject" class="cf-input cf-select">
-                    <option value="">Select a topic…</option>
-                    <option>Order Enquiry</option>
-                    <option>Custom Design Request</option>
-                    <option>Exchange / Buyback</option>
-                    <option>KYC Verification Help</option>
-                    <option>General Question</option>
-                    <option>Complaint / Feedback</option>
-                </select>
-            </div>
-            <div class="cf-group">
-                <label class="cf-label">Message</label>
-                <textarea id="cf-message" class="cf-input cf-textarea" placeholder="Tell us how we can help you…" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn-contact-submit" id="cf-submit">
-                <i class="fas fa-paper-plane"></i> Send Message
-            </button>
-        </form>
+  <!-- RIGHT: Form -->
+  <div class="c-right reveal">
+    <div class="form-hdr">
+      <span class="hc-eyebrow" style="text-align:left;display:block">Send a Message</span>
+      <h2>We'll get back to you</h2>
+      <div class="form-hdr-orn">
+        <div class="form-hdr-orn-l"></div>
+        <div class="form-hdr-orn-d"></div>
+      </div>
     </div>
 
-</main>
+    <div class="fmsg ok" id="fmsg"></div>
+
+    <form id="cform">
+      <div class="fgrp-row">
+        <div class="fgrp">
+          <label class="flbl">Full Name</label>
+          <input class="finp" type="text" id="fn" placeholder="Your name" required>
+        </div>
+        <div class="fgrp">
+          <label class="flbl">Phone Number</label>
+          <input class="finp" type="tel" id="fph" placeholder="+91 98765 43210">
+        </div>
+      </div>
+      <div class="fgrp">
+        <label class="flbl">Email Address</label>
+        <input class="finp" type="email" id="fem" placeholder="your@email.com" required>
+      </div>
+      <div class="fgrp">
+        <label class="flbl">Subject</label>
+        <select class="finp fsel" id="fsub">
+          <option value="">Select a topic…</option>
+          <option>Order Enquiry</option>
+          <option>Custom Design Request</option>
+          <option>Exchange / Buyback</option>
+          <option>KYC Verification Help</option>
+          <option>Bulk / Corporate Order</option>
+          <option>General Question</option>
+          <option>Complaint / Feedback</option>
+        </select>
+      </div>
+      <div class="fgrp">
+        <label class="flbl">Your Message</label>
+        <textarea class="finp ftxt" id="fmsg2" placeholder="Tell us how we can help you…" required></textarea>
+      </div>
+      <button type="submit" class="btn-send" id="fbtn">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+    </form>
+  </div>
+
+</div>
+
+<!-- ── STATS STRIP ─────────────────────────────────── -->
+<div class="stats-strip reveal">
+  <div class="stat-item">
+    <div class="stat-num">45+</div>
+    <div class="stat-lbl">Years of Craftsmanship</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">2 hrs</div>
+    <div class="stat-lbl">Average Response Time</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">10K+</div>
+    <div class="stat-lbl">Happy Customers</div>
+  </div>
+</div>
 
 <!-- ── FOOTER ─────────────────────────────────────── -->
 <footer>
-    <div class="footer-top">
-        <div>
-            <span class="footer-brand-name">GAB JEWELS</span>
-            <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
-        </div>
-        <div class="footer-col">
-            <h4>Navigate</h4>
-            <a href="../index.html">Home</a>
-            <a href="collections.html">Collections</a>
-            <a href="advance-buy.html">Buy Gold</a>
-            <a href="cart.html">Your Bag</a>
-        </div>
-        <div class="footer-col">
-            <h4>Policies</h4>
-            <a href="#">Exchange Policy</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Use</a>
-        </div>
-        <div class="footer-col">
-            <h4>Contact</h4>
-            <a href="mailto:gbhanuprasad63@gmail.com">gbhanuprasad63@gmail.com</a>
-            <a href="tel:+917780184822">+91 77801 84822</a>
-        </div>
+  <div class="footer-top">
+    <div>
+      <span class="footer-brand-name">GAB JEWELS</span>
+      <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru. Every piece carries the weight of tradition and the brilliance of modern artistry.</p>
     </div>
-    <div class="footer-bottom">
-        <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
-        <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="../index.html">Home</a>
+      <a href="collections.html">Collections</a>
+      <a href="advance-buy.html">Buy Gold</a>
+      <a href="cart.html">Your Bag</a>
     </div>
+    <div class="footer-col">
+      <h4>Policies</h4>
+      <a href="#">Exchange Policy</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="mailto:gbhanuprasad63@gmail.com">gbhanuprasad63@gmail.com</a>
+      <a href="mailto:yatishb1922@gmail.com">yatishb1922@gmail.com</a>
+      <a href="tel:+917780184822">+91 77801 84822</a>
+      <a href="tel:+918884953038">+91 88849 53038</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+    <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+  </div>
 </footer>
 
 <script src="../assets/js/cart.js"></script>
 <script>
-    // Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // Reveal on scroll
+  const obs = new IntersectionObserver(
+    es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.05 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Contact form submit
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('cf-submit');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+  // Form submit
+  document.getElementById('cform').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('fbtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
 
-        // Simulate send (replace with real API call if needed)
-        setTimeout(() => {
-            const msg = document.getElementById('contact-msg');
-            msg.textContent = '✦ Your message has been sent. We\'ll get back to you within 24 hours.';
-            msg.className = 'contact-msg show';
-            document.getElementById('contact-form').reset();
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-        }, 1200);
-    });
+    setTimeout(() => {
+      const msg = document.getElementById('fmsg');
+      msg.textContent = '✦ Message sent successfully! We\'ll get back to you within 24 hours.';
+      msg.classList.add('show');
+      this.reset();
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+      setTimeout(() => msg.classList.remove('show'), 6000);
+    }, 1200);
+  });
 </script>
 
 </body>

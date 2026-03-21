@@ -14,17 +14,14 @@
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Cormorant Garamond',serif;background:var(--dark);color:var(--cream);min-height:100vh;display:flex;align-items:stretch;overflow-x:hidden}
 
-    /* BG */
     .bg{position:fixed;inset:0;z-index:0;pointer-events:none}
     .bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 10%,rgba(201,168,76,.10) 0%,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 90%,rgba(201,168,76,.07) 0%,transparent 60%)}
     .bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.035) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,black 20%,transparent 100%)}
 
-    /* LAYOUT */
     .wrap{position:relative;z-index:1;width:100%;min-height:100vh;display:flex}
     .left{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 40px;border-right:1px solid rgba(201,168,76,.12);overflow:hidden}
     .inner{max-width:420px;width:100%}
 
-    /* BRAND */
     .brand{text-align:center;margin-bottom:40px}
     .orn{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:20px}
     .oln{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
@@ -34,37 +31,31 @@
     .bsub{font-family:'Raleway',sans-serif;font-size:.62rem;letter-spacing:.55em;text-transform:uppercase;color:var(--muted);margin-top:6px}
     .divl{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent);margin-bottom:32px}
 
-    /* TABS */
     .tabs{display:flex;border-bottom:1px solid rgba(201,168,76,.18);margin-bottom:28px}
     .tab{flex:1;padding:13px 0;background:none;border:none;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(250,246,238,.35);cursor:pointer;position:relative;transition:color .35s}
     .tab::after{content:'';position:absolute;bottom:-1px;left:0;width:0;height:2px;background:var(--gold);transition:width .35s cubic-bezier(.4,0,.2,1)}
     .tab.on{color:var(--gold-l)}
     .tab.on::after{width:100%}
 
-    /* VIEWS */
     .view{display:none;animation:si .4s ease forwards}
     .view.on{display:block}
     @keyframes si{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-    /* FORM */
     .flbl{display:block;font-family:'Raleway',sans-serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(250,246,238,.45);margin-bottom:7px;margin-top:16px}
     .finp{width:100%;padding:13px 16px;background:rgba(201,168,76,.055);border:1px solid rgba(201,168,76,.2);color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:1.05rem;transition:border-color .3s,background .3s;outline:none;box-sizing:border-box}
     .finp:focus{border-color:var(--gold);background:rgba(201,168,76,.09)}
     .finp::placeholder{color:rgba(250,246,238,.2);font-style:italic}
 
-    /* PHONE ROW */
     .prow{display:flex;gap:8px}
     .ccode{width:85px;flex-shrink:0;padding:13px 8px;background:rgba(201,168,76,.055);border:1px solid rgba(201,168,76,.2);color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:.95rem;cursor:pointer;-webkit-appearance:none;text-align:center;outline:none}
     .ccode option{background:var(--dark2)}
     .ccode:focus{border-color:var(--gold)}
 
-    /* OTP BOXES */
     .orow{display:flex;gap:8px;justify-content:center;margin:18px 0}
     .obox{width:48px;height:54px;background:rgba(201,168,76,.055);border:1px solid rgba(201,168,76,.2);color:var(--cream);font-size:1.3rem;text-align:center;transition:border-color .3s;caret-color:var(--gold);outline:none}
     .obox:focus{border-color:var(--gold)}
     .obox.fl{border-color:rgba(201,168,76,.5)}
 
-    /* STEPS */
     .steps{display:flex;align-items:center;justify-content:center;margin-bottom:20px}
     .sdot{width:26px;height:26px;border-radius:50%;border:1px solid rgba(201,168,76,.25);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.65rem;color:rgba(250,246,238,.35);transition:all .4s}
     .sdot.done{background:var(--gold);border-color:var(--gold);color:var(--dark)}
@@ -72,42 +63,35 @@
     .sline{width:40px;height:1px;background:rgba(201,168,76,.18);transition:background .4s}
     .sline.done{background:var(--gold)}
 
-    /* STRENGTH */
     .strw{display:flex;gap:4px;margin-top:6px}
     .srseg{height:3px;flex:1;background:rgba(201,168,76,.1);border-radius:2px;transition:background .4s}
     .strlbl{font-family:'Raleway',sans-serif;font-size:.6rem;letter-spacing:.15em;color:var(--muted);text-align:right;margin-top:4px}
 
-    /* BUTTONS */
     .bgold{width:100%;padding:15px;background:var(--gold);color:var(--dark);border:none;font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.35em;text-transform:uppercase;cursor:pointer;margin-top:14px;transition:all .3s;position:relative;overflow:hidden}
     .bgold::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.15);transform:translateX(-100%) skewX(-15deg);transition:transform .5s}
     .bgold:hover::before{transform:translateX(120%) skewX(-15deg)}
     .bgold:hover{background:var(--gold-l);transform:translateY(-1px)}
     .bgold:disabled{opacity:.45;cursor:not-allowed;transform:none}
 
-    /* MESSAGES */
     .msg{font-family:'Raleway',sans-serif;font-size:.74rem;letter-spacing:.08em;padding:10px 14px;margin-bottom:12px;display:none;text-align:left;line-height:1.5}
     .msg.err{color:var(--err);background:rgba(224,112,112,.08);border-left:2px solid var(--err)}
     .msg.ok{color:var(--ok);background:rgba(109,191,138,.08);border-left:2px solid var(--ok)}
     .msg.info{color:var(--gold);background:rgba(201,168,76,.08);border-left:2px solid rgba(201,168,76,.4)}
     .msg.on{display:block}
 
-    /* SWITCH LINK */
     .swl{text-align:center;margin-top:16px;font-family:'Raleway',sans-serif;font-size:.7rem;letter-spacing:.1em;color:var(--muted)}
     .swl span{color:var(--gold);cursor:pointer;border-bottom:1px solid var(--gold)}
 
-    /* RESEND */
     .rrow{text-align:center;margin-top:12px}
     .rbtn{background:none;border:none;font-family:'Raleway',sans-serif;font-size:.7rem;color:var(--muted);cursor:pointer;letter-spacing:.1em;transition:color .3s}
     .rbtn:hover:not(:disabled){color:var(--gold)}
     .rbtn:disabled{cursor:default}
     .rtmr{color:var(--gold);font-family:'Cinzel',serif}
 
-    /* EYE */
     .ewrap{position:relative}
     .ebtn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:0;color:rgba(250,246,238,.3);transition:color .3s}
     .ebtn:hover{color:var(--gold)}
 
-    /* SUCCESS */
     .succ{text-align:center;padding:24px 0}
     .sring{width:60px;height:60px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
     @keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
@@ -115,10 +99,8 @@
     .stitle{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--cream);margin-bottom:8px}
     .ssub{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(250,246,238,.45);font-size:1rem;margin-bottom:28px}
 
-    /* OFFLINE BANNER */
     .offbanner{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.8);font-family:'Raleway',sans-serif;font-size:.68rem;letter-spacing:.08em;padding:8px 14px;text-align:center;margin-bottom:16px;display:none}
 
-    /* RIGHT PANEL */
     .right{width:360px;flex-shrink:0;background:var(--dark3);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 40px;position:relative;overflow:hidden}
     .right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,168,76,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 60% at 50% 100%,rgba(201,168,76,.08) 0%,transparent 60%)}
     .dq{position:relative;z-index:1;text-align:center}
@@ -142,11 +124,10 @@
 
 <div class="wrap">
 
-  <!-- ── LEFT PANEL ── -->
+  <!-- LEFT PANEL -->
   <div class="left">
     <div class="inner">
 
-      <!-- BRAND -->
       <div class="brand">
         <div class="orn">
           <div class="oln"></div><div class="odm"></div><div class="oln r"></div>
@@ -156,19 +137,15 @@
       </div>
       <div class="divl"></div>
 
-      <!-- OFFLINE BANNER -->
       <div class="offbanner" id="offbanner">⚠ Running in offline mode — demo accounts available</div>
-
-      <!-- MESSAGE -->
       <div class="msg" id="msg"></div>
 
-      <!-- TABS -->
       <div class="tabs">
         <button class="tab on" id="tl" onclick="switchTab('login')">Sign In</button>
-        <button class="tab"    id="ts" onclick="switchTab('signup')">Create Account</button>
+        <button class="tab" id="ts" onclick="switchTab('signup')">Create Account</button>
       </div>
 
-      <!-- ══ LOGIN ══ -->
+      <!-- LOGIN -->
       <div class="view on" id="vl">
         <label class="flbl">Email Address</label>
         <input class="finp" type="email" id="le" placeholder="your@email.com" autocomplete="email">
@@ -184,7 +161,6 @@
         <button class="bgold" id="lbtn" onclick="doLogin()">Enter the Vault</button>
         <div class="swl">New member? <span onclick="switchTab('signup')">Create an account</span></div>
 
-        <!-- DEMO HINT -->
         <div style="margin-top:20px;padding:12px 14px;border:1px solid rgba(201,168,76,.15);background:rgba(201,168,76,.04)">
           <p style="font-family:'Raleway',sans-serif;font-size:.65rem;letter-spacing:.12em;color:rgba(250,246,238,.4);text-align:center;line-height:1.8">
             DEMO ACCOUNTS<br>
@@ -194,14 +170,14 @@
         </div>
       </div>
 
-      <!-- ══ SIGNUP STEP 1: Details ══ -->
+      <!-- SIGNUP STEP 1 -->
       <div class="view" id="vs1">
         <div class="steps">
-          <div class="sdot cur" id="sd1">1</div>
-          <div class="sline" id="sl1"></div>
-          <div class="sdot" id="sd2">2</div>
-          <div class="sline" id="sl2"></div>
-          <div class="sdot" id="sd3">3</div>
+          <div class="sdot cur">1</div>
+          <div class="sline"></div>
+          <div class="sdot">2</div>
+          <div class="sline"></div>
+          <div class="sdot">3</div>
         </div>
 
         <label class="flbl">Full Name</label>
@@ -226,13 +202,13 @@
         <div class="swl">Already a member? <span onclick="switchTab('login')">Sign in</span></div>
       </div>
 
-      <!-- ══ SIGNUP STEP 2: OTP / Skip ══ -->
+      <!-- SIGNUP STEP 2: OTP -->
       <div class="view" id="vs2">
         <div class="steps">
           <div class="sdot done">✓</div>
           <div class="sline done"></div>
           <div class="sdot cur">2</div>
-          <div class="sline" id="sl2b"></div>
+          <div class="sline"></div>
           <div class="sdot">3</div>
         </div>
 
@@ -264,7 +240,7 @@
         </div>
       </div>
 
-      <!-- ══ SIGNUP STEP 3: Password ══ -->
+      <!-- SIGNUP STEP 3: Password -->
       <div class="view" id="vs3">
         <div class="steps">
           <div class="sdot done">✓</div>
@@ -298,7 +274,7 @@
         <button class="bgold" id="s3btn" onclick="finish()">Enter the Store</button>
       </div>
 
-      <!-- ══ SUCCESS ══ -->
+      <!-- SUCCESS -->
       <div class="view" id="vok">
         <div class="succ">
           <div class="sring">
@@ -313,7 +289,7 @@
     </div>
   </div>
 
-  <!-- ── RIGHT PANEL ── -->
+  <!-- RIGHT PANEL -->
   <div class="right">
     <div class="since">Est. 1978 · Bengaluru</div>
     <div class="dq">
@@ -329,48 +305,28 @@
 </div>
 
 <script>
-// ─────────────────────────────────────────────────────────
-//  STATE
-// ─────────────────────────────────────────────────────────
 let serverOnline = false;
 let sd = { name:'', email:'', phone:'', code:'+91' };
 let resendTimer = null;
 
-// ─────────────────────────────────────────────────────────
-//  INIT — runs immediately
-// ─────────────────────────────────────────────────────────
 (async function() {
-    // Already logged in?
     if (localStorage.getItem('isLoggedIn') === 'true') {
-        if (localStorage.getItem('aurum_role') === 'admin') {
-            location.href = '/pages/admin/dashboard.html';
-        } else {
-            location.href = 'index.html';
-        }
+        location.href = localStorage.getItem('aurum_role') === 'admin'
+            ? '/pages/admin/dashboard.html' : 'index.html';
         return;
     }
-
-    // Check server
     try {
         const r = await fetch('/api/products', { signal: AbortSignal.timeout(2000) });
         serverOnline = r.ok;
     } catch { serverOnline = false; }
-
-    if (!serverOnline) {
-        document.getElementById('offbanner').style.display = 'block';
-    }
-
+    if (!serverOnline) document.getElementById('offbanner').style.display = 'block';
     setupOTP();
     setupEnter();
 })();
 
-// ─────────────────────────────────────────────────────────
-//  HELPERS
-// ─────────────────────────────────────────────────────────
 function showMsg(txt, type='err') {
     const m = document.getElementById('msg');
-    m.textContent = txt;
-    m.className = `msg ${type} on`;
+    m.textContent = txt; m.className = `msg ${type} on`;
 }
 function clearMsg() { document.getElementById('msg').className = 'msg'; }
 
@@ -380,18 +336,15 @@ function switchTab(t) {
     document.getElementById('ts').classList.toggle('on', t==='signup');
     show(t==='login' ? 'vl' : 'vs1');
 }
-
 function show(id) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
     document.getElementById(id).classList.add('on');
     clearMsg();
 }
-
 function eye(id) {
     const i = document.getElementById(id);
     i.type = i.type === 'password' ? 'text' : 'password';
 }
-
 function strength(pw) {
     let s=0;
     if(pw.length>=8) s++;
@@ -404,39 +357,33 @@ function strength(pw) {
         document.getElementById('ss'+i).style.background = i<=s ? c[s] : 'rgba(201,168,76,.1)';
     document.getElementById('slbl').textContent = pw.length ? l[s] : l[0];
 }
+function save(role, token) {
+    localStorage.setItem('aurum_token', token);
+    localStorage.setItem('aurum_role', role);
+    localStorage.setItem('isLoggedIn', 'true');
+}
 
-// ─────────────────────────────────────────────────────────
-//  LOGIN
-// ─────────────────────────────────────────────────────────
 async function doLogin() {
     clearMsg();
     const email = document.getElementById('le').value.trim();
     const pass  = document.getElementById('lp').value;
     if (!email || !pass) { showMsg('Please enter your email and password.'); return; }
-
     const btn = document.getElementById('lbtn');
     btn.disabled = true; btn.textContent = 'Signing in…';
 
-    // ── OFFLINE / DEMO ──
     if (!serverOnline) {
-        // Built-in admin
         if (email === 'admin@gabjewels.com' && pass === 'Admin@1234') {
             save('admin', 'demo-admin-token');
-            location.href = '/pages/admin/dashboard.html';
-            return;
+            location.href = '/pages/admin/dashboard.html'; return;
         }
-        // Built-in demo customer
         if (email === 'demo@gabjewels.com' && pass === '1234') {
             save('customer', 'demo-token');
-            location.href = 'index.html';
-            return;
+            location.href = 'index.html'; return;
         }
-        // Check locally registered accounts
         const accs = JSON.parse(localStorage.getItem('gab_accs') || '[]');
         const found = accs.find(a => a.email === email && a.pass === pass);
         if (found) {
-            save('customer', 'local-token');
-            location.href = 'index.html';
+            save('customer', 'local-token'); location.href = 'index.html';
         } else {
             showMsg('Invalid credentials. Try demo@gabjewels.com / 1234');
             btn.disabled = false; btn.textContent = 'Enter the Vault';
@@ -444,7 +391,6 @@ async function doLogin() {
         return;
     }
 
-    // ── ONLINE ──
     try {
         const r = await fetch('/api/auth/login', {
             method:'POST', headers:{'Content-Type':'application/json'},
@@ -454,207 +400,101 @@ async function doLogin() {
         if (!r.ok) { showMsg(d.error || 'Invalid credentials.'); return; }
         save(d.role, d.token);
         location.href = d.role === 'admin' ? '/pages/admin/dashboard.html' : 'index.html';
-    } catch {
-        showMsg('Cannot connect to server.');
-    } finally {
-        btn.disabled = false; btn.textContent = 'Enter the Vault';
-    }
+    } catch { showMsg('Cannot connect to server.'); }
+    finally { btn.disabled = false; btn.textContent = 'Enter the Vault'; }
 }
 
-function save(role, token) {
-    localStorage.setItem('aurum_token',  token);
-    localStorage.setItem('aurum_role',   role);
-    localStorage.setItem('isLoggedIn',   'true');
-}
-
-// ─────────────────────────────────────────────────────────
-//  SIGNUP — STEP 1
-// ─────────────────────────────────────────────────────────
 function goStep2() {
     clearMsg();
-    const name  = document.getElementById('sn').value.trim();
-    const email = document.getElementById('se').value.trim();
-    const phone = document.getElementById('sp').value.trim();
-    const code  = document.getElementById('sc').value;
-
-    if (!name)  { showMsg('Please enter your full name.'); return; }
-    if (!email || !email.includes('@')) { showMsg('Please enter a valid email.'); return; }
-    if (!phone || phone.length < 10) { showMsg('Please enter a valid 10-digit number.'); return; }
-
-    // Check not already registered
-    const accs = JSON.parse(localStorage.getItem('gab_accs') || '[]');
-    if (accs.find(a => a.email === email)) {
-        showMsg('Email already registered. Please sign in.'); return;
-    }
-
-    sd = { name, email, phone, code, full: code + phone };
-    document.getElementById('otpdisp').textContent = code + ' ' + phone;
-
+    const name=document.getElementById('sn').value.trim();
+    const email=document.getElementById('se').value.trim();
+    const phone=document.getElementById('sp').value.trim();
+    const code=document.getElementById('sc').value;
+    if (!name) { showMsg('Please enter your full name.'); return; }
+    if (!email||!email.includes('@')) { showMsg('Please enter a valid email.'); return; }
+    if (!phone||phone.length<10) { showMsg('Please enter a valid 10-digit number.'); return; }
+    const accs=JSON.parse(localStorage.getItem('gab_accs')||'[]');
+    if (accs.find(a=>a.email===email)) { showMsg('Email already registered. Please sign in.'); return; }
+    sd = { name, email, phone, code, full: code+phone };
+    document.getElementById('otpdisp').textContent = code+' '+phone;
     if (!serverOnline) {
-        // Offline — skip OTP, go straight to password
-        showMsg('Offline mode — skipping OTP verification.', 'info');
-        setTimeout(() => { clearMsg(); goStep3(); }, 1200);
-        return;
+        showMsg('Offline mode — skipping OTP.','info');
+        setTimeout(()=>{clearMsg();goStep3();},1200); return;
     }
-
-    // Online — send OTP
-    sendOTP();
-    show('vs2');
-    startTimer();
-    document.getElementById('ob0').focus();
+    sendOTP(); show('vs2'); startTimer(); document.getElementById('ob0').focus();
 }
 
-// ─────────────────────────────────────────────────────────
-//  OTP
-// ─────────────────────────────────────────────────────────
 async function sendOTP() {
-    try {
-        await fetch('/api/auth/send-otp', {
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ phone: sd.full, email: sd.email })
-        });
-    } catch {}
+    try { await fetch('/api/auth/send-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:sd.full,email:sd.email})}); } catch {}
 }
-
 function setupOTP() {
     for (let i=0;i<6;i++) {
-        const b = document.getElementById('ob'+i);
-        b.addEventListener('input', function() {
-            this.classList.toggle('fl', this.value!=='');
-            if (this.value && i<5) document.getElementById('ob'+(i+1)).focus();
-        });
-        b.addEventListener('keydown', function(e) {
-            if (e.key==='Backspace' && !this.value && i>0)
-                document.getElementById('ob'+(i-1)).focus();
-        });
-        b.addEventListener('paste', function(e) {
-            const d = e.clipboardData.getData('text').replace(/\D/g,'');
-            d.split('').slice(0,6).forEach((ch,idx) => {
-                const bx = document.getElementById('ob'+idx);
-                if (bx) { bx.value=ch; bx.classList.add('fl'); }
-            });
-            e.preventDefault();
-        });
+        const b=document.getElementById('ob'+i);
+        b.addEventListener('input',function(){this.classList.toggle('fl',this.value!=='');if(this.value&&i<5)document.getElementById('ob'+(i+1)).focus();});
+        b.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!this.value&&i>0)document.getElementById('ob'+(i-1)).focus();});
+        b.addEventListener('paste',function(e){const d=e.clipboardData.getData('text').replace(/\D/g,'');d.split('').slice(0,6).forEach((ch,idx)=>{const bx=document.getElementById('ob'+idx);if(bx){bx.value=ch;bx.classList.add('fl');}});e.preventDefault();});
     }
 }
-
 function startTimer() {
-    let s=30;
-    const btn=document.getElementById('rbtn');
-    const tmr=document.getElementById('rtmr');
-    btn.disabled=true;
-    clearInterval(resendTimer);
-    resendTimer = setInterval(()=>{
-        s--;
-        tmr.textContent = s+'s';
-        if(s<=0){
-            clearInterval(resendTimer);
-            btn.disabled=false;
-            btn.innerHTML='Resend OTP';
-        }
-    },1000);
+    let s=30; const btn=document.getElementById('rbtn'),tmr=document.getElementById('rtmr');
+    btn.disabled=true; clearInterval(resendTimer);
+    resendTimer=setInterval(()=>{s--;tmr.textContent=s+'s';if(s<=0){clearInterval(resendTimer);btn.disabled=false;btn.innerHTML='Resend OTP';}},1000);
 }
-
-async function resend() {
-    await sendOTP();
-    showMsg('New OTP sent.','ok');
-    startTimer();
-}
+async function resend() { await sendOTP(); showMsg('New OTP sent.','ok'); startTimer(); }
 
 async function verifyOTP() {
     clearMsg();
-    const otp = [0,1,2,3,4,5].map(i=>document.getElementById('ob'+i).value).join('');
-    if (otp.length<6) { showMsg('Please enter the complete 6-digit OTP.'); return; }
-
-    const btn = document.getElementById('s2btn');
-    btn.disabled=true; btn.textContent='Verifying…';
-
+    const otp=[0,1,2,3,4,5].map(i=>document.getElementById('ob'+i).value).join('');
+    if(otp.length<6){showMsg('Please enter the complete 6-digit OTP.');return;}
+    const btn=document.getElementById('s2btn'); btn.disabled=true; btn.textContent='Verifying…';
     try {
-        const r = await fetch('/api/auth/verify-otp',{
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ phone: sd.full, otp })
-        });
-        const d = await r.json();
-        if (!r.ok) { showMsg(d.error||'Invalid OTP.'); return; }
+        const r=await fetch('/api/auth/verify-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:sd.full,otp})});
+        const d=await r.json();
+        if(!r.ok){showMsg(d.error||'Invalid OTP.');return;}
         goStep3();
-    } catch {
-        showMsg('Cannot connect to server.');
-    } finally {
-        btn.disabled=false; btn.textContent='Verify OTP';
-    }
+    } catch { showMsg('Cannot connect to server.'); }
+    finally { btn.disabled=false; btn.textContent='Verify OTP'; }
 }
+function goStep3() { show('vs3'); document.getElementById('spw').focus(); }
 
-function goStep3() {
-    show('vs3');
-    document.getElementById('spw').focus();
-}
-
-// ─────────────────────────────────────────────────────────
-//  SIGNUP — STEP 3: FINISH
-// ─────────────────────────────────────────────────────────
 async function finish() {
     clearMsg();
-    const pw  = document.getElementById('spw').value;
-    const pw2 = document.getElementById('spw2').value;
-
-    if (pw.length<8)  { showMsg('Password must be at least 8 characters.'); return; }
-    if (pw !== pw2)   { showMsg('Passwords do not match.'); return; }
-
-    const btn = document.getElementById('s3btn');
-    btn.disabled=true; btn.textContent='Creating account…';
-
-    // ── OFFLINE ──
+    const pw=document.getElementById('spw').value, pw2=document.getElementById('spw2').value;
+    if(pw.length<8){showMsg('Password must be at least 8 characters.');return;}
+    if(pw!==pw2){showMsg('Passwords do not match.');return;}
+    const btn=document.getElementById('s3btn'); btn.disabled=true; btn.textContent='Creating account…';
     if (!serverOnline) {
-        const accs = JSON.parse(localStorage.getItem('gab_accs')||'[]');
-        accs.push({ name:sd.name, email:sd.email, phone:sd.full, pass:pw });
-        localStorage.setItem('gab_accs', JSON.stringify(accs));
+        const accs=JSON.parse(localStorage.getItem('gab_accs')||'[]');
+        accs.push({name:sd.name,email:sd.email,phone:sd.full,pass:pw});
+        localStorage.setItem('gab_accs',JSON.stringify(accs));
         save('customer','local-token');
-        document.getElementById('smsg').textContent = `Welcome, ${sd.name}. Your account is ready.`;
-        show('vok');
-        btn.disabled=false; btn.textContent='Enter the Store';
-        return;
+        localStorage.setItem('gab_user',JSON.stringify({name:sd.name,email:sd.email}));
+        document.getElementById('smsg').textContent=`Welcome, ${sd.name}. Your account is ready.`;
+        show('vok'); btn.disabled=false; btn.textContent='Enter the Store'; return;
     }
-
-    // ── ONLINE ──
     try {
-        const r = await fetch('/api/auth/register',{
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ name:sd.name, email:sd.email, phone:sd.full, password:pw })
-        });
-        const d = await r.json();
-        if (!r.ok) { showMsg(d.error||'Registration failed.'); return; }
-
-        // Auto-login
-        const lr = await fetch('/api/auth/login',{
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ email:sd.email, password:pw })
-        });
-        const ld = await lr.json();
-        if (lr.ok) save(ld.role, ld.token);
-
-        document.getElementById('smsg').textContent = `Welcome, ${sd.name}. Your account is ready.`;
+        const r=await fetch('/api/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:sd.name,email:sd.email,phone:sd.full,password:pw})});
+        const d=await r.json();
+        if(!r.ok){showMsg(d.error||'Registration failed.');return;}
+        const lr=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:sd.email,password:pw})});
+        const ld=await lr.json();
+        if(lr.ok){save(ld.role,ld.token);localStorage.setItem('gab_user',JSON.stringify({name:sd.name,email:sd.email}));}
+        document.getElementById('smsg').textContent=`Welcome, ${sd.name}. Your account is ready.`;
         show('vok');
-    } catch {
-        showMsg('Cannot connect to server.');
-    } finally {
-        btn.disabled=false; btn.textContent='Enter the Store';
-    }
+    } catch { showMsg('Cannot connect to server.'); }
+    finally { btn.disabled=false; btn.textContent='Enter the Store'; }
 }
-
 function go() { location.href='index.html'; }
 
-// ─────────────────────────────────────────────────────────
-//  ENTER KEY
-// ─────────────────────────────────────────────────────────
 function setupEnter() {
-    document.addEventListener('keydown', function(e) {
-        if (e.key!=='Enter') return;
-        const a = document.querySelector('.view.on');
-        if (!a) return;
-        if (a.id==='vl')  doLogin();
-        if (a.id==='vs1') goStep2();
-        if (a.id==='vs2') verifyOTP();
-        if (a.id==='vs3') finish();
+    document.addEventListener('keydown',function(e){
+        if(e.key!=='Enter')return;
+        const a=document.querySelector('.view.on');
+        if(!a)return;
+        if(a.id==='vl') doLogin();
+        if(a.id==='vs1') goStep2();
+        if(a.id==='vs2') verifyOTP();
+        if(a.id==='vs3') finish();
     });
 }
 </script>
