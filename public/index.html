@@ -1,6 +1,1443 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GAB Jewels | Fine Jewellery Since 1978</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale: #F5E6B8;
+      --dark: #0E0B07;
+      --dark-2: #1A1410;
+      --dark-3: #2C1F0E;
+      --cream: #FAF6EE;
+      --text-muted: rgba(232, 201, 122, 0.5);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background-color: var(--dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ─── LOGIN OVERLAY ─── */
+    #login-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 40px 20px;
+    }
+
+    .login-ornament {
+      width: 200px;
+      margin-bottom: 24px;
+      opacity: 0.6;
+    }
+
+    #login-overlay h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      color: var(--gold-light);
+      letter-spacing: 0.3em;
+      font-weight: 600;
+    }
+
+    .login-tagline {
+      color: var(--text-muted);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin: 10px 0 40px;
+    }
+
+    .login-divider {
+      width: 180px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 36px;
+    }
+
+    #login-overlay input {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--cream);
+      width: 340px;
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      font-family: 'Raleway', sans-serif;
+      letter-spacing: 0.08em;
+      display: block;
+      margin: 0 auto 14px;
+      transition: border-color 0.3s;
+    }
+
+    #login-overlay input:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.1);
+    }
+
+    #login-overlay input::placeholder { color: rgba(250,246,238,0.3); }
+
+    .login-btn {
+      width: 340px;
+      padding: 15px;
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin: 10px auto 0;
+      display: block;
+      transition: all 0.3s;
+    }
+
+    .login-btn:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.3);
+    }
+
+    .guest-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--text-muted);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+    }
+    .guest-link:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+    #login-error {
+      color: #E07070;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.78rem;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    /* ─── MAIN SITE ─── */
+    #main-site { display: none; }
+
+    /* ─── TICKER ─── */
+    .ticker-wrap {
+      background: var(--gold);
+      overflow: hidden;
+      padding: 8px 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
+    }
+
+    .ticker-track span {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--dark);
+      padding: 0 40px;
+    }
+
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(14, 11, 7, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      letter-spacing: 0.25em;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+
+    .nav-links a {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,246,238,0.7);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cart {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--cream);
+      letter-spacing: 0.05em;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    .hero-title .gold { color: var(--gold-light); }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-style: italic;
+      color: rgba(250,246,238,0.6);
+      margin: 20px 0 44px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.7s forwards;
+    }
+
+    .hero-ctas {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.9s forwards;
+    }
+
+    .btn-primary {
+      padding: 16px 40px;
+      background: var(--gold);
+      color: var(--dark);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201,168,76,0.35);
+    }
+
+    .btn-outline {
+      padding: 15px 40px;
+      background: transparent;
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(201,168,76,0.5);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.4s forwards;
+    }
+
+    .hero-scroll span {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+    /* ─── SECTION HEADERS ─── */
+    .section-header {
+      text-align: center;
+      padding: 80px 20px 50px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--cream);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .ornament-line {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-top: 20px;
+    }
+
+    .ornament-line::before, .ornament-line::after {
+      content: '';
+      flex: 1; max-width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .ornament-line::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .ornament-diamond {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ─── COLLECTIONS SLIDER ─── */
+    #collections {
+      background: var(--dark-2);
+      padding-bottom: 80px;
+    }
+
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+      padding: 0 60px;
+    }
+
+    .slider-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 10px 0 20px;
+    }
+
+    .collection-card {
+      flex: 0 0 calc(33.333% - 16px);
+      min-width: 0;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--dark-3);
+    }
+
+    .collection-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(14,11,7,0.9) 30%, transparent 70%);
+      z-index: 1;
+      transition: opacity 0.4s;
+    }
+
+    .collection-card:hover::before {
+      opacity: 0.7;
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+      background: linear-gradient(135deg, #2C1F0E, #1A1410);
+    }
+
+    .collection-card:hover .card-img { transform: scale(1.06); }
+
+    .card-emoji {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -70%);
+      font-size: 4rem;
+      z-index: 0;
+      opacity: 0.15;
+      transition: transform 0.6s ease;
+    }
+
+    .collection-card:hover .card-emoji {
+      transform: translate(-50%, -75%) scale(1.1);
+    }
+
+    .card-body {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 24px;
+      z-index: 2;
+    }
+
+    .card-tag {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      margin-bottom: 6px;
+    }
+
+    .card-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(250,246,238,0.55);
+    }
+
+    .card-hover-btn {
+      display: inline-block;
+      margin-top: 14px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 2px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s;
+    }
+
+    .collection-card:hover .card-hover-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      width: 48px; height: 48px;
+      background: rgba(14,11,7,0.8);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .slider-btn:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    .slider-btn.prev { left: 0; }
+    .slider-btn.next { right: 0; }
+
+    /* ─── LIVE RATES ─── */
+    #rates {
+      padding: 80px 40px;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #rates::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .rates-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .rate-card {
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .rate-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .rate-card:hover {
+      background: rgba(201,168,76,0.09);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    .rate-metal {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .rate-price {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      color: var(--cream);
+      margin-bottom: 6px;
+    }
+
+    .rate-unit {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: rgba(250,246,238,0.4);
+    }
+
+    .rate-pulse {
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: #4CAF50;
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: pulse 2s ease-in-out infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(76,175,80,0.5); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(76,175,80,0); }
+    }
+
+    .rates-live-label {
+      text-align: center;
+      margin-top: 28px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: rgba(250,246,238,0.35);
+    }
+
+    /* ─── BUY GOLD ─── */
+    #buy-gold {
+      background: var(--dark-2);
+      padding: 80px 40px;
+    }
+
+    .buy-gold-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .buy-gold-info h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      margin-bottom: 16px;
+    }
+
+    .buy-gold-info p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: rgba(250,246,238,0.65);
+      margin-bottom: 20px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+
+    .feature-list li {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: rgba(250,246,238,0.7);
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .feature-list li::before {
+      content: '◆';
+      font-size: 0.5rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ─── BUY GOLD CALCULATOR ─── */
+    .calculator {
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 36px 30px;
+      position: relative;
+    }
+
+    .calculator::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .calc-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .calc-group {
+      margin-bottom: 18px;
+    }
+
+    .calc-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(250,246,238,0.5);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .calc-select, .calc-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(201,168,76,0.07);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+    }
+
+    .calc-select:focus, .calc-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .calc-select option { background: var(--dark-2); }
+
+    .calc-result {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 20px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .calc-result-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .calc-result-value {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      color: var(--gold-light);
+    }
+
+    .calc-result-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: rgba(250,246,238,0.4);
+      margin-top: 4px;
+    }
+
+    /* ─── CART ─── */
+    #cart-section {
+      padding: 60px 40px;
+      background: var(--dark);
+    }
+
+    .cart-container {
+      max-width: 700px;
+      margin: 0 auto;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .cart-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .cart-header h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--cream);
+      letter-spacing: 0.1em;
+    }
+
+    .cart-count-badge {
+      background: var(--gold);
+      color: var(--dark);
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .cart-empty {
+      padding: 50px;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(250,246,238,0.3);
+    }
+
+    #cart-body { padding: 0; }
+
+    .cart-item {
+      display: flex; align-items: center; gap: 20px;
+      padding: 20px 28px;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
+
+    .cart-item-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      width: 50px; text-align: center;
+    }
+
+    .cart-item-info { flex: 1; }
+
+    .cart-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--cream);
+      margin-bottom: 3px;
+    }
+
+    .cart-item-price {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+    }
+
+    .cart-remove {
+      background: none;
+      border: none;
+      color: rgba(250,246,238,0.3);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px;
+      transition: color 0.3s;
+    }
+
+    .cart-remove:hover { color: #E07070; background: none; }
+
+    .cart-total {
+      padding: 20px 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(201,168,76,0.05);
+    }
+
+    .cart-total-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(250,246,238,0.5);
+    }
+
+    .cart-total-value {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 60px 40px 30px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      max-width: 1100px;
+      margin: 0 auto 50px;
+    }
+
+    .footer-brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(250,246,238,0.4);
+      line-height: 1.8;
+    }
+
+    .footer-col h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .footer-col a {
+      display: block;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.78rem;
+      color: rgba(250,246,238,0.45);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      max-width: 1100px; margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .footer-copy {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: rgba(250,246,238,0.25);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .collection-card { flex: 0 0 calc(50% - 12px); }
+      .rates-grid { grid-template-columns: 1fr 1fr; }
+      .buy-gold-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 16px; }
+      .collection-card { flex: 0 0 calc(80vw); }
+      .rates-grid { grid-template-columns: 1fr; }
+      .slider-container { padding: 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── LOGIN ─── -->
+<div id="login-overlay">
+  <svg class="login-ornament" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="30" x2="60" y2="30" stroke="#C9A84C" stroke-width="0.5"/>
+    <polygon points="80,10 100,30 80,50 60,30" fill="none" stroke="#C9A84C" stroke-width="0.5"/>
+    <polygon points="80,18 100,30 80,42 60,30" fill="#C9A84C" opacity="0.3"/>
+    <line x1="140" y1="30" x2="200" y2="30" stroke="#C9A84C" stroke-width="0.5"/>
+    <line x1="100" y1="10" x2="100" y2="50" stroke="#C9A84C" stroke-width="0.5"/>
+  </svg>
+
+  <h1>GAB JEWELS</h1>
+  <p class="login-tagline">Fine Jewellery Since 1978</p>
+  <div class="login-divider"></div>
+
+  <input type="email" id="login-email" placeholder="Email address" />
+  <input type="password" id="login-pass" placeholder="Password" />
+  <p id="login-error" style="display:none; color:#E07070; font-family:Raleway,sans-serif; font-size:0.78rem; margin-bottom:10px;">Invalid credentials. Try admin@gabjewels.com / 1234</p>
+  <button class="login-btn" onclick="doLogin()">Enter the Atelier</button>
+  <a href="#" class="guest-link" onclick="guestLogin()">Continue as Guest →</a>
+</div>
+
+<!-- ─── MAIN ─── -->
+<div id="main-site">
+
+  <!-- Ticker -->
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="ticker-inner">
+      <span>✦ Free shipping on orders above ₹50,000</span>
+      <span>✦ BIS Hallmarked Jewellery</span>
+      <span>✦ Lifetime Exchange & Buyback</span>
+      <span>✦ 30-Day Easy Returns</span>
+      <span>✦ Custom Design Available</span>
+      <span>✦ EMI Available on all purchases</span>
+      <!-- duplicate for seamless loop -->
+      <span>✦ Free shipping on orders above ₹50,000</span>
+      <span>✦ BIS Hallmarked Jewellery</span>
+      <span>✦ Lifetime Exchange & Buyback</span>
+      <span>✦ 30-Day Easy Returns</span>
+      <span>✦ Custom Design Available</span>
+      <span>✦ EMI Available on all purchases</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">GAB JEWELS</a>
+    <div class="nav-links">
+      <a href="pages/collections.html">Collections</a>
+      <a href="#rates">Live Rates</a>
+      <a href="pages/advance-buy.html">Buy Gold</a>
+      <a href="pages/contact.html">Contact</a>
+      <a href="pages/settings.html">Settings</a>
+    </div>
+    <div class="nav-cart" onclick="window.location.href='pages/cart.html'" style="cursor:pointer;">
+      ✦ Bag (<span id="cart-count">0</span>)
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Est. 1978 · Bengaluru · India</p>
+      <h1 class="hero-title">
+        Crafted in <span class="gold">Gold,</span><br>
+        Worn Forever
+      </h1>
+      <p class="hero-subtitle">
+        Where heritage meets artistry — jewellery that tells your story
+      </p>
+      <div class="hero-ctas">
+        <a href="pages/collections.html" class="btn-primary">Explore Collections</a>
+        <a href="pages/advance-buy.html" class="btn-outline">Buy Gold Today</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Collections -->
+  <section id="collections">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Our Atelier</p>
+      <h2 class="section-title">Curated <em>Collections</em></h2>
+      <div class="ornament-line"><div class="ornament-diamond"></div></div>
+    </div>
+
+    <div class="slider-container">
+      <button class="slider-btn prev" onclick="slideMove(-1)">&#8592;</button>
+      <div class="slider-track" id="slider-track">
+
+        <div class="collection-card" onclick="window.location.href='pages/collections.html'" style="cursor:pointer;">
+          <div class="card-img" style="background: linear-gradient(135deg, #2C1F0E 0%, #4A2E0A 100%); display:flex; align-items:center; justify-content:center;">
+            <div class="card-emoji" style="font-size:7rem; opacity:0.25; position:relative; top:auto; left:auto; transform:none;">💍</div>
+          </div>
+          <div class="card-body">
+            <p class="card-tag">Bridal</p>
+            <h3 class="card-title">Wedding Royale</h3>
+            <p class="card-subtitle">Necklaces, Bangles & Sets</p>
+            <span class="card-hover-btn">Explore →</span>
+          </div>
+        </div>
+
+        <div class="collection-card" onclick="window.location.href='pages/collections.html'" style="cursor:pointer;">
+          <div class="card-img" style="background: linear-gradient(135deg, #1A1410 0%, #3B2A18 100%); display:flex; align-items:center; justify-content:center;">
+            <div class="card-emoji" style="font-size:7rem; opacity:0.25; position:relative; top:auto; left:auto; transform:none;">✨</div>
+          </div>
+          <div class="card-body">
+            <p class="card-tag">Everyday</p>
+            <h3 class="card-title">Daily Luxe</h3>
+            <p class="card-subtitle">Rings, Chains & Studs</p>
+            <span class="card-hover-btn">Explore →</span>
+          </div>
+        </div>
+
+        <div class="collection-card" onclick="window.location.href='pages/collections.html'" style="cursor:pointer;">
+          <div class="card-img" style="background: linear-gradient(135deg, #0A0804 0%, #2C200E 100%); display:flex; align-items:center; justify-content:center;">
+            <div class="card-emoji" style="font-size:7rem; opacity:0.25; position:relative; top:auto; left:auto; transform:none;">👑</div>
+          </div>
+          <div class="card-body">
+            <p class="card-tag">Premium</p>
+            <h3 class="card-title">Heirloom Prestige</h3>
+            <p class="card-subtitle">Statement & Heritage Pieces</p>
+            <span class="card-hover-btn">Explore →</span>
+          </div>
+        </div>
+
+        <div class="collection-card" onclick="window.location.href='pages/collections.html'" style="cursor:pointer;">
+          <div class="card-img" style="background: linear-gradient(135deg, #1C1004 0%, #362210 100%); display:flex; align-items:center; justify-content:center;">
+            <div class="card-emoji" style="font-size:7rem; opacity:0.25; position:relative; top:auto; left:auto; transform:none;">🌙</div>
+          </div>
+          <div class="card-body">
+            <p class="card-tag">Contemporary</p>
+            <h3 class="card-title">Modern Grace</h3>
+            <p class="card-subtitle">Minimalist & Geometric</p>
+            <span class="card-hover-btn">Explore →</span>
+          </div>
+        </div>
+
+        <div class="collection-card" onclick="window.location.href='pages/collections.html'" style="cursor:pointer;">
+          <div class="card-img" style="background: linear-gradient(135deg, #231508 0%, #4A2E0A 100%); display:flex; align-items:center; justify-content:center;">
+            <div class="card-emoji" style="font-size:7rem; opacity:0.25; position:relative; top:auto; left:auto; transform:none;">🌸</div>
+          </div>
+          <div class="card-body">
+            <p class="card-tag">Gifting</p>
+            <h3 class="card-title">Gift of Gold</h3>
+            <p class="card-subtitle">Coins, Pendants & Charms</p>
+            <span class="card-hover-btn">Explore →</span>
+          </div>
+        </div>
+
+      </div>
+      <button class="slider-btn next" onclick="slideMove(1)">&#8594;</button>
+    </div>
+  </section>
+
+  <!-- Live Rates -->
+  <section id="rates">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Market Data</p>
+      <h2 class="section-title">Live <em>Metal Rates</em></h2>
+      <div class="ornament-line"><div class="ornament-diamond"></div></div>
+    </div>
+
+    <div class="rates-grid reveal">
+      <div class="rate-card">
+        <p class="rate-metal"><span class="rate-pulse"></span>Gold 24K</p>
+        <p class="rate-price" id="p-24k">—</p>
+        <p class="rate-unit">per 10 grams</p>
+      </div>
+      <div class="rate-card">
+        <p class="rate-metal"><span class="rate-pulse"></span>Gold 22K</p>
+        <p class="rate-price" id="p-22k">—</p>
+        <p class="rate-unit">per 10 grams</p>
+      </div>
+      <div class="rate-card">
+        <p class="rate-metal"><span class="rate-pulse"></span>Silver</p>
+        <p class="rate-price" id="p-silver">—</p>
+        <p class="rate-unit">per 1 kilogram</p>
+      </div>
+    </div>
+    <p class="rates-live-label" id="last-updated"></p>
+  </section>
+
+  <!-- Buy Gold -->
+  <section id="buy-gold">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Investment</p>
+      <h2 class="section-title">Buy <em>Gold</em></h2>
+      <div class="ornament-line"><div class="ornament-diamond"></div></div>
+    </div>
+
+    <div class="buy-gold-wrap">
+      <div class="buy-gold-info reveal">
+        <h3>Invest in Pure Gold</h3>
+        <p>
+          GAB Jewels offers BIS-certified 24K gold coins and bars — a legacy investment 
+          trusted by families across generations. Transparent pricing, guaranteed purity, 
+          and the assurance of a name established in 1978.
+        </p>
+        <ul class="feature-list">
+          <li>BIS Hallmarked 999.9 Purity</li>
+          <li>Live rate-based transparent pricing</li>
+          <li>Available in 1g, 2g, 5g, 10g, 20g, 50g bars</li>
+          <li>Free secure packaging & insured delivery</li>
+          <li>Lifetime buyback guarantee</li>
+          <li>GST invoice provided for all purchases</li>
+        </ul>
+      </div>
+
+      <div class="calculator reveal">
+        <p class="calc-title">GOLD CALCULATOR</p>
+        <div class="calc-group">
+          <label class="calc-label">Select Purity</label>
+          <select class="calc-select" id="calc-karat" onchange="calculateGold()">
+            <option value="24">Gold 24K (999.9)</option>
+            <option value="22">Gold 22K (916)</option>
+            <option value="18">Gold 18K (750)</option>
+          </select>
+        </div>
+        <div class="calc-group">
+          <label class="calc-label">Weight (grams)</label>
+          <input type="number" class="calc-input" id="calc-weight" value="10" min="1" max="1000" oninput="calculateGold()" />
+        </div>
+        <div class="calc-group">
+          <label class="calc-label">Making Charges (%)</label>
+          <input type="number" class="calc-input" id="calc-making" value="12" min="0" max="50" oninput="calculateGold()" />
+        </div>
+        <div class="calc-result">
+          <p class="calc-result-label">Estimated Price</p>
+          <p class="calc-result-value" id="calc-result">—</p>
+          <p class="calc-result-sub" id="calc-breakdown">Rates update live</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart -->
+  <section id="cart-section">
+    <div class="cart-container reveal">
+      <div class="cart-header">
+        <h3>YOUR BAG</h3>
+        <div class="cart-count-badge" id="cart-count-badge">0</div>
+      </div>
+      <div id="cart-body">
+        <p class="cart-empty">Your bag is empty — begin your journey</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <p class="footer-brand-name">GAB JEWELS</p>
+        <p class="footer-brand-desc">
+          Crafting heirlooms since 1978 in the heart of Bengaluru. 
+          Every piece carries the weight of tradition and the brilliance of modern artistry.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="pages/collections.html">Collections</a>
+        <a href="#rates">Live Rates</a>
+        <a href="pages/advance-buy.html">Buy Gold</a>
+        <a href="pages/contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Policies</h4>
+        <a href="#">Exchange Policy</a>
+        <a href="#">Buyback Terms</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+      <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+    </div>
+  </footer>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  /* ─── LOGIN ─── */
+
+  // Change these to your own credentials
+  const VALID_EMAIL    = 'admin@gabjewels.com';
+  const VALID_PASSWORD = '1234';
+
+  function doLogin() {
+    const email = document.getElementById('login-email').value.trim().toLowerCase();
+    const pass  = document.getElementById('login-pass').value.trim();
+    const err   = document.getElementById('login-error');
+    if (email === VALID_EMAIL && pass === VALID_PASSWORD) {
+      err.style.display = 'none';
+      showSite();
+    } else {
+      err.style.display = 'block';
+    }
+  }
+
+  function guestLogin() {
+    showSite();
+    return false;
+  }
+
+  function showSite() {
+    document.getElementById('login-overlay').style.display = 'none';
+    document.getElementById('main-site').style.display = 'block';
+    localStorage.setItem('gab_logged_in', 'true');
+    loadRates();
+  }
+
+  function logout() {
+    localStorage.removeItem('gab_logged_in');
+    location.reload();
+  }
+
+  // Auto-skip login if already logged in
+  window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('gab_logged_in') === 'true') {
+      showSite();
+    }
+  });
+
+  /* ─── REVEAL ON SCROLL ─── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ─── SLIDER ─── */
+  let slideIndex = 0;
+
+  function slideMove(dir) {
+    const track = document.getElementById('slider-track');
+    const cards = track.querySelectorAll('.collection-card');
+    const visibleCount = window.innerWidth <= 600 ? 1 : window.innerWidth <= 900 ? 2 : 3;
+    const maxIndex = cards.length - visibleCount;
+    slideIndex = Math.max(0, Math.min(slideIndex + dir, maxIndex));
+    const cardWidth = cards[0].offsetWidth + 24;
+    track.style.transform = `translateX(-${slideIndex * cardWidth}px)`;
+  }
+
+  /* ─── METAL RATES ─── */
+  let goldPer10g = null;
+  let silverPerKg = null;
+
+  function loadRates() {
+    // Simulated live data with a small random fluctuation
+    const base24K = 73200 + Math.round((Math.random() - 0.5) * 400);
+    goldPer10g = base24K;
+    const gold22k = Math.round(base24K * (22/24));
+    silverPerKg = 92000 + Math.round((Math.random() - 0.5) * 1000);
+
+    document.getElementById('p-24k').textContent   = '₹' + base24K.toLocaleString('en-IN');
+    document.getElementById('p-22k').textContent   = '₹' + gold22k.toLocaleString('en-IN');
+    document.getElementById('p-silver').textContent = '₹' + silverPerKg.toLocaleString('en-IN');
+
+    const now = new Date();
+    document.getElementById('last-updated').textContent =
+      `Last updated: ${now.toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'})} IST`;
+
+    calculateGold();
+    setTimeout(loadRates, 30000); // refresh every 30s
+  }
+
+  /* ─── GOLD CALCULATOR ─── */
+  function calculateGold() {
+    if (!goldPer10g) return;
+    const karat   = parseInt(document.getElementById('calc-karat').value);
+    const weight  = parseFloat(document.getElementById('calc-weight').value) || 0;
+    const making  = parseFloat(document.getElementById('calc-making').value) || 0;
+
+    const pricePerGram = (goldPer10g / 10) * (karat / 24);
+    const metalValue   = pricePerGram * weight;
+    const makingAmt    = metalValue * (making / 100);
+    const gst          = (metalValue + makingAmt) * 0.03;
+    const total        = metalValue + makingAmt + gst;
+
+    document.getElementById('calc-result').textContent = '₹' + Math.round(total).toLocaleString('en-IN');
+    document.getElementById('calc-breakdown').textContent =
+      `Metal ₹${Math.round(metalValue).toLocaleString('en-IN')} + Making ₹${Math.round(makingAmt).toLocaleString('en-IN')} + GST ₹${Math.round(gst).toLocaleString('en-IN')}`;
+  }
+
+  /* ─── CART ─── */
+  let cart = [];
+
+  function updateCartUI() {
+    const count = cart.length;
+    document.getElementById('cart-count').textContent = count;
+    document.getElementById('cart-count-badge').textContent = count;
+
+    const body = document.getElementById('cart-body');
+
+    if (count === 0) {
+      body.innerHTML = '<p class="cart-empty">Your bag is empty — begin your journey</p>';
+      return;
+    }
+
+    let total = 0;
+    let html = '';
+
+    cart.forEach((item, i) => {
+      total += item.price;
+      html += `
+        <div class="cart-item">
+          <div class="cart-item-icon">${item.icon}</div>
+          <div class="cart-item-info">
+            <p class="cart-item-name">${item.name}</p>
+            <p class="cart-item-price">₹${item.price.toLocaleString('en-IN')}</p>
+          </div>
+          <button class="cart-remove" onclick="removeFromCart(${i})">✕</button>
+        </div>
+      `;
+    });
+
+    html += `
+      <div class="cart-total">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-value">₹${total.toLocaleString('en-IN')}</span>
+      </div>
+    `;
+
+    body.innerHTML = html;
+  }
+
+  function addToCart(name, price, icon = '💎') {
+    cart.push({ name, price, icon });
+    updateCartUI();
+    document.getElementById('cart-section').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function removeFromCart(i) {
+    cart.splice(i, 1); updateCartUI();
+    } /* ─── ENTER ON LOGIN INPUTS ─── */ document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); }); </script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAB Jewels | Home</title>
