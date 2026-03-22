@@ -1,42 +1,55 @@
+"use strict";
+
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt  = require('bcryptjs');
+const path    = require('path');
 
-const db = new sqlite3.Database('./gab_jewels.db', (err) => {
-    if (err) console.error('DB connection error:', err.message);
-    else     console.log('✦ Connected to SQLite database.');
+const DB_PATH = path.join(__dirname, 'gab_jewels.db');
+
+const db = new sqlite3.Database(DB_PATH, (err) => {
+    if (err) { console.error('DB connection error:', err.message); process.exit(1); }
+    console.log('Connected to SQLite database.');
 });
 
 db.serialize(() => {
-
+    db.run('PRAGMA journal_mode = WAL');
     db.run('PRAGMA foreign_keys = ON');
 
-    // ── USERS ─────────────────────────────────────────────
+    // ── USERS ─────────────────────────────────────────────────
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id            INTEGER PRIMARY KEY AUTOINCREMENT,
-        email         TEXT    UNIQUE NOT NULL,
+        name          TEXT    NOT NULL DEFAULT '',
+        email         TEXT    UNIQUE NOT NULL COLLATE NOCASE,
+        phone         TEXT,
         password_hash TEXT    NOT NULL,
         role          TEXT    NOT NULL DEFAULT 'customer'
                               CHECK(role IN ('customer','admin')),
         is_banned     INTEGER NOT NULL DEFAULT 0,
-        created_at    TEXT    NOT NULL DEFAULT (datetime('now'))
+        created_at    TEXT    NOT NULL DEFAULT (datetime('now')),
+        updated_at    TEXT    NOT NULL DEFAULT (datetime('now'))
     )`);
 
-    // ── PRODUCTS ──────────────────────────────────────────
+    // Add name/phone columns if upgrading from old schema (safe — ignored if exists)
+    db.run(`ALTER TABLE users ADD COLUMN name TEXT NOT NULL DEFAULT ''`,  () => {});
+    db.run(`ALTER TABLE users ADD COLUMN phone TEXT`,                     () => {});
+    db.run(`ALTER TABLE users ADD COLUMN updated_at TEXT NOT NULL DEFAULT (datetime('now'))`, () => {});
+
+    // ── PRODUCTS ──────────────────────────────────────────────
     db.run(`CREATE TABLE IF NOT EXISTS products (
-        id           INTEGER PRIMARY KEY AUTOINCREMENT,
-        name         TEXT    NOT NULL,
-        category     TEXT    NOT NULL,
-        price_base   REAL    NOT NULL DEFAULT 0,
-        gold_weight  REAL    NOT NULL DEFAULT 0,
-        purity       TEXT    NOT NULL DEFAULT '22K',
-        image_url    TEXT,
-        stock_count  INTEGER NOT NULL DEFAULT 0,
-        is_archived  INTEGER NOT NULL DEFAULT 0,
-        created_at   TEXT    NOT NULL DEFAULT (datetime('now')),
-        updated_at   TEXT    NOT NULL DEFAULT (datetime('now'))
+        id          INTEGER PRIMARY KEY AUTOINCREMENT,
+        name        TEXT    NOT NULL,
+        category    TEXT    NOT NULL,
+        price_base  REAL    NOT NULL DEFAULT 0,
+        gold_weight REAL    NOT NULL DEFAULT 0,
+        purity      TEXT    NOT NULL DEFAULT '22K',
+        image_url   TEXT,
+        stock_count INTEGER NOT NULL DEFAULT 0,
+        is_archived INTEGER NOT NULL DEFAULT 0,
+        created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
+        updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
     )`);
 
-    // ── GOLD SETTINGS ─────────────────────────────────────
+    // ── GOLD SETTINGS ─────────────────────────────────────────
     db.run(`CREATE TABLE IF NOT EXISTS gold_settings (
         id          INTEGER PRIMARY KEY AUTOINCREMENT,
         markup_pct  REAL    NOT NULL DEFAULT 5.0,
@@ -45,7 +58,7 @@ db.serialize(() => {
         updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
     )`);
 
-    // ── ADMIN AUDIT LOG ───────────────────────────────────
+    // ── ADMIN AUDIT LOG ───────────────────────────────────────
     db.run(`CREATE TABLE IF NOT EXISTS admin_logs (
         id          INTEGER PRIMARY KEY AUTOINCREMENT,
         admin_id    INTEGER NOT NULL REFERENCES users(id),
@@ -57,7 +70,7 @@ db.serialize(() => {
         created_at  TEXT    NOT NULL DEFAULT (datetime('now'))
     )`);
 
-    // ── TRANSACTIONS ──────────────────────────────────────
+    // ── TRANSACTIONS ──────────────────────────────────────────
     db.run(`CREATE TABLE IF NOT EXISTS transactions (
         id         INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id    INTEGER NOT NULL REFERENCES users(id),
@@ -67,40 +80,31 @@ db.serialize(() => {
         created_at TEXT    NOT NULL DEFAULT (datetime('now'))
     )`);
 
-    // ── SEED: gold settings ───────────────────────────────
+    // ── SEED: gold settings ───────────────────────────────────
     db.run(`INSERT OR IGNORE INTO gold_settings (id, markup_pct) VALUES (1, 5.0)`);
 
-    // ── SEED: admin account ───────────────────────────────
+    // ── SEED: admin account ───────────────────────────────────
     const adminHash = bcrypt.hashSync('Admin@1234', 12);
     db.run(
-        `INSERT OR IGNORE INTO users (email, password_hash, role) VALUES (?, ?, 'admin')`,
+        `INSERT OR IGNORE INTO users (email, password_hash, role, name) VALUES (?, ?, 'admin', 'Admin')`,
         ['admin@gabjewels.com', adminHash]
     );
 
-    // ── SEED: demo customer ───────────────────────────────
-    const demoHash = bcrypt.hashSync('1234', 10);
-    db.run(
-        `INSERT OR IGNORE INTO users (email, password_hash) VALUES (?, ?)`,
-        ['demo@gabjewels.com', demoHash]
-    );
-
-    // ── SEED: sample products ─────────────────────────────
+    // ── SEED: sample products ─────────────────────────────────
     const sampleProducts = [
-        ['Classic Gold Bangle',    'Bracelets', 2800, 12.5, '22K', 15],
-        ['Diamond Solitaire Ring', 'Rings',     8500,  4.2, '18K',  6],
-        ['Temple Necklace Set',    'Necklaces', 5200, 22.8, '22K',  3],
-        ['Twisted Hoop Earrings',  'Earrings',   950,  3.1, '22K', 20],
-        ['Men Kada Bracelet',      'Bracelets', 3100, 18.0, '22K',  8],
+        ['Classic Gold Bangle',    'Bracelets', 28000,  12.5, '22K', 15],
+        ['Diamond Solitaire Ring', 'Rings',     85000,   4.2, '18K',  6],
+        ['Temple Necklace Set',    'Necklaces', 52000,  22.8, '22K',  3],
+        ['Twisted Hoop Earrings',  'Earrings',   9500,   3.1, '22K', 20],
+        ['Men Kada Bracelet',      'Bracelets', 31000,  18.0, '22K',  8],
     ];
     const stmt = db.prepare(
-        `INSERT OR IGNORE INTO products
-            (name, category, price_base, gold_weight, purity, stock_count)
-         VALUES (?, ?, ?, ?, ?, ?)`
+        `INSERT OR IGNORE INTO products (name, category, price_base, gold_weight, purity, stock_count) VALUES (?,?,?,?,?,?)`
     );
     sampleProducts.forEach(p => stmt.run(...p));
     stmt.finalize();
 
-    console.log('✦ Database schema ready.');
+    console.log('Database schema ready.');
 });
 
 module.exports = db;
