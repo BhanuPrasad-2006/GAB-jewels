@@ -92,14 +92,16 @@ db.serialize(() => {
 
     // ── SEED: sample products ─────────────────────────────────
     const sampleProducts = [
-        ['Classic Gold Bangle',    'Bracelets', 28000,  12.5, '22K', 15],
-        ['Diamond Solitaire Ring', 'Rings',     85000,   4.2, '18K',  6],
-        ['Temple Necklace Set',    'Necklaces', 52000,  22.8, '22K',  3],
-        ['Twisted Hoop Earrings',  'Earrings',   9500,   3.1, '22K', 20],
-        ['Men Kada Bracelet',      'Bracelets', 31000,  18.0, '22K',  8],
+        // price = gold_weight × rate_per_gram × 1.15 (making) × 1.03 (GST)
+        // 22K = ₹6,738/g · 18K = ₹5,513/g (update daily from ibja.co)
+        ['Classic Gold Bangle',    'Bracelets',  99500,  12.5, '22K', 15, 'https://images.pexels.com/photos/1454171/pexels-photo-1454171.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'],
+        ['Diamond Solitaire Ring', 'Rings',      27500,   4.2, '18K',  6, 'https://images.pexels.com/photos/691046/pexels-photo-691046.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'],
+        ['Temple Necklace Set',    'Necklaces', 182000,  22.8, '22K',  3, 'https://images.pexels.com/photos/1458867/pexels-photo-1458867.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'],
+        ['Twisted Hoop Earrings',  'Earrings',   24800,   3.1, '22K', 20, 'https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'],
+        ['Men Kada Bracelet',      'Bracelets', 143500,  18.0, '22K',  8, 'https://images.pexels.com/photos/1413420/pexels-photo-1413420.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'],
     ];
     const stmt = db.prepare(
-        `INSERT OR IGNORE INTO products (name, category, price_base, gold_weight, purity, stock_count) VALUES (?,?,?,?,?,?)`
+        `INSERT OR IGNORE INTO products (name, category, price_base, gold_weight, purity, stock_count, image_url) VALUES (?,?,?,?,?,?,?)`
     );
     sampleProducts.forEach(p => stmt.run(...p));
     stmt.finalize();

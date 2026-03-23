@@ -9,7 +9,8 @@ const xss       = require("xss");
 const { body, param, validationResult } = require("express-validator");
 const db        = require("./database");
 const path      = require("path");
-const https     = require("https");
+const https      = require("https");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const PORT         = process.env.PORT        || 3000;
@@ -389,6 +390,111 @@ app.get("/api/admin/logs", requireAuth, requireAdmin, async (req, res) => {
 app.get("/api/products", async (req, res) => {
     try { res.json(await dbAll("SELECT * FROM products WHERE is_archived=0 ORDER BY created_at DESC")); }
     catch { res.status(500).json({ error: "Could not fetch products." }); }
+});
+
+// ── CONTACT FORM EMAIL ────────────────────────────────────────
+app.post("/api/contact", async (req, res) => {
+    const { name, email, phone, subject, message } = req.body;
+    if (!name || !email || !message) {
+        return res.status(400).json({ error: "Name, email and message are required." });
+    }
+
+    // Try sending email via nodemailer
+    try {
+        const GMAIL_USER = process.env.GMAIL_USER || "gbhanuprasad63@gmail.com";
+        const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD || "";
+
+        if (!GMAIL_PASS) {
+            // No email configured — log it and return success anyway
+            console.log("\n📨 CONTACT FORM SUBMISSION:");
+            console.log(`   From: ${name} <${email}>`);
+            console.log(`   Phone: ${phone || 'not provided'}`);
+            console.log(`   Subject: ${subject || 'General Enquiry'}`);
+            console.log(`   Message: ${message}`);
+            console.log("   ⚠ Set GMAIL_APP_PASSWORD in .env to enable email delivery\n");
+            return res.json({ ok: true, note: "Message received. Email delivery not configured." });
+        }
+
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: { user: GMAIL_USER, pass: GMAIL_PASS }
+        });
+
+        const mailOptions = {
+            from:    `"GAB Jewels Contact" <${GMAIL_USER}>`,
+            to:      "gbhanuprasad63@gmail.com, yatishb1922@gmail.com",
+            replyTo: email,
+            subject: `[GAB Jewels] ${subject || 'New Message'} — from ${name}`,
+            html: `
+                <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f9f9f9;padding:0">
+                    <div style="background:#0E0B07;padding:28px 32px;text-align:center">
+                        <h1 style="color:#C9A84C;font-family:Georgia,serif;margin:0;font-size:1.6rem;letter-spacing:0.15em">GAB JEWELS</h1>
+                        <p style="color:rgba(201,168,76,0.6);margin:6px 0 0;font-size:0.75rem;letter-spacing:0.3em">NEW CONTACT FORM MESSAGE</p>
+                    </div>
+                    <div style="background:#fff;padding:32px">
+                        <table style="width:100%;border-collapse:collapse">
+                            <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:0.85rem;width:120px">Name</td>
+                                <td style="padding:10px 0;border-bottom:1px solid #eee;font-weight:600;color:#333">${name}</td></tr>
+                            <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:0.85rem">Email</td>
+                                <td style="padding:10px 0;border-bottom:1px solid #eee;color:#333"><a href="mailto:${email}" style="color:#C9A84C">${email}</a></td></tr>
+                            <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:0.85rem">Phone</td>
+                                <td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">${phone || '—'}</td></tr>
+                            <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:0.85rem">Subject</td>
+                                <td style="padding:10px 0;border-bottom:1px solid #eee;color:#333">${subject || 'General Enquiry'}</td></tr>
+                        </table>
+                        <div style="margin-top:24px;padding:20px;background:#f9f9f9;border-left:3px solid #C9A84C">
+                            <p style="color:#888;font-size:0.8rem;margin:0 0 8px;text-transform:uppercase;letter-spacing:0.1em">Message</p>
+                            <p style="color:#333;line-height:1.7;margin:0">${message.replace(/\n/g, '<br>')}</p>
+                        </div>
+                        <div style="margin-top:24px;text-align:center">
+                            <a href="mailto:${email}" style="background:#C9A84C;color:#0E0B07;padding:12px 28px;text-decoration:none;font-weight:600;font-size:0.85rem;display:inline-block">
+                                Reply to ${name}
+                            </a>
+                        </div>
+                    </div>
+                    <div style="background:#0E0B07;padding:16px;text-align:center">
+                        <p style="color:rgba(201,168,76,0.4);font-size:0.7rem;margin:0">GAB Jewels · MG Road, Bengaluru · Est. 1978</p>
+                    </div>
+                </div>
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`✦ Contact email sent from ${name} <${email}>`);
+        res.json({ ok: true });
+
+    } catch (err) {
+        console.error("Contact email error:", err.message);
+        res.status(500).json({ error: "Could not send message. Please try calling us directly." });
+    }
+});
+
+// ── GOLD RATES ────────────────────────────────────────────────
+// Update these daily from goldprice.org or ibja.co
+// Or integrate a paid API like metals-api.com
+let GOLD_RATES = {
+    gold24K:   73500,   // per 10g
+    gold22K:   67375,   // per 10g
+    silver:    92500,   // per kg
+    updatedAt: new Date().toISOString(),
+    source:    'manual' // 'manual' or 'api'
+};
+
+app.get("/api/rates", (req, res) => {
+    res.json(GOLD_RATES);
+});
+
+// Admin can update rates manually
+app.post("/api/admin/rates", requireAuth, requireAdmin, async (req, res) => {
+    const { gold24K, gold22K, silver } = req.body;
+    if (gold24K) GOLD_RATES.gold24K = Number(gold24K);
+    if (gold22K) GOLD_RATES.gold22K = Number(gold22K);
+    if (silver)  GOLD_RATES.silver  = Number(silver);
+    if (gold24K && !gold22K) GOLD_RATES.gold22K = Math.round(Number(gold24K) * 22 / 24);
+    GOLD_RATES.updatedAt = new Date().toISOString();
+    GOLD_RATES.source    = 'manual';
+    await auditLog(req.user.id, 'UPDATE_RATES', 'rates', null, GOLD_RATES, req.ip);
+    res.json({ ok: true, rates: GOLD_RATES });
 });
 
 app.use(express.static(path.join(__dirname, "../public")));
