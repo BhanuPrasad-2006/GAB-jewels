@@ -1,35 +1,99 @@
-// ── Cart storage key ──
-const CART_KEY = 'gab_cart';
+"use strict";
 
-// ── Load cart from localStorage ──
-let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+const CART_KEY = "gab_cart";
 
-// ── Update the cart badge count on any page ──
-function updateCartBadge() {
-    const latestCart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-    const badge = document.getElementById('cart-badge');
-    if (badge) {
-        badge.innerText = latestCart.length;
-        badge.style.display = latestCart.length > 0 ? 'flex' : 'none';
-    }
+function getCart() {
+    return JSON.parse(localStorage.getItem(CART_KEY) || "[]");
 }
 
-// ── Add an item to cart ──
-function addToCart(product) {
-    cart.push(product);
+function saveCart(cart) {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartBadge();
-    showCartToast(product.title);
 }
 
-// ── Luxury toast notification (replaces the basic alert) ──
+function updateCartBadge() {
+    const cart = getCart();
+    const badge = document.getElementById("cart-count");
+    if (!badge) return;
+
+    const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    badge.innerText = totalQty;
+    badge.style.display = totalQty > 0 ? "flex" : "none";
+}
+
+function getCartItem(productId) {
+    return getCart().find(item => String(item.id) === String(productId));
+}
+
+function getCartItemQty(productId) {
+    const item = getCartItem(productId);
+    return item ? (item.qty || 1) : 0;
+}
+
+function addToCart(product) {
+    if (!product || !product.id) return;
+
+    const cart = getCart();
+    const existing = cart.find(item => String(item.id) === String(product.id));
+
+    if (existing) {
+        existing.qty = (existing.qty || 1) + 1;
+    } else {
+        cart.push({
+            id: product.id,
+            title: product.title || product.name || "Item",
+            name: product.name || product.title || "Item",
+            price: product.price || 0,
+            image: product.image || "",
+            qty: 1
+        });
+    }
+
+    saveCart(cart);
+    showCartToast(product.title || product.name || "Item");
+}
+
+function increaseQty(productId) {
+    const cart = getCart();
+    const item = cart.find(i => String(i.id) === String(productId));
+
+    if (!item) return;
+
+    item.qty = (item.qty || 1) + 1;
+    saveCart(cart);
+}
+
+function decreaseQty(productId) {
+    let cart = getCart();
+    const item = cart.find(i => String(i.id) === String(productId));
+
+    if (!item) return;
+
+    item.qty = (item.qty || 1) - 1;
+
+    if (item.qty <= 0) {
+        cart = cart.filter(i => String(i.id) !== String(productId));
+    }
+
+    saveCart(cart);
+}
+
+function removeFromCart(productId) {
+    const cart = getCart().filter(i => String(i.id) !== String(productId));
+    saveCart(cart);
+}
+
+function clearCart() {
+    localStorage.removeItem(CART_KEY);
+    updateCartBadge();
+}
+
 function showCartToast(title) {
-    // Remove existing toast if present
-    const existing = document.getElementById('gab-cart-toast');
+    const existing = document.getElementById("gab-cart-toast");
     if (existing) existing.remove();
 
-    const toast = document.createElement('div');
-    toast.id = 'gab-cart-toast';
+    const toast = document.createElement("div");
+    toast.id = "gab-cart-toast";
     toast.innerHTML = `
         <div style="
             position: fixed;
@@ -52,7 +116,7 @@ function showCartToast(title) {
                 <div style="font-family:'Cinzel',serif; font-size:0.75rem; color:#FAF6EE; letter-spacing:0.08em; margin-bottom:3px;">Added to Bag</div>
                 <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.9rem; color:rgba(250,246,238,0.6);">${title}</div>
             </div>
-            <a href="cart.html" style="
+            <a href="pages/cart.html" style="
                 margin-left:auto;
                 font-family:'Cinzel',serif;
                 font-size:0.6rem;
@@ -76,16 +140,14 @@ function showCartToast(title) {
 
     document.body.appendChild(toast);
 
-    // Auto dismiss after 4 seconds
     setTimeout(() => {
-        const el = document.getElementById('gab-cart-toast');
+        const el = document.getElementById("gab-cart-toast");
         if (el) {
-            el.style.transition = 'opacity 0.4s ease';
-            el.style.opacity = '0';
+            el.style.transition = "opacity 0.4s ease";
+            el.style.opacity = "0";
             setTimeout(() => el.remove(), 400);
         }
     }, 4000);
 }
 
-// ── Run badge update on every page load ──
-document.addEventListener('DOMContentLoaded', updateCartBadge);
+document.addEventListener("DOMContentLoaded", updateCartBadge);

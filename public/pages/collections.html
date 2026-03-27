@@ -6,6 +6,25 @@
     <title>Collections | GAB Jewels</title>
     <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Override card images for this page */
+        .card-bg { width:100%;height:100%;background-size:cover;background-position:center;transition:transform 0.7s ease; }
+        .collection-card:hover .card-bg { transform:scale(1.06); }
+
+        /* Women — gold necklace worn by woman */
+        .card-img-women {
+            background-image: url('https://images.pexels.com/photos/3812433/pexels-photo-3812433.jpeg?auto=compress&cs=tinysrgb&w=800');
+            background-position: center top;
+        }
+        /* Men — gold bracelet/kada on man's wrist */
+        .card-img-men {
+            background-image: url('https://images.pexels.com/photos/6624862/pexels-photo-6624862.jpeg?auto=compress&cs=tinysrgb&w=800');
+        }
+        /* Kids — small gold bangles */
+        .card-img-kids {
+            background-image: url('https://images.pexels.com/photos/5370706/pexels-photo-5370706.jpeg?auto=compress&cs=tinysrgb&w=800');
+        }
+    </style>
 </head>
 <body>
 
@@ -13,13 +32,13 @@
         <div class="ticker-track">
             <span>✦ Free shipping on orders above ₹50,000</span>
             <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
+            <span>✦ Lifetime Exchange &amp; Buyback</span>
             <span>✦ 30-Day Easy Returns</span>
             <span>✦ Custom Design Available</span>
             <span>✦ EMI Available</span>
             <span>✦ Free shipping on orders above ₹50,000</span>
             <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
+            <span>✦ Lifetime Exchange &amp; Buyback</span>
             <span>✦ 30-Day Easy Returns</span>
             <span>✦ Custom Design Available</span>
             <span>✦ EMI Available</span>
@@ -32,11 +51,12 @@
             <a href="../index.html">Home</a>
             <a href="collections.html" class="active">Collections</a>
             <a href="advance-buy.html">Buy Gold</a>
-            <a href="settings.html">My Account</a>
+            <a href="contact.html">Contact</a>
             <a href="cart.html" class="cart-icon">
                 <i class="fas fa-shopping-bag"></i>
                 <span id="cart-badge" class="badge">0</span>
             </a>
+            <div class="nav-profile" id="nav-profile"></div>
         </nav>
     </header>
 
@@ -56,21 +76,21 @@
 
         <div class="grid-layout reveal">
             <a href="womens-collection.html" class="collection-card">
-                <img src="https://images.unsplash.com/photo-1515562141207-7a8efd3e35a1?auto=format&fit=crop&w=800&q=80" alt="Women's Jewelry">
+                <div class="card-bg card-img-women"></div>
                 <div class="card-overlay">
                     <h3>Women</h3>
                     <span class="shop-link">Enter Gallery <i class="fas fa-arrow-right"></i></span>
                 </div>
             </a>
             <a href="mens-collection.html" class="collection-card">
-                <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80" alt="Men's Jewelry">
+                <div class="card-bg card-img-men"></div>
                 <div class="card-overlay">
                     <h3>Men</h3>
                     <span class="shop-link">Enter Gallery <i class="fas fa-arrow-right"></i></span>
                 </div>
             </a>
             <a href="kids-collection.html" class="collection-card">
-                <img src="https://images.unsplash.com/photo-1602752250019-3507e155b9e0?auto=format&fit=crop&w=800&q=80" alt="Kids' Jewelry">
+                <div class="card-bg card-img-kids"></div>
                 <div class="card-overlay">
                     <h3>Kids</h3>
                     <span class="shop-link">Enter Gallery <i class="fas fa-arrow-right"></i></span>
@@ -81,9 +101,9 @@
 
     <footer>
         <div class="footer-top">
-            <div>
+            <div class="footer-brand">
                 <span class="footer-brand-name">GAB JEWELS</span>
-                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru. Every piece carries the weight of tradition and the brilliance of modern artistry.</p>
+                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
             </div>
             <div class="footer-col">
                 <h4>Navigate</h4>
@@ -108,6 +128,19 @@
 
     <script src="../assets/js/cart.js"></script>
     <script>
+        // Nav profile
+        (function() {
+            const el = document.getElementById('nav-profile');
+            const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const name = localStorage.getItem('aurum_name') || 'Account';
+            if (!loggedIn) {
+                el.innerHTML = '<a href="../login.html" class="nav-login-btn"><i class="fas fa-user"></i> Login</a>';
+            } else {
+                const initial = name.charAt(0).toUpperCase();
+                el.innerHTML = '<a href="settings.html" class="nav-login-btn"><span class="nav-avatar" style="width:28px;height:28px;font-size:0.75rem">' + initial + '</span> ' + name.split(' ')[0] + '</a>';
+            }
+        })();
+
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });

@@ -3,97 +3,95 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Advance Gold Buy | GAB Jewels</title>
-    <link rel="stylesheet" href="../assets/css/global.css" />
+    <title>Buy Gold | GAB Jewels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/css/global.css" />
+    <link rel="stylesheet" href="../assets/css/advance-buy.css" />
 </head>
 <body>
 
-<!-- ── Navigation ── -->
-    <!-- Ticker -->
-    <div class="ticker-wrap">
-        <div class="ticker-track">
-            <span>✦ Free shipping on orders above ₹50,000</span>
-            <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
-            <span>✦ 30-Day Easy Returns</span>
-            <span>✦ Custom Design Available</span>
-            <span>✦ EMI Available</span>
-            <span>✦ Free shipping on orders above ₹50,000</span>
-            <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
-            <span>✦ 30-Day Easy Returns</span>
-            <span>✦ Custom Design Available</span>
-            <span>✦ EMI Available</span>
-        </div>
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span>✦ Free shipping on orders above ₹50,000</span>
+        <span>✦ BIS Hallmarked Jewellery</span>
+        <span>✦ Lifetime Exchange &amp; Buyback</span>
+        <span>✦ 30-Day Easy Returns</span>
+        <span>✦ Custom Design Available</span>
+        <span>✦ EMI Available</span>
+        <span>✦ Free shipping on orders above ₹50,000</span>
+        <span>✦ BIS Hallmarked Jewellery</span>
+        <span>✦ Lifetime Exchange &amp; Buyback</span>
+        <span>✦ 30-Day Easy Returns</span>
+        <span>✦ Custom Design Available</span>
+        <span>✦ EMI Available</span>
     </div>
+</div>
 
-    <header class="top-nav">
-        <a href="../index.html" class="brand"><i class="fa-solid fa-gem"></i> GAB Jewels</a>
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="collections.html">Collections</a>
-            <a href="advance-buy.html" class="active">Buy Gold</a>
-            <a href="settings.html">My Account</a>
-            <a href="cart.html" class="cart-icon" id="nav-cart-link">
-                <i class="fa-solid fa-bag-shopping"></i>
-                <span class="badge" id="cart-badge" style="display:none;">0</span>
-            </a>
-        </nav>
-    </header>
-
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
+<header class="top-nav">
+    <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
+    <nav>
         <a href="../index.html">Home</a>
-        <span>◆</span>
-        <span style="color: var(--gold);">Advance Gold Buy</span>
-    </div>
+        <a href="collections.html">Collections</a>
+        <a href="advance-buy.html" class="active">Buy Gold</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html" class="cart-icon">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="badge" id="cart-badge">0</span>
+        </a>
+        <div class="nav-profile" id="nav-profile"></div>
+    </nav>
+</header>
 
-<!-- ── Hero Banner ── -->
+<div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>◆</span>
+    <span style="color:var(--gold)">Buy Gold</span>
+</div>
+
+<!-- HERO -->
 <section class="ab-hero">
+    <div class="ab-hero-bg"></div>
     <div class="ab-hero-inner">
-        <span class="ab-hero-eyebrow">Reserve Today · Redeem Anytime</span>
+        <div class="ab-hero-badge">
+            <span class="ab-live-dot"></span> Reserve Today · Redeem Anytime
+        </div>
         <h1>Advance Gold <em>Buy</em></h1>
-        <p>Lock in today's live rate and accumulate gold or silver in grams — hassle-free. Redeem as jewellery or take physical delivery.</p>
-        <div class="ab-live-bar">
-            <div class="ab-live-dot"></div>
-            <span>Live rates updating every 60 s</span>
+        <p>Lock in today's live rate and accumulate gold or silver in grams — hassle-free. Redeem as jewellery or take physical delivery whenever you wish.</p>
+        <div class="ab-hero-stats">
+            <div class="ab-stat">
+                <span class="ab-stat-val" id="tick-22k">₹6,842</span>
+                <span class="ab-stat-lbl">22K Gold / g</span>
+            </div>
+            <div class="ab-stat-div"></div>
+            <div class="ab-stat">
+                <span class="ab-stat-val" id="tick-24k">₹7,460</span>
+                <span class="ab-stat-lbl">24K Gold / g</span>
+            </div>
+            <div class="ab-stat-div"></div>
+            <div class="ab-stat">
+                <span class="ab-stat-val" id="tick-silver">₹94</span>
+                <span class="ab-stat-lbl">Silver / g</span>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- ── Rate Ticker ── -->
-<div class="ab-ticker-wrap">
-    <div class="ab-ticker">
-        <span class="ticker-item">22K Gold <strong id="tick-22k">₹6,842</strong>/g</span>
-        <span class="ticker-sep">◆</span>
-        <span class="ticker-item">24K Gold <strong id="tick-24k">₹7,460</strong>/g</span>
-        <span class="ticker-sep">◆</span>
-        <span class="ticker-item">Silver <strong id="tick-silver">₹94</strong>/g</span>
-        <span class="ticker-sep">◆</span>
-        <span class="ticker-item">Making charge <strong>Waived</strong> on advance</span>
-        <span class="ticker-sep">◆</span>
-        <span class="ticker-item">Min. advance <strong>1 g</strong></span>
-    </div>
-</div>
-
-<!-- ── Main Content ── -->
+<!-- MAIN -->
 <main class="ab-main">
 
-    <!-- LEFT: Metal Selector Cards -->
+    <!-- LEFT: Selector -->
     <section class="ab-selector-col">
-
         <h2 class="ab-section-heading">Select Metal &amp; Quantity</h2>
 
-        <!-- Metal Type Tabs -->
-        <div class="ab-metal-tabs" role="tablist">
-            <button class="ab-tab active" data-metal="gold22" role="tab">22K Gold</button>
-            <button class="ab-tab" data-metal="gold24" role="tab">24K Gold</button>
-            <button class="ab-tab" data-metal="silver" role="tab">Silver</button>
+        <div class="ab-metal-tabs">
+            <button class="ab-tab active" data-metal="gold22">22K Gold</button>
+            <button class="ab-tab" data-metal="gold24">24K Gold</button>
+            <button class="ab-tab" data-metal="silver">Silver</button>
         </div>
 
-        <!-- Metal Info Card -->
-        <div class="ab-metal-card" id="metal-card">
+        <div class="ab-metal-card">
             <div class="ab-metal-card-header">
                 <div>
                     <span class="ab-metal-label" id="mc-label">22K Gold</span>
@@ -105,8 +103,7 @@
                 </div>
             </div>
 
-            <!-- Gram Presets -->
-            <div class="ab-preset-label">Quick select</div>
+            <div class="ab-preset-label">Quick Select</div>
             <div class="ab-presets">
                 <button class="ab-preset" data-grams="1">1g</button>
                 <button class="ab-preset" data-grams="2">2g</button>
@@ -117,71 +114,66 @@
                 <button class="ab-preset" data-grams="100">100g</button>
             </div>
 
-            <!-- Custom gram input -->
             <div class="ab-custom-row">
-                <label class="ab-custom-label" for="gram-input">Or enter grams</label>
+                <label class="ab-custom-label">Custom Grams</label>
                 <div class="ab-gram-input-wrap">
                     <input type="number" id="gram-input" class="ab-gram-input" min="1" max="1000" step="0.5" value="10" />
                     <span class="ab-gram-unit">g</span>
                 </div>
             </div>
 
-            <!-- Slider -->
             <input type="range" class="ab-slider" id="gram-slider" min="1" max="100" step="0.5" value="10" />
             <div class="ab-slider-labels"><span>1g</span><span>50g</span><span>100g</span></div>
 
-            <!-- Price breakdown -->
             <div class="ab-price-card">
                 <div class="ab-price-row">
-                    <span>Metal weight</span>
-                    <span id="pc-weight">10.00 g</span>
+                    <span>Metal weight</span><span id="pc-weight">10.00 g</span>
                 </div>
                 <div class="ab-price-row">
-                    <span>Rate per gram</span>
-                    <span id="pc-rate">₹6,842</span>
+                    <span>Rate per gram</span><span id="pc-rate">₹6,842</span>
                 </div>
                 <div class="ab-price-row">
-                    <span>Making charge</span>
-                    <span class="ab-free">FREE</span>
+                    <span>Making charge</span><span class="ab-free">FREE</span>
                 </div>
                 <div class="ab-price-row">
-                    <span>GST (3%)</span>
-                    <span id="pc-gst">₹2,052.60</span>
+                    <span>GST (3%)</span><span id="pc-gst">₹2,052.60</span>
                 </div>
                 <div class="ab-price-divider"></div>
                 <div class="ab-price-row ab-price-total">
-                    <span>Total Payable</span>
-                    <span id="pc-total">₹72,484.60</span>
+                    <span>Total Payable</span><span id="pc-total">₹72,484.60</span>
                 </div>
             </div>
 
-            <!-- Add to Cart -->
             <button class="ab-add-btn" id="add-to-cart-btn">
-                <i class="fa-solid fa-bag-shopping"></i>
-                Add to Advance Cart
+                <i class="fas fa-shopping-bag"></i> Add to Advance Cart
             </button>
 
-            <!-- Toast -->
             <div class="ab-toast" id="ab-toast">
-                <i class="fa-solid fa-circle-check"></i>
+                <i class="fas fa-circle-check"></i>
                 <span id="ab-toast-msg">Added to cart!</span>
             </div>
         </div>
 
+        <!-- Perks -->
+        <div class="ab-perks">
+            <div class="ab-perk"><i class="fas fa-shield-halved"></i><span>BIS Hallmarked</span></div>
+            <div class="ab-perk"><i class="fas fa-lock"></i><span>Rate locked at purchase</span></div>
+            <div class="ab-perk"><i class="fas fa-rotate-left"></i><span>No expiry on advance</span></div>
+            <div class="ab-perk"><i class="fas fa-truck"></i><span>Free delivery on redemption</span></div>
+        </div>
     </section>
 
-    <!-- RIGHT: Info + Cart Preview -->
+    <!-- RIGHT: Cart + How it works -->
     <aside class="ab-info-col">
 
-        <!-- Advance Cart Preview -->
-        <div class="ab-cart-preview" id="ab-cart-preview">
+        <div class="ab-cart-preview">
             <div class="ab-cart-preview-header">
                 <h3>Your Advance Cart</h3>
-                <a href="cart.html" class="ab-cart-link">View Full Cart <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="cart.html" class="ab-cart-link">View Full Cart <i class="fas fa-arrow-right"></i></a>
             </div>
             <div id="ab-cart-items" class="ab-cart-items">
                 <div class="ab-cart-empty" id="ab-cart-empty">
-                    <i class="fa-regular fa-gem"></i>
+                    <i class="far fa-gem"></i>
                     <p>No advance metals added yet</p>
                 </div>
             </div>
@@ -191,310 +183,316 @@
                     <strong id="ab-cart-total">₹0</strong>
                 </div>
                 <a href="cart.html" class="btn-primary ab-checkout-btn">
-                    Proceed to Checkout <i class="fa-solid fa-arrow-right"></i>
+                    Proceed to Checkout <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
 
-        <!-- How it works -->
         <div class="ab-how-card">
             <h3>How It Works</h3>
             <ol class="ab-steps-list">
                 <li>
                     <span class="ab-step-num">01</span>
-                    <div>
-                        <strong>Select metal & grams</strong>
-                        <p>Choose 22K, 24K gold or silver and enter the quantity.</p>
-                    </div>
+                    <div><strong>Select metal &amp; grams</strong><p>Choose 22K, 24K gold or silver and enter the quantity.</p></div>
                 </li>
                 <li>
                     <span class="ab-step-num">02</span>
-                    <div>
-                        <strong>Lock today's rate</strong>
-                        <p>Your price is fixed at today's live rate — market rises don't affect you.</p>
-                    </div>
+                    <div><strong>Lock today's rate</strong><p>Your price is fixed at today's live rate — market rises don't affect you.</p></div>
                 </li>
                 <li>
                     <span class="ab-step-num">03</span>
-                    <div>
-                        <strong>Pay &amp; receive certificate</strong>
-                        <p>Complete checkout and get a digital advance gold certificate instantly.</p>
-                    </div>
+                    <div><strong>Pay &amp; receive certificate</strong><p>Complete checkout and get a digital advance gold certificate instantly.</p></div>
                 </li>
                 <li>
                     <span class="ab-step-num">04</span>
-                    <div>
-                        <strong>Redeem anytime</strong>
-                        <p>Convert to jewellery or take physical delivery — no expiry.</p>
-                    </div>
+                    <div><strong>Redeem anytime</strong><p>Convert to jewellery or take physical delivery — no expiry.</p></div>
                 </li>
             </ol>
         </div>
 
-        <!-- Perks -->
-        <div class="ab-perks">
-            <div class="ab-perk"><i class="fa-solid fa-shield-halved"></i><span>BIS Hallmarked, govt. certified</span></div>
-            <div class="ab-perk"><i class="fa-solid fa-lock"></i><span>Rates locked at purchase</span></div>
-            <div class="ab-perk"><i class="fa-solid fa-rotate-left"></i><span>No expiry on advance</span></div>
-            <div class="ab-perk"><i class="fa-solid fa-truck"></i><span>Free home delivery on redemption</span></div>
-        </div>
-
     </aside>
-
 </main>
 
+<footer>
+    <div class="footer-top">
+        <div class="footer-brand">
+            <span class="footer-brand-name">GAB JEWELS</span>
+            <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Navigate</h4>
+            <a href="../index.html">Home</a>
+            <a href="collections.html">Collections</a>
+            <a href="advance-buy.html">Buy Gold</a>
+            <a href="cart.html">Your Bag</a>
+        </div>
+        <div class="footer-col">
+            <h4>Policies</h4>
+            <a href="#">Exchange Policy</a>
+            <a href="#">Buyback Terms</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
+        <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+    </div>
+</footer>
+
+<script src="../assets/js/cart.js"></script>
 <script>
-// ── Live Rates (mock — replace with API) ──
-const RATES = {
-    gold22:  6842,
-    gold24:  7460,
-    silver:  94
-};
+// Paste this ENTIRE script block into advance-buy.html
+// replacing the existing <script> tag content
 
-const GST_RATE = 0.03;
+// Nav profile
+(function() {
+    const el = document.getElementById('nav-profile');
+    if (!el) return;
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const name = localStorage.getItem('aurum_name') || 'Account';
+    if (!loggedIn) {
+        el.innerHTML = '<a href="../login.html" class="nav-login-btn"><i class="fas fa-user"></i> Login</a>';
+    } else {
+        const initial = name.charAt(0).toUpperCase();
+        el.innerHTML = `<button class="nav-profile-btn" onclick="toggleDrop(event)">
+            <span class="nav-avatar">${initial}</span>
+            <span class="nav-username">${name.split(' ')[0]}</span>
+            <i class="fas fa-chevron-down nav-chevron"></i>
+        </button>
+        <div class="nav-dropdown" id="nav-dropdown">
+            <div class="nav-dropdown-header"><span class="nav-dropdown-name">${name}</span></div>
+            <a href="settings.html"><i class="fas fa-cog"></i> My Account</a>
+            <a href="cart.html"><i class="fas fa-shopping-bag"></i> My Bag</a>
+            <div class="nav-dropdown-divider"></div>
+            <button onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>`;
+    }
+})();
 
-const METAL_META = {
-    gold22:  { label: '22K Gold',  purity: '916 Hallmarked · BIS Certified', tickId: 'tick-22k',    unit: '/g' },
-    gold24:  { label: '24K Gold',  purity: '999 Hallmarked · BIS Certified', tickId: 'tick-24k',    unit: '/g' },
-    silver:  { label: 'Silver',    purity: '999 Fine Silver · Hallmarked',   tickId: 'tick-silver', unit: '/g' }
+function toggleDrop(e) { e.stopPropagation(); document.getElementById('nav-dropdown')?.classList.toggle('open'); }
+document.addEventListener('click', () => document.getElementById('nav-dropdown')?.classList.remove('open'));
+function doLogout() {
+    ['aurum_token','aurum_role','isLoggedIn','aurum_name','aurum_email'].forEach(k => localStorage.removeItem(k));
+    window.location.replace('../login.html');
+}
+
+// ── RATES ─────────────────────────────────────────────────────
+const RATES = { gold22: 6842, gold24: 7460, silver: 94 };
+const GST   = 0.03;
+const META  = {
+    gold22: { label: '22K Gold', purity: '916 Hallmarked · BIS Certified' },
+    gold24: { label: '24K Gold', purity: '999 Hallmarked · BIS Certified' },
+    silver: { label: 'Silver',   purity: '999 Fine Silver · Hallmarked'   }
 };
 
 let currentMetal = 'gold22';
 let currentGrams = 10;
 
-// ── DOM refs ──
-const gramInput   = document.getElementById('gram-input');
-const gramSlider  = document.getElementById('gram-slider');
-const presets     = document.querySelectorAll('.ab-preset');
-const tabs        = document.querySelectorAll('.ab-tab');
-const addBtn      = document.getElementById('add-to-cart-btn');
-const toast       = document.getElementById('ab-toast');
-const toastMsg    = document.getElementById('ab-toast-msg');
+const fmt = n => '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 2 });
 
-// ── Format currency ──
-const fmt = n => '₹' + n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+function updateDisplay() {
+    const rate  = RATES[currentMetal];
+    const grams = parseFloat(currentGrams) || 0;
+    const metal = grams * rate;
+    const gst   = metal * GST;
 
-// ── Update price display ──
-function updatePriceCard() {
-    const rate   = RATES[currentMetal];
-    const grams  = parseFloat(currentGrams) || 0;
-    const metal  = grams * rate;
-    const gst    = metal * GST_RATE;
-    const total  = metal + gst;
+    // Header stats
+    const t24   = document.getElementById('tick-24k');
+    const t22   = document.getElementById('tick-22k');
+    const tSil  = document.getElementById('tick-silver');
+    if (t24)  t24.textContent  = fmt(RATES.gold24);
+    if (t22)  t22.textContent  = fmt(RATES.gold22);
+    if (tSil) tSil.textContent = fmt(RATES.silver);
 
-    document.getElementById('pc-weight').textContent = grams.toFixed(2) + ' g';
-    document.getElementById('pc-rate').textContent   = fmt(rate);
-    document.getElementById('pc-gst').textContent    = fmt(gst);
-    document.getElementById('pc-total').textContent  = fmt(total);
-}
+    // Metal card
+    const mcLabel  = document.getElementById('mc-label');
+    const mcPurity = document.getElementById('mc-purity');
+    const mcRate   = document.getElementById('mc-rate');
+    if (mcLabel)  mcLabel.textContent  = META[currentMetal].label;
+    if (mcPurity) mcPurity.textContent = META[currentMetal].purity;
+    if (mcRate)   mcRate.innerHTML     = fmt(rate) + '<small>/g</small>';
 
-// ── Update metal card header ──
-function updateMetalCard() {
-    const meta = METAL_META[currentMetal];
-    document.getElementById('mc-label').textContent  = meta.label;
-    document.getElementById('mc-purity').textContent = meta.purity;
-    document.getElementById('mc-rate').innerHTML     = fmt(RATES[currentMetal]) + '<small>/g</small>';
-    updatePriceCard();
-}
+    // Price card
+    const pcW = document.getElementById('pc-weight');
+    const pcR = document.getElementById('pc-rate');
+    const pcG = document.getElementById('pc-gst');
+    const pcT = document.getElementById('pc-total');
+    if (pcW) pcW.textContent = grams.toFixed(2) + ' g';
+    if (pcR) pcR.textContent = fmt(rate);
+    if (pcG) pcG.textContent = fmt(gst);
+    if (pcT) pcT.textContent = fmt(metal + gst);
 
-// ── Tab switch ──
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        currentMetal = tab.dataset.metal;
-        updateMetalCard();
-    });
-});
+    // Sync input & slider
+    const gramInput  = document.getElementById('gram-input');
+    const gramSlider = document.getElementById('gram-slider');
+    if (gramInput && gramInput !== document.activeElement)  gramInput.value  = currentGrams;
+    if (gramSlider && gramSlider !== document.activeElement) gramSlider.value = Math.min(currentGrams, 100);
 
-// ── Preset buttons ──
-presets.forEach(btn => {
-    btn.addEventListener('click', () => {
-        presets.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentGrams = parseFloat(btn.dataset.grams);
-        gramInput.value  = currentGrams;
-        gramSlider.value = Math.min(currentGrams, 100);
-        updatePriceCard();
-    });
-});
-
-// ── Gram input ──
-gramInput.addEventListener('input', () => {
-    currentGrams = parseFloat(gramInput.value) || 0;
-    gramSlider.value = Math.min(currentGrams, 100);
-    presets.forEach(b => b.classList.remove('active'));
-    updatePriceCard();
-});
-
-// ── Slider ──
-gramSlider.addEventListener('input', () => {
-    currentGrams = parseFloat(gramSlider.value);
-    gramInput.value = currentGrams;
-    presets.forEach(b => {
+    // Highlight matching preset
+    document.querySelectorAll('.ab-preset').forEach(b => {
         b.classList.toggle('active', parseFloat(b.dataset.grams) === currentGrams);
     });
-    updatePriceCard();
+}
+
+// ── WIRE UP CONTROLS after DOM ready ─────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Tabs
+    document.querySelectorAll('.ab-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.ab-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            currentMetal = this.dataset.metal;
+            updateDisplay();
+        });
+    });
+
+    // Presets
+    document.querySelectorAll('.ab-preset').forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentGrams = parseFloat(this.dataset.grams);
+            updateDisplay();
+        });
+    });
+
+    // Gram input
+    const gramInput = document.getElementById('gram-input');
+    if (gramInput) {
+        gramInput.addEventListener('input', function() {
+            currentGrams = parseFloat(this.value) || 0;
+            updateDisplay();
+        });
+    }
+
+    // Slider
+    const gramSlider = document.getElementById('gram-slider');
+    if (gramSlider) {
+        gramSlider.addEventListener('input', function() {
+            currentGrams = parseFloat(this.value);
+            if (gramInput) gramInput.value = currentGrams;
+            updateDisplay();
+        });
+    }
+
+    // Add to cart button
+    const addBtn = document.getElementById('add-to-cart-btn');
+    if (addBtn) {
+        addBtn.addEventListener('click', addToCart);
+    }
+
+    // Initial render
+    updateDisplay();
+    renderCartPreview();
+    updateBadge();
+
+    // Rate jitter every 60s
+    setInterval(() => {
+        Object.keys(RATES).forEach(k => {
+            RATES[k] = parseFloat((RATES[k] * (1 + (Math.random()-0.5)*0.003)).toFixed(2));
+        });
+        updateDisplay();
+    }, 60000);
 });
 
-// ── Cart Logic (localStorage) ──
-const CART_KEY = 'aurum_cart';
-
-function getCart() {
-    try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
-    catch { return []; }
-}
-
-function saveCart(cart) {
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-}
+// ── CART helpers (matching cart.js key 'gab_cart') ───────────
+function getCart()   { try { return JSON.parse(localStorage.getItem('gab_cart')) || []; } catch { return []; } }
+function saveCart(c) { localStorage.setItem('gab_cart', JSON.stringify(c)); }
 
 function addToCart() {
-    const rate   = RATES[currentMetal];
-    const grams  = parseFloat(currentGrams) || 0;
-    if (grams <= 0) return;
+    const grams = parseFloat(currentGrams) || 0;
+    if (grams <= 0) { showToast('Please select a quantity.'); return; }
 
-    const metal  = grams * rate;
-    const gst    = metal * GST_RATE;
-    const total  = metal + gst;
-    const meta   = METAL_META[currentMetal];
-
-    const item = {
+    const rate  = RATES[currentMetal];
+    const metal = grams * rate;
+    const gst   = metal * GST;
+    const item  = {
         id:       currentMetal + '_' + Date.now(),
         type:     'advance',
         metal:    currentMetal,
-        label:    meta.label,
-        purity:   meta.purity,
-        grams:    grams,
-        rate:     rate,
-        subtotal: total,
-        gst:      gst,
+        label:    META[currentMetal].label,
+        purity:   META[currentMetal].purity,
+        grams,
+        rate,
+        subtotal: metal + gst,
+        gst,
         qty:      1
     };
-
     const cart = getCart();
     cart.push(item);
     saveCart(cart);
-
     renderCartPreview();
     updateBadge();
-    showToast(`${grams}g ${meta.label} added to cart!`);
+    showToast(grams + 'g ' + item.label + ' added to cart!');
 }
 
 function removeFromCart(id) {
-    const cart = getCart().filter(i => i.id !== id);
-    saveCart(cart);
+    saveCart(getCart().filter(i => i.id !== id));
     renderCartPreview();
     updateBadge();
 }
 
 function updateBadge() {
-    const cart   = getCart();
-    const badge  = document.getElementById('cart-badge');
-    const count  = cart.length;
-    badge.textContent = count;
-    badge.style.display = count > 0 ? 'flex' : 'none';
+    const count = getCart().length;
+    const badge = document.getElementById('cart-badge');
+    if (badge) {
+        badge.textContent   = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+    }
 }
 
 function renderCartPreview() {
-    const cart      = getCart();
-    const container = document.getElementById('ab-cart-items');
-    const empty     = document.getElementById('ab-cart-empty');
-    const footer    = document.getElementById('ab-cart-footer');
+    const cart   = getCart();
+    const wrap   = document.getElementById('ab-cart-items');
+    const empty  = document.getElementById('ab-cart-empty');
+    const footer = document.getElementById('ab-cart-footer');
+    if (!wrap) return;
 
-    if (cart.length === 0) {
-        container.innerHTML = '';
-        container.appendChild(empty);
-        empty.style.display = 'flex';
-        footer.style.display = 'none';
+    if (!cart.length) {
+        wrap.innerHTML = '';
+        if (empty)  { wrap.appendChild(empty); empty.style.display = 'flex'; }
+        if (footer) footer.style.display = 'none';
         return;
     }
 
-    empty.style.display = 'none';
-    footer.style.display = 'block';
+    if (empty)  empty.style.display = 'none';
+    if (footer) footer.style.display = 'block';
 
-    let html = '';
-    let grandTotal = 0;
-
+    let html = '', total = 0;
     cart.forEach(item => {
-        grandTotal += item.subtotal;
-        html += `
-        <div class="ab-ci" data-id="${item.id}">
-            <div class="ab-ci-icon ab-ci-icon--${item.metal}">
-                <i class="fa-solid fa-circle"></i>
-            </div>
+        total += item.subtotal;
+        html += `<div class="ab-ci">
+            <div class="ab-ci-icon ab-ci-icon--${item.metal}"><i class="fas fa-circle"></i></div>
             <div class="ab-ci-info">
                 <span class="ab-ci-label">${item.label}</span>
                 <span class="ab-ci-meta">${item.grams}g · ${fmt(item.rate)}/g</span>
             </div>
             <div class="ab-ci-right">
                 <span class="ab-ci-price">${fmt(item.subtotal)}</span>
-                <button class="ab-ci-remove" data-id="${item.id}" title="Remove"><i class="fa-solid fa-xmark"></i></button>
+                <button class="ab-ci-remove" data-id="${item.id}"><i class="fas fa-xmark"></i></button>
             </div>
         </div>`;
     });
 
-    container.innerHTML = html;
-    document.getElementById('ab-cart-total').textContent = fmt(grandTotal);
+    wrap.innerHTML = html;
+    const totalEl = document.getElementById('ab-cart-total');
+    if (totalEl) totalEl.textContent = fmt(total);
 
-    container.querySelectorAll('.ab-ci-remove').forEach(btn => {
+    wrap.querySelectorAll('.ab-ci-remove').forEach(btn => {
         btn.addEventListener('click', () => removeFromCart(btn.dataset.id));
     });
 }
 
 function showToast(msg) {
-    toastMsg.textContent = msg;
+    const toast    = document.getElementById('ab-toast');
+    const toastMsg = document.getElementById('ab-toast-msg');
+    if (!toast) return;
+    if (toastMsg) toastMsg.textContent = msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ── Ticker update (mock: random ±0.3%) ──
-function jitterRates() {
-    Object.keys(RATES).forEach(k => {
-        RATES[k] = parseFloat((RATES[k] * (1 + (Math.random() - 0.5) * 0.003)).toFixed(2));
-    });
-    document.getElementById('tick-22k').textContent    = fmt(RATES.gold22);
-    document.getElementById('tick-24k').textContent    = fmt(RATES.gold24);
-    document.getElementById('tick-silver').textContent = fmt(RATES.silver);
-    updateMetalCard();
-}
-
-// ── Init ──
-addBtn.addEventListener('click', addToCart);
-updateMetalCard();
-renderCartPreview();
-updateBadge();
-setInterval(jitterRates, 60000);
 </script>
-
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-top">
-            <div>
-                <span class="footer-brand-name">GAB JEWELS</span>
-                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru. Every piece carries the weight of tradition and the brilliance of modern artistry.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Navigate</h4>
-                <a href="../index.html">Home</a>
-                <a href="collections.html">Collections</a>
-                <a href="advance-buy.html">Buy Gold</a>
-                <a href="cart.html">Your Bag</a>
-            </div>
-            <div class="footer-col">
-                <h4>Policies</h4>
-                <a href="#">Exchange Policy</a>
-                <a href="#">Buyback Terms</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Use</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
-            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
-        </div>
-    </footer>
 
 </body>
 </html>

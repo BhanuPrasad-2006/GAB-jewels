@@ -6,25 +6,35 @@
     <title>Kids' Collection | GAB Jewels</title>
     <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .card-bg {
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.7s ease;
+        }
+        .collection-card:hover .card-bg { transform: scale(1.06); }
+        .card-img-infant   { background-image: url('https://images.pexels.com/photos/1454171/pexels-photo-1454171.jpeg?auto=compress&cs=tinysrgb&w=600'); }
+        .card-img-nazariya { background-image: url('https://images.pexels.com/photos/691046/pexels-photo-691046.jpeg?auto=compress&cs=tinysrgb&w=600'); }
+        .card-img-earrings { background-image: url('https://images.pexels.com/photos/1458867/pexels-photo-1458867.jpeg?auto=compress&cs=tinysrgb&w=600'); }
+        .card-img-pendants { background-image: url('https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=600'); }
+    </style>
 </head>
 <body>
-
-    <div class="ticker-wrap">
-        <div class="ticker-track">
-            <span>✦ Free shipping on orders above ₹50,000</span>
-            <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
-            <span>✦ 30-Day Easy Returns</span>
-            <span>✦ Custom Design Available</span>
-            <span>✦ EMI Available</span>
-            <span>✦ Free shipping on orders above ₹50,000</span>
-            <span>✦ BIS Hallmarked Jewellery</span>
-            <span>✦ Lifetime Exchange & Buyback</span>
-            <span>✦ 30-Day Easy Returns</span>
-            <span>✦ Custom Design Available</span>
-            <span>✦ EMI Available</span>
-        </div>
-    </div>
+    <div class="ticker-wrap"><div class="ticker-track">
+        <span>Free shipping on orders above Rs.50,000</span>
+        <span>BIS Hallmarked Jewellery</span>
+        <span>Lifetime Exchange and Buyback</span>
+        <span>30-Day Easy Returns</span>
+        <span>Custom Design Available</span>
+        <span>EMI Available</span>
+        <span>Free shipping on orders above Rs.50,000</span>
+        <span>BIS Hallmarked Jewellery</span>
+        <span>Lifetime Exchange and Buyback</span>
+        <span>30-Day Easy Returns</span>
+        <span>Custom Design Available</span>
+        <span>EMI Available</span>
+    </div></div>
 
     <header class="top-nav">
         <a href="../index.html" class="brand"><i class="fas fa-gem"></i> GAB Jewels</a>
@@ -32,91 +42,83 @@
             <a href="../index.html">Home</a>
             <a href="collections.html" class="active">Collections</a>
             <a href="advance-buy.html">Buy Gold</a>
-            <a href="settings.html">My Account</a>
             <a href="cart.html" class="cart-icon">
                 <i class="fas fa-shopping-bag"></i>
                 <span id="cart-badge" class="badge">0</span>
             </a>
+            <div class="nav-profile" id="nav-profile"></div>
         </nav>
     </header>
 
     <div class="breadcrumb">
-        <a href="../index.html">Home</a>
-        <span>◆</span>
-        <a href="collections.html">Collections</a>
-        <span>◆</span>
-        <span style="color: var(--gold);">Kids</span>
+        <a href="../index.html">Home</a><span>◆</span>
+        <a href="collections.html">Collections</a><span>◆</span>
+        <span style="color:var(--gold)">Kids</span>
     </div>
 
     <main class="collections-container">
         <div class="header-text reveal">
             <span class="eyebrow">Kids' Gallery</span>
-            <h2>Pure & Precious</h2>
-            <p>Safe, smooth-edged designs for ceremonies, blessings, and gifting.</p>
+            <h2>Pure &amp; Precious</h2>
+            <p>Safe, smooth-edged gold ornaments for ceremonies, blessings, and gifting.</p>
             <div class="ornament-line"><div class="ornament-diamond"></div></div>
         </div>
 
         <div class="grid-layout level-2-grid reveal">
             <a href="products.html?dept=kids&cat=infant" class="collection-card">
-                <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80" alt="Infants">
-                <div class="card-overlay">
-                    <h3>Infant Jewellery</h3>
-                    <span class="shop-link">View <i class="fas fa-arrow-right"></i></span>
-                </div>
+                <div class="card-bg card-img-infant"></div>
+                <div class="card-overlay"><h3>Infant Jewellery</h3><span class="shop-link">View <i class="fas fa-arrow-right"></i></span></div>
             </a>
             <a href="products.html?dept=kids&cat=nazariya" class="collection-card">
-                <img src="https://images.unsplash.com/photo-1602752250019-3507e155b9e0?auto=format&fit=crop&w=600&q=80" alt="Nazariya">
-                <div class="card-overlay">
-                    <h3>Bracelets & Nazariya</h3>
-                    <span class="shop-link">View <i class="fas fa-arrow-right"></i></span>
-                </div>
+                <div class="card-bg card-img-nazariya"></div>
+                <div class="card-overlay"><h3>Bracelets &amp; Nazariya</h3><span class="shop-link">View <i class="fas fa-arrow-right"></i></span></div>
             </a>
             <a href="products.html?dept=kids&cat=earrings" class="collection-card">
-                <img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=600&q=80" alt="Earrings">
-                <div class="card-overlay">
-                    <h3>Small Earrings</h3>
-                    <span class="shop-link">View <i class="fas fa-arrow-right"></i></span>
-                </div>
+                <div class="card-bg card-img-earrings"></div>
+                <div class="card-overlay"><h3>Small Earrings</h3><span class="shop-link">View <i class="fas fa-arrow-right"></i></span></div>
             </a>
             <a href="products.html?dept=kids&cat=pendants" class="collection-card">
-                <img src="https://images.unsplash.com/photo-1599643478524-fb66f70362f6?auto=format&fit=crop&w=600&q=80" alt="Pendants">
-                <div class="card-overlay">
-                    <h3>Cartoon Pendants</h3>
-                    <span class="shop-link">View <i class="fas fa-arrow-right"></i></span>
-                </div>
+                <div class="card-bg card-img-pendants"></div>
+                <div class="card-overlay"><h3>Cartoon Pendants</h3><span class="shop-link">View <i class="fas fa-arrow-right"></i></span></div>
             </a>
         </div>
     </main>
 
     <footer>
         <div class="footer-top">
-            <div>
+            <div class="footer-brand">
                 <span class="footer-brand-name">GAB JEWELS</span>
-                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru. Every piece carries the weight of tradition and the brilliance of modern artistry.</p>
+                <p class="footer-brand-desc">Crafting heirlooms since 1978 in the heart of Bengaluru.</p>
             </div>
-            <div class="footer-col">
-                <h4>Navigate</h4>
+            <div class="footer-col"><h4>Navigate</h4>
                 <a href="../index.html">Home</a>
                 <a href="collections.html">Collections</a>
                 <a href="advance-buy.html">Buy Gold</a>
                 <a href="cart.html">Your Bag</a>
             </div>
-            <div class="footer-col">
-                <h4>Policies</h4>
-                <a href="#">Exchange Policy</a>
-                <a href="#">Buyback Terms</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Use</a>
+            <div class="footer-col"><h4>Policies</h4>
+                <a href="#">Exchange Policy</a><a href="#">Buyback Terms</a>
+                <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <span class="footer-copy">© 2026 GAB Jewels. All rights reserved.</span>
-            <span class="footer-copy">BIS Hallmarked · Est. 1978 · Bengaluru</span>
+            <span class="footer-copy">2026 GAB Jewels. All rights reserved.</span>
+            <span class="footer-copy">BIS Hallmarked. Est. 1978. Bengaluru</span>
         </div>
     </footer>
 
     <script src="../assets/js/cart.js"></script>
     <script>
+        (function() {
+            const el = document.getElementById('nav-profile');
+            const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const name = localStorage.getItem('aurum_name') || 'Account';
+            if (!loggedIn) {
+                el.innerHTML = '<a href="../login.html" class="nav-login-btn"><i class="fas fa-user"></i> Login</a>';
+            } else {
+                el.innerHTML = '<a href="settings.html" class="nav-login-btn"><i class="fas fa-user-circle"></i> ' + name.split(' ')[0] + '</a>';
+            }
+        })();
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
