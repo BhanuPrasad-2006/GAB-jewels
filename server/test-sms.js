@@ -4,7 +4,12 @@ require('dotenv').config();
 const https = require('https');
 
 const KEY    = process.env.FAST2SMS_KEY;
-const NUMBER = '7780184812'; // your number — change if needed
+const NUMBER = process.env.TEST_SMS_NUMBER;
+
+if (!NUMBER) {
+    console.error('❌ TEST_SMS_NUMBER not found in .env');
+    process.exit(1);
+}
 
 if (!KEY) {
     console.error('❌ FAST2SMS_KEY not found in .env');
